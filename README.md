@@ -2,9 +2,10 @@
 
 > run node code, for web - [dealt.dev](https://dealt.dev)
 
-```ts
-// work in progress
-// computer: do the things, and if something goes wrong, undo and tell me why
+```bash
+# work in progress
+# computer: do the things, and if something goes wrong, undo and tell me why
+$ dt deals.ts
 ```
 
 > :rainbow: did you know? `dt` is
@@ -21,7 +22,7 @@ don't lol :blowfish: or wait maybe forever :seedling:
 ## credits :turtle: <sub>:turtle:</sub><sub><sub>:turtle:</sub></sub>
 
 tech: [`prettier`](https://github.com/prettier/prettier),
-[`GitHub`](https://github.com)
+[`github`](https://github.com)
 
 > :rainbow: did you know? `emoji` can be punctuation :snail: neat huh
 
