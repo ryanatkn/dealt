@@ -16,7 +16,7 @@
 don't lol :blowfish: or wait maybe forever :seedling:
 
 > :rainbow: did you know? `dealt` gets ahead of the joke :blowfish:
-> did you know am i a joke to you? \*___\*
+> did you know am i a joke to you? `*___*`
 
 ## credits :turtle: <sub>:turtle:</sub><sub><sub>:turtle:</sub></sub>
 
