@@ -4,6 +4,7 @@
 
 ```ts
 // work in progress
+// computer: do the things, and if something goes wrong, undo and tell me why
 ```
 
 > :rainbow: Did you know? `dt` is
