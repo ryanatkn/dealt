@@ -1,0 +1,46 @@
+{
+  "name": "dealt",
+  "version": "0.1.0",
+  "description": "run node code, for web",
+  "license": "CC0-1.0",
+  "homepage": "https://dealt.dev",
+  "scripts": {
+    "start": "echo :D"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanatkn/dealt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ryanatkn/dealt/issues"
+  },
+  "keywords": [
+		"run",
+		"node",
+    "code",
+		"web"
+  ],
+  "author": {
+    "name": "Ryan Atkinson",
+    "email": "ryanatkn@gmail.com",
+    "url": "https://github.com/ryanatkn"
+  },
+  "engines": {
+    "node": ">=12"
+  },
+  "type": "module",
+  "prettier": {
+    "useTabs": true,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "bracketSpacing": false,
+    "overrides": [
+      {
+        "files": "*.json",
+        "options": {
+          "useTabs": false
+        }
+      }
+    ]
+  }
+}
