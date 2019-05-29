@@ -1,6 +1,6 @@
 # dealt
 
-> run node code, for web - [dealt.dev](https://dealt.dev)
+> ahead of the joke :rhinoceros: [dealt.dev](https://dealt.dev)
 
 ```bash
 # work in progress
