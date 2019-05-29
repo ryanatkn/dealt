@@ -8,7 +8,7 @@
 $ dt deals.ts
 ```
 
-> :rainbow: did you know? `dt` is
+> :rainbow::sparkles: did you know? `dt` is
 > [the current cli command for `dealt`](https://github.com/ryanatkn/dealt/issues/1)
 > :octopus:
 
@@ -16,7 +16,7 @@ $ dt deals.ts
 
 don't lol :blowfish: or wait maybe forever :seedling:
 
-> :rainbow: did you know? `dealt` gets ahead of the joke :blowfish:
+> :rainbow::sparkles: did you know? `dealt` gets ahead of the joke :blowfish:
 > did you know am i a joke to you? `*___*`
 
 ## credits :turtle: <sub>:turtle:</sub><sub><sub>:turtle:</sub></sub>
@@ -24,7 +24,7 @@ don't lol :blowfish: or wait maybe forever :seedling:
 tech: [`prettier`](https://github.com/prettier/prettier),
 [`github`](https://github.com)
 
-> :rainbow: did you know? `emoji` can be punctuation :snail: neat huh
+> :rainbow::sparkles: did you know? `emoji` can be punctuation :snail: neat huh
 
 ## license :frog:
 
