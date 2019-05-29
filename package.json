@@ -15,10 +15,10 @@
     "url": "https://github.com/ryanatkn/dealt/issues"
   },
   "keywords": [
-		"run",
-		"node",
+    "run",
+    "node",
     "code",
-		"web"
+    "web"
   ],
   "author": {
     "name": "Ryan Atkinson",
@@ -42,5 +42,8 @@
         }
       }
     ]
+  },
+  "devDependencies": {
+    "prettier": "^1.17.1"
   }
 }
