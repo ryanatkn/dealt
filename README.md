@@ -1,6 +1,6 @@
 # dealt
 
-> ahead of the joke :rhinoceros: [dealt.dev](https://dealt.dev)
+> ahead of the joke `*___*` [dealt.dev](https://dealt.dev)
 
 ```bash
 # work in progress
@@ -17,7 +17,6 @@ $ dt deals.ts
 don't lol :blowfish: or wait maybe forever :seedling:
 
 > :rainbow::sparkles: did you know? `dealt` gets ahead of the joke :blowfish:
-> did you know am i a joke to you? `*___*`
 
 ## credits :turtle: <sub>:turtle:</sub><sub><sub>:turtle:</sub></sub>
 
