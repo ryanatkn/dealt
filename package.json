@@ -2,7 +2,7 @@
   "name": "dealt",
   "version": "0.1.0",
   "description": "run node code, for web",
-  "license": "CC0-1.0",
+  "license": "MIT",
   "homepage": "https://dealt.dev",
   "scripts": {
     "start": "echo :D"
