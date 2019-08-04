@@ -717,7 +717,13 @@
         "Beware false friends",
         "Don't be mealy-mouthed; say what you think and do what you want to do"
       ],
-      "keywords": ["conflict", "decision", "option", "individuality"],
+      "keywords": [
+        "conflict",
+        "decision",
+        "option",
+        "individuality",
+        "dominion"
+      ],
       "meanings": {
         "light": [
           "Having a choice",
@@ -744,7 +750,7 @@
         "You'll be planning a trip soon",
         "Be on the lookout: your ship is coming in"
       ],
-      "keywords": ["implementation", "action", "exploration"],
+      "keywords": ["implementation", "action", "exploration", "virtue"],
       "meanings": {
         "light": [
           "Putting a plan into motion",
@@ -865,7 +871,7 @@
         "Don't be surprised by a personal attack",
         "Prepare to defend yourself or someone you love"
       ],
-      "keywords": ["bravery", "resolve", "determination"],
+      "keywords": ["bravery", "resolve", "determination", "valor"],
       "meanings": {
         "light": [
           "Refusing to be silenced through fear or intimidation",
@@ -921,7 +927,14 @@
         "Don't relax yet; there's more to come",
         "The test you're facing now is happening for one reason: to show you who your real friends are"
       ],
-      "keywords": ["toughness", "persistence", "stamina", "loyalty", "release"],
+      "keywords": [
+        "toughness",
+        "persistence",
+        "stamina",
+        "loyalty",
+        "release",
+        "strength"
+      ],
       "meanings": {
         "light": [
           "Sticking with it for the duration",
@@ -1207,7 +1220,8 @@
         "re-evaluation",
         "regret",
         "uncertainty",
-        "repentance"
+        "repentance",
+        "disappointment"
       ],
       "meanings": {
         "light": [
@@ -1270,7 +1284,7 @@
         "You're being fed a line",
         "Rather than be dazzled by fancy words and promises, demand something real"
       ],
-      "keywords": ["imagination", "dreams", "illusions", "goals"],
+      "keywords": ["imagination", "dreams", "illusions", "goals", "debauchery"],
       "meanings": {
         "light": [
           "Motivating yourself with images of future success",
@@ -1301,7 +1315,8 @@
         "dissatisfaction",
         "quest",
         "departure",
-        "withdrawal"
+        "withdrawal",
+        "indolence"
       ],
       "meanings": {
         "light": [
@@ -1330,7 +1345,13 @@
     },
     {
       "fortune_telling": ["Whatever you want, you'll get it"],
-      "keywords": ["satisfaction", "sensuality", "luxury", "pleasure"],
+      "keywords": [
+        "satisfaction",
+        "sensuality",
+        "luxury",
+        "pleasure",
+        "happiness"
+      ],
       "meanings": {
         "light": [
           "Being delighted with your own achievements",
@@ -1359,7 +1380,13 @@
         "Marriage and family are in the cards",
         "Expect a friendship to blossom into a romance"
       ],
-      "keywords": ["joy", "fulfillment", "overwhelming emotion", "giddiness"],
+      "keywords": [
+        "joy",
+        "fulfillment",
+        "overwhelming emotion",
+        "giddiness",
+        "satiety"
+      ],
       "meanings": {
         "light": [
           "Having more than you ever dreamed",
@@ -1528,7 +1555,7 @@
         "Sometimes, the only way to win is to refuse to fight",
         "You're stuck for now; let time pass before taking action"
       ],
-      "keywords": ["denial", "debate", "impasse", "truce"],
+      "keywords": ["denial", "debate", "impasse", "truce", "peace"],
       "meanings": {
         "light": [
           "Refusing to make a decision without getting the facts",
@@ -1560,7 +1587,8 @@
         "difference",
         "dissatisfaction",
         "heartache",
-        "rejection"
+        "rejection",
+        "sorrow"
       ],
       "meanings": {
         "light": [
@@ -1616,7 +1644,8 @@
         "selfishness",
         "hostility",
         "irrationality",
-        "self-preservation"
+        "self-preservation",
+        "defeat"
       ],
       "meanings": {
         "light": [
@@ -1675,7 +1704,13 @@
         "Don't assume people around you are worthy of your trust",
         "Ask for an accounting of where people have been, and what they've been doing"
       ],
-      "keywords": ["dishonesty", "presumption", "sneakiness", "assumptions"],
+      "keywords": [
+        "dishonesty",
+        "presumption",
+        "sneakiness",
+        "assumptions",
+        "futility"
+      ],
       "meanings": {
         "light": [
           "Refusing to do something dishonest, even when there's no chance of ever being caught",
@@ -1701,7 +1736,13 @@
         "Get over playing the victim",
         "Once you realize you are your own biggest obstacle, nothing can hold you back"
       ],
-      "keywords": ["restriction", "limitation", "confinement", "helplessness"],
+      "keywords": [
+        "restriction",
+        "limitation",
+        "confinement",
+        "helplessness",
+        "interference"
+      ],
       "meanings": {
         "light": [
           "Honoring limits",
@@ -1731,7 +1772,7 @@
       "fortune_telling": [
         "If you take the action you're considering now, you'll be sorry in the future"
       ],
-      "keywords": ["remorse", "worry", "distraught", "conclusion"],
+      "keywords": ["remorse", "worry", "distraught", "conclusion", "cruelty"],
       "meanings": {
         "light": [
           "Refusing to worry about what you cannot control",
@@ -2083,7 +2124,13 @@
         "Things won't work out as expected",
         "Pick up the pieces and prepare to move on"
       ],
-      "keywords": ["assessment", "evaluation", "re-evaluation", "reflection"],
+      "keywords": [
+        "assessment",
+        "evaluation",
+        "re-evaluation",
+        "reflection",
+        "failure"
+      ],
       "meanings": {
         "light": [
           "Measuring progress toward your goal",
@@ -2111,7 +2158,7 @@
         "Stop over-analyzing, researching, and outlining",
         "Buckle down and get the work done"
       ],
-      "keywords": ["effort", "work diligence", "skill"],
+      "keywords": ["effort", "work diligence", "skill", "prudence"],
       "meanings": {
         "light": [
           "Doing your best",
@@ -2141,7 +2188,7 @@
       "fortune_telling": [
         "Until you appreciate what you have, you won't have any luck getting more"
       ],
-      "keywords": ["training", "discipline", "confidence", "enough"],
+      "keywords": ["training", "discipline", "confidence", "enough", "gain"],
       "meanings": {
         "light": [
           "Investing time in learning or teaching a difficult task",
