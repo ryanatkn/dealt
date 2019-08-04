@@ -6,6 +6,11 @@
 // work in progress
 ```
 
+`dealt` is a junkyard of experiments in
+[procedural generation](https://en.wikipedia.org/wiki/Procedural_generation)
+with a splash of dilettante buffoonery.
+Explorers are encouraged to keep feet on ground and tongue in cheek.
+
 ## contents
 
 - [tarot](tarot/)
