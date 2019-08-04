@@ -1,6 +1,10 @@
 # dealt
 
-> ahead of the joke `*___*` [dealt.dev](https://dealt.dev)
+> giving meaning a chance `*___*` [dealt.dev](https://dealt.dev)
+
+## contents
+
+- [tarot](tarot/)
 
 ## credits :turtle: <sub>:turtle:</sub><sub><sub>:turtle:</sub></sub>
 
