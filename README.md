@@ -1,6 +1,6 @@
 # dealt
 
-> giving meaning a chance `*___*` [dealt.dev](https://dealt.dev)
+> giving meaning a chance :dragon: [dealt.dev](https://dealt.dev)
 
 ## contents
 
