@@ -1,5 +1,7 @@
 # tarot
 
+> [dealt.dev/tarot](https://dealt.dev/tarot)
+
 ## credits
 
 [Tarot card interpretations data](https://github.com/dariusk/corpora/blob/master/data/divination/tarot_interpretations.json)
