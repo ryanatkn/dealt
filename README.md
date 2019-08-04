@@ -2,6 +2,10 @@
 
 > giving meaning a chance :dragon: [dealt.dev](https://dealt.dev)
 
+```ts
+// work in progress
+```
+
 ## contents
 
 - [tarot](tarot/)
