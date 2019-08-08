@@ -1,6 +1,9 @@
 {
-  "description": "Tarot card interpretations, from Mark McElroy's _A Guide to Tarot Meanings_ (http://www.madebymark.com/a-guide-to-tarot-card-meanings/)",
-  "repo": "https://github.com/dariusk/corpora",
+  "description": "Tarot card interpretations, from Mark McElroy's _A Guide to Tarot Meanings_",
+  "sources": [
+    "https://github.com/dariusk/corpora",
+    "http://www.madebymark.com/a-guide-to-tarot-card-meanings/"
+  ],
   "tarot_interpretations": [
     {
       "fortune_telling": [
