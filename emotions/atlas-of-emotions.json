@@ -1,0 +1,77 @@
+{
+  "description": "Atlas of Emotions - emotion families and their states of varying intensity",
+  "sources": ["http://atlasofemotions.org"],
+  "emotions": [
+    {
+      "emotion": "anger",
+      "states": [
+        "annoyance",
+        "frustration",
+        "exasperation",
+        "argumentativeness",
+        "bitterness",
+        "vengefulness",
+        "fury"
+      ]
+    },
+    {
+      "emotion": "fear",
+      "states": [
+        "trepitation",
+        "nervousness",
+        "anxiety",
+        "dread",
+        "desperation",
+        "panic",
+        "horror",
+        "terror"
+      ]
+    },
+    {
+      "emotion": "disgust",
+      "states": [
+        "dislike",
+        "aversion",
+        "distaste",
+        "repugnance",
+        "revulsion",
+        "abhorrence",
+        "loathing"
+      ]
+    },
+    {
+      "emotion": "sadness",
+      "states": [
+        "disappointment",
+        "discouragement",
+        "distraughtness",
+        "resignation",
+        "helplessness",
+        "hopelessness",
+        "misery",
+        "despair",
+        "grief",
+        "sorrow",
+        "anguish"
+      ]
+    },
+    {
+      "emotion": "enjoyment",
+      "states": [
+        "sensory pleasure",
+        "rejoicing",
+        "compassion/joy",
+        "amusement",
+        "schadenfreude",
+        "relief",
+        "peace",
+        "pride",
+        "fiero",
+        "naches",
+        "wonder",
+        "excitement",
+        "ecstasy"
+      ]
+    }
+  ]
+}
