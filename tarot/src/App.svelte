@@ -5,6 +5,12 @@
 	const TAROT_COUNT = 78;
 </script>
 
+<div class="cards">
+	{#each {length: TAROT_COUNT} as _, i (i)}
+		<TarotCardThumbnail index={i} />
+	{/each}
+</div>
+
 <style>
 	.cards {
 		margin: 20px;
@@ -14,9 +20,3 @@
 		justify-content: center;
 	}
 </style>
-
-<div class="cards">
-	{#each {length: TAROT_COUNT} as _, i (i)}
-		<TarotCardThumbnail index={i} />
-	{/each}
-</div>
