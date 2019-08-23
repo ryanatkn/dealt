@@ -1,0 +1,9 @@
+.cards.svelte-o44yh3{display:flex;align-items:center}.card.svelte-o44yh3{min-width:0;width:100%}
+.thumbnail.svelte-10w8zpa{margin:20px}
+.thumbnails.svelte-pc6d8t{display:flex;flex-wrap:wrap;align-items:center;justify-content:center}
+body {
+	background-color: #000;
+	color: rgba(255, 245, 245, 0.9);
+	padding: 0;
+	margin: 0;
+}
