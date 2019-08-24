@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Thumbnail from './Thumbnail.svelte';
 	import TarotThumbnail from './TarotThumbnail.svelte';
 </script>

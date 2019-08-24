@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import TarotCardThumbnail from './TarotCardThumbnail.svelte';
 
 	// TODO move with index constant
