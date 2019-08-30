@@ -1,6 +1,61 @@
+* {
+	box-sizing: border-box;
+}
+
+html {
+	height: 100%;
+}
+
+:root {
+	--bg-color: rgba(8, 0, 0, 1);
+	--bg-color-overlay: rgba(8, 0, 0, 0.65);
+	--bg-color-backdrop: rgba(8, 0, 0, 0.8);
+	--bg-color-fg: rgba(255, 247, 247, 0.08);
+	--border-color: rgba(255, 247, 247, 0.2);
+	--font-color: #ddd7d7;
+	--font-color-heading: #d7c7c7;
+	--font-size: 18px;
+}
+
 body {
-	background-color: #000;
-	color: rgba(255, 245, 245, 0.9);
+	overflow: hidden;
+	height: 100%;
+	background-color: var(--bg-color);
+	color: var(--font-color);
 	padding: 0;
 	margin: 0;
+	font-size: var(--font-size);
+	font-family: sans-serif;
+}
+
+#root {
+	height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	color: var(--font-color-heading);
+}
+
+ul {
+	padding-left: 25px;
+}
+
+blockquote {
+	border-left: 4px double var(--border-color);
+	margin: 10px 0;
+	padding-left: 15px;
+}
+
+hr {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	border-top: 1px solid var(--border-color);
+	height: 0;
+	width: 100%;
 }
