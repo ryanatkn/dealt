@@ -22,9 +22,9 @@ tech: [`prettier`](https://github.com/prettier/prettier),
 
 > :rainbow::sparkles: did you know? `emoji` can be punctuation :snail: neat huh
 
-## license
+## license :bird:
 
-Code is licensed [AGPL-3.0-only](license), maximizing end-user freedoms :bird:
+Code license is [MIT](license). :dolphin:
 
 Graphics, sounds, and other non-code assets may have
 licenses that restrict usage.
