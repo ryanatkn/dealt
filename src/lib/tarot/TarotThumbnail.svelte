@@ -1,14 +1,11 @@
 <script lang="ts">
 	import Thumbnail from '$lib/Thumbnail.svelte';
+	import {randomCardIndex} from './tarot';
 
-	const randInt = (min: number, max: number): number =>
-		Math.floor(Math.random() * (max - min + 1)) + min;
-
-	const TAROT_COUNT = 78;
 	const drawCards = (count: number): number[] => {
 		const drawn = new Set<number>();
 		while (drawn.size < count) {
-			drawn.add(randInt(0, TAROT_COUNT - 1));
+			drawn.add(randomCardIndex());
 		}
 		return Array.from(drawn);
 	};

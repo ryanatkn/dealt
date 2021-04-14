@@ -5,14 +5,9 @@ const pkg = require('./package.json');
 const dev = process.env.NODE_ENV !== 'production';
 
 // TODO import from gro
-const toPackageRepoName = pkg =>
-	pkg.name.includes('/')
-		? pkg.name
-				.split('/')
-				.slice(1)
-				.join('/')
-		: pkg.name;
-const toSvelteKitBasePath = (pkg, dev) => (dev ? '' : `/${toPackageRepoName(pkg)}`);
+const toPackageRepoName = (pkg) =>
+	pkg.name.includes('/') ? pkg.name.split('/').slice(1).join('/') : pkg.name;
+const toSvelteKitBasePath = (pkg, dev) => (dev || !dev ? '' : `/${toPackageRepoName(pkg)}`);
 
 /** @type {import('@sveltejs/kit').Config} */
 module.exports = {
