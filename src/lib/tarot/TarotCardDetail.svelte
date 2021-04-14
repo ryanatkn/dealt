@@ -1,12 +1,14 @@
 <script lang="ts">
+	import type {TarotCard} from './tarot.js';
+
 	// TODO consider a different version of this component for small screens
 	// breakpoints just don't give the best UX without a ton of complexity
 
-	export let card; // TODO type
+	export let card: TarotCard;
 </script>
 
 <div class="wrapper">
-	<img src="images/{card.id}.jpg" alt={card.name} />
+	<img src="/tarot/images/{card.id}.jpg" alt={card.name} />
 	<div class="content">
 		<h1>{card.name}</h1>
 		<p class="keywords">{card.keywords.join(', ')}</p>

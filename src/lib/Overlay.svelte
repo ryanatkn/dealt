@@ -1,10 +1,8 @@
 <script lang="ts">
-	import {onMount, onDestroy} from 'svelte';
-
 	export let contentStyle = '';
 	export let contentClass = 'p-1';
 
-	export let close;
+	export let close: () => void;
 
 	// TODO close with escape key
 	// TODO extract OverlayContent?
@@ -48,7 +46,5 @@
 		background-color: var(--bg-color-backdrop);
 		border: 1px solid var(--border-color);
 		box-shadow: 4px 12px 24px var(--bg-color-backdrop); /* TODO does this perform ok on all devices? */
-	}
-	.content {
 	}
 </style>
