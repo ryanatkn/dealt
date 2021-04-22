@@ -11,9 +11,9 @@
 		<div style="max-width: 300px; padding-right: 10px;">
 			<p>JavaScript is disabled. If you enable it, fun and surprising things could happen!</p>
 			<p>
-				This website's
+				This website tries to respect you and your machines, and its
 				<a href="https://github.com/ryanatkn/dealt">source code</a>
-				is open for inspection and complaints.
+				is open for inspection and criticism.
 			</p>
 		</div>
 	</section>

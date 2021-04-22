@@ -40,11 +40,17 @@
 		justify-content: center;
 		align-items: flex-start; /* prevents aspect ratio changes */
 	}
+	img {
+		margin: 20px;
+	}
 	.tarot-card.shadow img {
 		transform: rotate(180deg);
 	}
-	img {
-		margin: 20px;
+	.keywords {
+		color: green;
+	}
+	.tarot-card.shadow .keywords {
+		color: red;
 	}
 	.content {
 		min-width: 240px;
