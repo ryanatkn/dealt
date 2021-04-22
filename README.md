@@ -41,7 +41,7 @@ node build
 
 also:
 
-[tarot credits](src/tarot/)
+[tarot card images and interpretations](src/tarot/)
 
 ## license 🐦
 
