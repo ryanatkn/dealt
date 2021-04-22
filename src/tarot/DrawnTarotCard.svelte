@@ -5,36 +5,43 @@
 	// breakpoints just don't give the best UX without a ton of complexity
 
 	export let card: TarotCard;
+	export let shadow: boolean = Math.random() > 0.5;
 </script>
 
-<div class="tarot-card-detail">
+<div class="tarot-card" class:shadow>
 	<img src="/tarot/images/{card.id}.jpg" alt={card.name} />
 	<div class="content">
 		<h1>{card.name}</h1>
 		<p class="keywords">{card.keywords.join(', ')}</p>
-		<section class="meanings light">
-			<ul>
-				{#each card.meanings.light as meaning (meaning)}
-					<li>{meaning}</li>
-				{/each}
-			</ul>
-		</section>
-		<section class="meanings shadow">
-			<ul>
-				{#each card.meanings.shadow as meaning (meaning)}
-					<li>{meaning}</li>
-				{/each}
-			</ul>
-		</section>
+		{#if shadow}
+			<section class="meanings shadow">
+				<ul>
+					{#each card.meanings.shadow as meaning (meaning)}
+						<li>{meaning}</li>
+					{/each}
+				</ul>
+			</section>
+		{:else}
+			<section class="meanings light">
+				<ul>
+					{#each card.meanings.light as meaning (meaning)}
+						<li>{meaning}</li>
+					{/each}
+				</ul>
+			</section>
+		{/if}
 	</div>
 </div>
 
 <style>
-	.tarot-card-detail {
+	.tarot-card {
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		align-items: flex-start; /* prevents aspect ratio changes */
+	}
+	.tarot-card.shadow img {
+		transform: rotate(180deg);
 	}
 	img {
 		margin: 20px;

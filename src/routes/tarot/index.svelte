@@ -2,31 +2,53 @@
 	import Overlay from '$lib/Overlay.svelte';
 	import TarotCardThumbnail from '../../tarot/TarotCardThumbnail.svelte';
 	import TarotCardDetail from '../../tarot/TarotCardDetail.svelte';
+	import DrawnTarotCard from '../../tarot/DrawnTarotCard.svelte';
 	import {cards as cardsData} from '../../tarot/tarot.json';
 	import {drawCards, last} from '../../tarot/tarot';
 	import type {TarotCard} from '../../tarot/tarot';
 
 	const cards: TarotCard[] = cardsData;
 
-	let activeCards: TarotCard[] = [];
+	let drawnCards: TarotCard[] = [];
+	let viewingCards: TarotCard[] = [];
+
+	const draw = (count: number): void => {
+		drawnCards = drawCards(cards, count);
+		viewingCards = [];
+	};
+
+	const view = (card: TarotCard): void => {
+		drawnCards = [];
+		viewingCards = [card];
+	};
 </script>
 
 <div class="app">
 	<div class="draw-card-buttons">
-		<button on:click={() => (activeCards = drawCards(cards, 1))}>draw a card</button>
-		<button on:click={() => (activeCards = drawCards(cards, 3))}> draw three cards </button>
+		<button on:click={() => draw(1)}>draw a card</button>
+		<button on:click={() => draw(3)}> draw three cards </button>
 	</div>
 	<div class="cards">
 		{#each cards as card (card.id)}
-			<TarotCardThumbnail {card} on:click={() => (activeCards = [card])} />
+			<TarotCardThumbnail {card} on:click={() => view(card)} />
 		{/each}
 	</div>
 </div>
-{#if activeCards.length}
-	<Overlay close={() => (activeCards = [])}>
-		{#each activeCards as card (card.id)}
+{#if drawnCards.length}
+	<Overlay close={() => (drawnCards = [])}>
+		{#each drawnCards as card (card.id)}
+			<DrawnTarotCard {card} />
+			{#if card !== last(drawnCards)}
+				<hr />
+			{/if}
+		{/each}
+	</Overlay>
+{/if}
+{#if viewingCards.length}
+	<Overlay close={() => (viewingCards = [])}>
+		{#each viewingCards as card (card.id)}
 			<TarotCardDetail {card} />
-			{#if card !== last(activeCards)}
+			{#if card !== last(viewingCards)}
 				<hr />
 			{/if}
 		{/each}
