@@ -4,7 +4,7 @@
 
 	// this is lightweight: it doesn't depend on the card data
 
-	export let shadow: boolean = Math.random() > 0.5;
+	export let shadow = false;
 
 	const drawCards = (count: number): number[] => {
 		const drawn = new Set<number>();

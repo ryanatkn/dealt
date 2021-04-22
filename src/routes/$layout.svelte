@@ -2,7 +2,7 @@
 	import {provideShadow} from '$lib/shadow';
 	import '../app.css';
 
-	provideShadow(Math.random() > 0.5);
+	provideShadow();
 </script>
 
 <svelte:head>

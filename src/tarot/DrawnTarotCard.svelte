@@ -6,7 +6,7 @@
 	// breakpoints just don't give the best UX without a ton of complexity
 
 	export let card: TarotCard;
-	export let shadow: boolean = Math.random() > 0.5;
+	export let shadow = false;
 </script>
 
 <div class="tarot-card" class:shadow>

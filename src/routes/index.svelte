@@ -9,7 +9,7 @@
 
 <main>
 	<h1 class:shadow>dealt</h1>
-	<TarotThumbnail />
+	<TarotThumbnail {shadow} />
 	<Thumbnail href="https://github.com/ryanatkn/dealt"><h2>source code on GitHub</h2></Thumbnail>
 	<Zodiac />
 </main>

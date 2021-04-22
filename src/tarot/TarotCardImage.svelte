@@ -2,7 +2,7 @@
 	import type {TarotCard} from './tarot.js';
 
 	export let card: TarotCard;
-	export let shadow: boolean = Math.random() > 0.5;
+	export let shadow = false;
 </script>
 
 <img class:shadow src="/tarot/images/{card.id}.jpg" alt={card.name} />

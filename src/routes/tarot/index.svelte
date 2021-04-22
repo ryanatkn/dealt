@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Overlay from '$lib/Overlay.svelte';
+	import {randomShadow} from '$lib/shadow';
 	import TarotCardThumbnail from '../../tarot/TarotCardThumbnail.svelte';
 	import TarotCardDetail from '../../tarot/TarotCardDetail.svelte';
 	import DrawnTarotCard from '../../tarot/DrawnTarotCard.svelte';
@@ -37,7 +38,7 @@
 {#if drawnCards.length}
 	<Overlay close={() => (drawnCards = [])}>
 		{#each drawnCards as card (card.id)}
-			<DrawnTarotCard {card} />
+			<DrawnTarotCard {card} shadow={randomShadow()} />
 			{#if card !== last(drawnCards)}
 				<hr />
 			{/if}
