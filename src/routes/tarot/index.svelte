@@ -1,10 +1,10 @@
 <script lang="ts">
-	import TarotCardThumbnail from '$lib/tarot/TarotCardThumbnail.svelte';
-	import TarotCardDetail from '$lib/tarot/TarotCardDetail.svelte';
 	import Overlay from '$lib/Overlay.svelte';
-	import {cards as cardsData} from '$lib/tarot/tarot.json';
-	import {drawCards, last} from '$lib/tarot/tarot';
-	import type {TarotCard} from '$lib/tarot/tarot';
+	import TarotCardThumbnail from '../../tarot/TarotCardThumbnail.svelte';
+	import TarotCardDetail from '../../tarot/TarotCardDetail.svelte';
+	import {cards as cardsData} from '../../tarot/tarot.json';
+	import {drawCards, last} from '../../tarot/tarot';
+	import type {TarotCard} from '../../tarot/tarot';
 
 	const cards: TarotCard[] = cardsData;
 

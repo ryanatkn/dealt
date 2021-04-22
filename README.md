@@ -10,7 +10,7 @@ Explorers are encouraged to keep feet on ground and tongue in cheek.
 ## contents
 
 - faken: fake data for the real world 🐿️ **work in progress**
-- [tarot](src/lib/tarot/)
+- [tarot](src/tarot/)
 
 ## usage
 
