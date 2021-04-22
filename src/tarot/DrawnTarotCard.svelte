@@ -63,9 +63,12 @@
 		margin-bottom: 0;
 	}
 	.meanings {
-		border: 1px solid var(--border-color);
+		border: 1px solid var(--light_border_color);
 		background-color: var(--bg-color-fg);
 		padding: 0 10px;
+	}
+	.meanings.shadow {
+		border-color: var(--shadow_border_color);
 	}
 	.light {
 		box-shadow: 10px 10px 40px 15px var(--bg-color-fg) inset;

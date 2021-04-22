@@ -27,6 +27,8 @@ html {
 	--font-size: 18px;
 	--shadow_text_color: #ff3e00;
 	--light_text_color: #3eff00;
+	--shadow_border_color: hsla(15, 50%, 50%, 0.4);
+	--light_border_color: hsla(105, 50%, 50%, 0.4);
 }
 
 body {
