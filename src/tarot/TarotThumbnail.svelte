@@ -2,6 +2,10 @@
 	import Thumbnail from '$lib/Thumbnail.svelte';
 	import {randomCardIndex} from './tarot';
 
+	// this is lightweight: it doesn't depend on the card data
+
+	export let shadow: boolean = Math.random() > 0.5;
+
 	const drawCards = (count: number): number[] => {
 		const drawn = new Set<number>();
 		while (drawn.size < count) {
@@ -16,7 +20,7 @@
 <Thumbnail href="tarot/">
 	<div class="cards">
 		{#each cards as card (card)}
-			<img class="card" src="/tarot/images/{card}.jpg" alt="tarot card" />
+			<img class="card" class:shadow src="/tarot/images/{card}.jpg" alt="tarot card {card}" />
 		{/each}
 	</div>
 </Thumbnail>
@@ -30,5 +34,8 @@
 		/* get the flex-item cards to shrink and maintain aspect ratio */
 		min-width: 0;
 		width: 100%;
+	}
+	.card.shadow {
+		transform: rotate(180deg);
 	}
 </style>
