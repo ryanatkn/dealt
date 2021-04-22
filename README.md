@@ -39,6 +39,10 @@ node build
 [@lukeed\/\*](https://github.com/lukeed) ∙
 & [more](package.json)
 
+also:
+
+[tarot credits](src/tarot/)
+
 ## license 🐦
 
 [public domain](license) (The Unlicense)
