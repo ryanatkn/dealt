@@ -1,7 +1,7 @@
 <script lang="ts">
-	import TarotThumbnail from '../tarot/TarotThumbnail.svelte';
 	import Thumbnail from '$lib/Thumbnail.svelte';
-	import Zodiac from '$lib/zodiac/Zodiac.svelte';
+	import TarotThumbnail from '../tarot/TarotThumbnail.svelte';
+	import Zodiac from '../zodiac/Zodiac.svelte';
 </script>
 
 <main>
