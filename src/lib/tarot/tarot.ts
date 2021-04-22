@@ -5,7 +5,6 @@ export interface TarotCard {
 	name: string;
 	rank: number;
 	suit: TarotSuit;
-	fortunes: string[];
 	keywords: string[];
 	meanings: {
 		light: string[];

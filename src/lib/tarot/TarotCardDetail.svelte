@@ -26,11 +26,6 @@
 				{/each}
 			</ul>
 		</section>
-		<section class="fortunes">
-			{#each card.fortunes as fortune (fortune)}
-				<blockquote>{fortune}</blockquote>
-			{/each}
-		</section>
 	</div>
 </div>
 
