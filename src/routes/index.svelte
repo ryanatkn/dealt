@@ -1,16 +1,21 @@
 <script lang="ts">
 	import TarotThumbnail from '$lib/tarot/TarotThumbnail.svelte';
 	import Thumbnail from '$lib/Thumbnail.svelte';
+	import Zodiac from '$lib/zodiac/Zodiac.svelte';
 </script>
 
 <main>
 	<h1>dealt</h1>
 	<TarotThumbnail />
-	<Thumbnail href="https://github.com/ryanatkn/dealt">source code on GitHub</Thumbnail>
+	<Thumbnail href="https://github.com/ryanatkn/dealt"><h2>source code on GitHub</h2></Thumbnail>
+	<Zodiac />
 </main>
 
 <style>
 	main {
+		height: 100%;
+		overflow-y: scroll;
+		overflow-x: auto;
 		text-align: center;
 		padding: 1em;
 		margin: 0 auto;
