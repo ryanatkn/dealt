@@ -1,16 +1,16 @@
 <script>
-	import Aquarius from '$lib/zodiac/Aquarius.svelte';
-	import Aries from '$lib/zodiac/Aries.svelte';
-	import Cancer from '$lib/zodiac/Cancer.svelte';
-	import Capricorn from '$lib/zodiac/Capricorn.svelte';
-	import Gemini from '$lib/zodiac/Gemini.svelte';
-	import Leo from '$lib/zodiac/Leo.svelte';
-	import Libra from '$lib/zodiac/Libra.svelte';
-	import Pisces from '$lib/zodiac/Pisces.svelte';
-	import Sagittarius from '$lib/zodiac/Sagittarius.svelte';
-	import Scorpio from '$lib/zodiac/Scorpio.svelte';
-	import Taurus from '$lib/zodiac/Taurus.svelte';
-	import Virgo from '$lib/zodiac/Virgo.svelte';
+	import Aquarius from './Aquarius.svelte';
+	import Aries from './Aries.svelte';
+	import Cancer from './Cancer.svelte';
+	import Capricorn from './Capricorn.svelte';
+	import Gemini from './Gemini.svelte';
+	import Leo from './Leo.svelte';
+	import Libra from './Libra.svelte';
+	import Pisces from './Pisces.svelte';
+	import Sagittarius from './Sagittarius.svelte';
+	import Scorpio from './Scorpio.svelte';
+	import Taurus from './Taurus.svelte';
+	import Virgo from './Virgo.svelte';
 </script>
 
 <Aquarius />
