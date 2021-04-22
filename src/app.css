@@ -16,6 +16,7 @@ html {
 }
 
 :root {
+	/* TODO refactor with felt */
 	--bg-color: rgba(8, 0, 0, 1);
 	--bg-color-overlay: rgba(8, 0, 0, 0.65);
 	--bg-color-backdrop: rgba(8, 0, 0, 0.8);
@@ -24,6 +25,8 @@ html {
 	--font-color: #ddd7d7;
 	--font-color-heading: #d7c7c7;
 	--font-size: 18px;
+	--shadow_text_color: #ff3e00;
+	--light_text_color: #3eff00;
 }
 
 body {

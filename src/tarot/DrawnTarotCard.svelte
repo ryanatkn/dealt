@@ -47,10 +47,10 @@
 		transform: rotate(180deg);
 	}
 	.keywords {
-		color: green;
+		color: var(--light_text_color);
 	}
 	.tarot-card.shadow .keywords {
-		color: red;
+		color: var(--shadow_text_color);
 	}
 	.content {
 		min-width: 240px;
