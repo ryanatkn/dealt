@@ -1,6 +1,6 @@
 import {getContext, setContext} from 'svelte';
 
-import {random} from '$lib/random';
+import {randomFloat} from '$lib/random';
 
 const shadowKey = {};
 
@@ -12,4 +12,4 @@ export const useShadow = (): boolean => {
 	return getContext(shadowKey);
 };
 
-export const toRandomShadow = (): boolean => random() > 0.5;
+export const toRandomShadow = (): boolean => randomFloat() > 0.5;

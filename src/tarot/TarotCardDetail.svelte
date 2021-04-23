@@ -1,10 +1,14 @@
 <script lang="ts">
 	import type {TarotCard} from './tarot.js';
+	import {shuffle} from '$lib/random';
 
 	// TODO consider a different version of this component for small screens
 	// breakpoints just don't give the best UX without a ton of complexity
 
 	export let card: TarotCard;
+
+	$: lightMeanings = shuffle(card.meanings.light);
+	$: shadowMeanings = shuffle(card.meanings.shadow);
 </script>
 
 <div class="tarot-card-detail">
@@ -14,14 +18,14 @@
 		<p class="keywords">{card.keywords.join(', ')}</p>
 		<section class="meanings light">
 			<ul>
-				{#each card.meanings.light as meaning (meaning)}
+				{#each lightMeanings as meaning (meaning)}
 					<li>{meaning}</li>
 				{/each}
 			</ul>
 		</section>
 		<section class="meanings shadow">
 			<ul>
-				{#each card.meanings.shadow as meaning (meaning)}
+				{#each shadowMeanings as meaning (meaning)}
 					<li>{meaning}</li>
 				{/each}
 			</ul>

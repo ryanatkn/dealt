@@ -12,7 +12,9 @@
 <h1 class:shadow>dealt</h1>
 <TarotThumbnail {shadow} />
 <AboutLink />
-<Zodiac {activeZodiac} />
+<section class="zodiac">
+	<Zodiac {activeZodiac} />
+</section>
 
 <style>
 	h1 {
@@ -23,6 +25,7 @@
 		line-height: 1.1;
 		margin: 4rem auto;
 		max-width: 14rem;
+		text-align: center;
 	}
 
 	h1.shadow {
@@ -33,5 +36,9 @@
 		h1 {
 			max-width: none;
 		}
+	}
+
+	.zodiac {
+		text-align: center;
 	}
 </style>

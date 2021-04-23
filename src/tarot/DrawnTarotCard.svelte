@@ -1,4 +1,5 @@
 <script lang="ts">
+	import {shuffle} from '$lib/random';
 	import type {TarotCard} from './tarot.js';
 	import TarotCardImage from './TarotCardImage.svelte';
 
@@ -8,7 +9,7 @@
 	export let card: TarotCard;
 	export let shadow = false;
 
-	$: meanings = shadow ? card.meanings.shadow : card.meanings.light;
+	$: meanings = shuffle(shadow ? card.meanings.shadow : card.meanings.light);
 </script>
 
 <div class="tarot-card" class:shadow>
