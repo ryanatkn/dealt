@@ -3,8 +3,7 @@
 > giving meaning a chance :dragon: [dealt.dev](https://dealt.dev)
 
 `dealt` is a junkyard of experiments in
-[procedural generation](https://en.wikipedia.org/wiki/Procedural_generation).
-It's all dilettante buffoonery, and it always has been.
+[procedural generation](https://en.wikipedia.org/wiki/Procedural_generation)
 
 ## contents
 
