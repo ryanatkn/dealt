@@ -35,41 +35,44 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<div>
-	<div class="draw-card-buttons">
-		<button on:click={() => draw(1)}>draw a card</button>
-		<button on:click={() => draw(3)}> draw three cards </button>
+<section>
+	<div>
+		<div class="draw-card-buttons">
+			<button on:click={() => draw(1)}>draw a card</button>
+			<button on:click={() => draw(3)}> draw three cards </button>
+		</div>
+		<div class="cards">
+			{#each cards as card (card.id)}
+				<button on:click={() => view(card)}>
+					<TarotCardThumbnail {card} />
+				</button>
+			{/each}
+		</div>
 	</div>
-	<div class="cards">
-		{#each cards as card (card.id)}
-			<button on:click={() => view(card)}>
-				<TarotCardThumbnail {card} />
-			</button>
-		{/each}
-	</div>
-</div>
-{#if drawnCards.length}
-	<Overlay close={() => (drawnCards = [])}>
-		{#each drawnCards as card (card.id)}
-			<DrawnTarotCard {card} shadow={toRandomShadow()} />
-			{#if card !== last(drawnCards)}
-				<hr />
-			{/if}
-		{/each}
-	</Overlay>
-{/if}
-{#if viewingCards.length}
-	<Overlay close={() => (viewingCards = [])}>
-		{#each viewingCards as card (card.id)}
-			<TarotCardDetail {card} />
-			{#if card !== last(viewingCards)}
-				<hr />
-			{/if}
-		{/each}
-	</Overlay>
-{/if}
-
-<AboutLink />
+	{#if drawnCards.length}
+		<Overlay close={() => (drawnCards = [])}>
+			{#each drawnCards as card (card.id)}
+				<DrawnTarotCard {card} shadow={toRandomShadow()} />
+				{#if card !== last(drawnCards)}
+					<hr />
+				{/if}
+			{/each}
+		</Overlay>
+	{/if}
+	{#if viewingCards.length}
+		<Overlay close={() => (viewingCards = [])}>
+			{#each viewingCards as card (card.id)}
+				<TarotCardDetail {card} />
+				{#if card !== last(viewingCards)}
+					<hr />
+				{/if}
+			{/each}
+		</Overlay>
+	{/if}
+</section>
+<section>
+	<AboutLink />
+</section>
 
 <style>
 	.draw-card-buttons {
@@ -86,7 +89,6 @@
 		background-color: var(--bg-color-fg);
 	}
 	.cards {
-		margin: 20px;
 		display: flex;
 		flex-wrap: wrap;
 		align-items: center;

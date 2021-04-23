@@ -29,6 +29,7 @@ html {
 	--light_text_color: #3eff00;
 	--shadow_border_color: hsla(15, 50%, 50%, 0.4);
 	--light_border_color: hsla(105, 50%, 50%, 0.4);
+	--spacing_lg: 20px;
 }
 
 body {
@@ -72,4 +73,8 @@ hr {
 	border-top: 1px solid var(--border-color);
 	height: 0;
 	width: 100%;
+}
+
+section {
+	margin-bottom: var(--spacing_lg);
 }
