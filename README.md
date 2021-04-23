@@ -51,4 +51,4 @@ adapted from [dariusk/corpora](https://github.com/dariusk/corpora) (public domai
 [tarot card images](http://www.sacred-texts.com/tarot/xr/index.htm)
 and [their copyright info](http://www.sacred-texts.com/tarot/faq.htm)
 
-everything else: [public domain](license) (The Unlicense)
+everything else: public domain ([The Unlicense](license))
