@@ -9,9 +9,13 @@
 	const activeZodiac = randomZodiac();
 </script>
 
-<h1 class:shadow>dealt</h1>
-<TarotThumbnail {shadow} />
-<AboutLink />
+<section>
+	<h1 class:shadow>dealt</h1>
+	<TarotThumbnail {shadow} />
+</section>
+<section>
+	<AboutLink />
+</section>
 <section class="zodiac">
 	<Zodiac {activeZodiac} />
 </section>
