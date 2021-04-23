@@ -8,7 +8,7 @@ It's all dilettante buffoonery, and it always has been.
 
 ## contents
 
-- faken: fake data for the real world 🐿️ **work in progress**
+- fakd: fake data for the real world 🐿️ **work in progress**
 - [tarot](src/tarot/)
 
 ## usage
