@@ -2,7 +2,7 @@
   "name": "dealt",
   "version": "0.0.0",
   "description": "giving meaning a chance",
-  "license": "MIT",
+  "license": "Unlicense",
   "homepage": "https://dealt.dev",
   "scripts": {
     "start": "echo :D",
