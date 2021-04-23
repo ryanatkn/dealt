@@ -1,6 +1,7 @@
 <script lang="ts">
 	import Overlay from '$lib/Overlay.svelte';
 	import {toRandomShadow} from '$lib/shadow';
+	import AboutLink from '$lib/AboutLink.svelte';
 	import TarotCardThumbnail from '../../tarot/TarotCardThumbnail.svelte';
 	import TarotCardDetail from '../../tarot/TarotCardDetail.svelte';
 	import DrawnTarotCard from '../../tarot/DrawnTarotCard.svelte';
@@ -22,9 +23,18 @@
 		drawnCards = [];
 		viewingCards = [card];
 	};
+
+	const onKeyDown = (e: KeyboardEvent) => {
+		if (e.key === 'Escape') {
+			drawnCards = []; // TODO should be hide modal
+			viewingCards = [];
+		}
+	};
 </script>
 
-<div class="app">
+<svelte:window on:keydown={onKeyDown} />
+
+<div>
 	<div class="draw-card-buttons">
 		<button on:click={() => draw(1)}>draw a card</button>
 		<button on:click={() => draw(3)}> draw three cards </button>
@@ -58,11 +68,9 @@
 	</Overlay>
 {/if}
 
+<AboutLink />
+
 <style>
-	.app {
-		height: 100%;
-		overflow: auto;
-	}
 	.draw-card-buttons {
 		padding: 10px;
 		display: flex;

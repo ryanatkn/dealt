@@ -22,4 +22,16 @@
 	</section>
 </noscript>
 
-<slot />
+<main>
+	<slot />
+</main>
+
+<style>
+	main {
+		height: 100%;
+		overflow-y: scroll;
+		overflow-x: auto;
+		padding: 1em;
+		margin: 0 auto;
+	}
+</style>

@@ -7,6 +7,8 @@
 
 	export let card: TarotCard;
 	export let shadow = false;
+
+	$: meanings = shadow ? card.meanings.shadow : card.meanings.light;
 </script>
 
 <div class="tarot-card" class:shadow>
@@ -14,23 +16,13 @@
 	<div class="content">
 		<h1>{card.name}</h1>
 		<p class="keywords">{card.keywords.join(', ')}</p>
-		{#if shadow}
-			<section class="meanings shadow">
-				<ul>
-					{#each card.meanings.shadow as meaning (meaning)}
-						<li>{meaning}</li>
-					{/each}
-				</ul>
-			</section>
-		{:else}
-			<section class="meanings light">
-				<ul>
-					{#each card.meanings.light as meaning (meaning)}
-						<li>{meaning}</li>
-					{/each}
-				</ul>
-			</section>
-		{/if}
+		<section class="meanings" class:shadow class:light={!shadow}>
+			<ul>
+				{#each meanings as meaning (meaning)}
+					<li>{meaning}</li>
+				{/each}
+			</ul>
+		</section>
 	</div>
 </div>
 

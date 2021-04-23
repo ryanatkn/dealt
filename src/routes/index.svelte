@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Thumbnail from '$lib/Thumbnail.svelte';
+	import AboutLink from '$lib/AboutLink.svelte';
 	import TarotThumbnail from '../tarot/TarotThumbnail.svelte';
 	import Zodiac from '../zodiac/Zodiac.svelte';
 	import {useShadow} from '$lib/shadow';
@@ -9,23 +9,12 @@
 	const activeZodiac = randomZodiac();
 </script>
 
-<main>
-	<h1 class:shadow>dealt</h1>
-	<TarotThumbnail {shadow} />
-	<Thumbnail href="https://github.com/ryanatkn/dealt"><h2>source code on GitHub</h2></Thumbnail>
-	<Zodiac {activeZodiac} />
-</main>
+<h1 class:shadow>dealt</h1>
+<TarotThumbnail {shadow} />
+<AboutLink />
+<Zodiac {activeZodiac} />
 
 <style>
-	main {
-		height: 100%;
-		overflow-y: scroll;
-		overflow-x: auto;
-		text-align: center;
-		padding: 1em;
-		margin: 0 auto;
-	}
-
 	h1 {
 		color: var(--light_text_color);
 		text-transform: lowercase;
