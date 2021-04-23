@@ -1,9 +1,10 @@
 import {getContext, setContext} from 'svelte';
-import {browser} from '$app/env';
+
+import {random} from '$lib/random';
 
 const shadowKey = {};
 
-export const provideShadow = (initial = randomShadow()) => {
+export const provideShadow = (initial = toRandomShadow()): void => {
 	setContext(shadowKey, initial);
 };
 
@@ -11,4 +12,4 @@ export const useShadow = (): boolean => {
 	return getContext(shadowKey);
 };
 
-export const randomShadow = (): boolean => (browser ? Math.random() > 0.5 : false);
+export const toRandomShadow = (): boolean => random() > 0.5;
