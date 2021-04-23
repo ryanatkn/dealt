@@ -8,8 +8,9 @@
 	import {cards as cardsData} from '../../tarot/tarot.json';
 	import {drawCards, last} from '../../tarot/tarot';
 	import type {TarotCard} from '../../tarot/tarot';
+	import {shuffle} from '$lib/random';
 
-	const cards: TarotCard[] = cardsData;
+	const cards: TarotCard[] = shuffle(cardsData);
 
 	let drawnCards: TarotCard[] = [];
 	let viewingCards: TarotCard[] = [];
