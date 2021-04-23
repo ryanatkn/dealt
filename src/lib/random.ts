@@ -11,6 +11,7 @@ export interface ToRandom {
 export interface ToToRandom {
 	(i?: number): ToRandom;
 }
+// TODO get a good small seeded implementation or something
 export const toToDeterministicRandom: ToToRandom = (i = 0) => () => VARY_RANDOM + i++ / 10000000000;
 
 export const random: ToRandom = browser ? toRandom : toToDeterministicRandom();
