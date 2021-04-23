@@ -31,7 +31,7 @@
   },
   "type": "module",
   "devDependencies": {
-    "@feltcoop/gro": "^0.21.1",
+    "@feltcoop/gro": "^0.21.2",
     "@sveltejs/adapter-static": "next",
     "@sveltejs/kit": "^1.0.0-next.84",
     "prettier": "~2.2.1",
