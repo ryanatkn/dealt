@@ -1,6 +1,6 @@
 import {browser} from '$app/env';
 
-export const VARY_RANDOM = 0.2;
+export const VARY_RANDOM = 0.42;
 
 // TODO copypasta from `corpus-activity-streams` then refactored
 // TODO import random utils from `felt` using `uid` probably
