@@ -1,6 +1,9 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="300" height="235" version="1.0" fill="red">
+<script lang="ts">
+	export let fill = 'red';
+</script>
+
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="235" version="1.0" {fill}>
 	<path
-		style="fill: red;"
 		id="top"
 		d="M300 57.23c-49.32-22.47-96.88-33.71-142.91-33.71-29.99 0-54.59 3.87-73.57 11.82A60 60.2 0 1 1 0 91.4C0 65.19 15.93 43.3 47.91 25.98S119.95 0 168.1 0C209.8 0 253.73 10.53 300 31.72ZM59.79 47.05a44.1 44.1 0 1 0 .02 0Z"
 	/>

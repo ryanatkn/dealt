@@ -1,10 +1,14 @@
+<script lang="ts">
+	export let fill = 'red';
+</script>
+
 <svg
 	xmlns="http://www.w3.org/2000/svg"
 	width="280pt"
 	height="188pt"
 	style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd"
 	viewBox="0 0 8268 11692"
-	fill="red"
+	{fill}
 >
 	<g transform="matrix(6.99342,0,0,6.984468,-23594.91,-32470.79)">
 		<path

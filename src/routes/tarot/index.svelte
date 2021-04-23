@@ -31,7 +31,9 @@
 	</div>
 	<div class="cards">
 		{#each cards as card (card.id)}
-			<TarotCardThumbnail {card} on:click={() => view(card)} />
+			<button on:click={() => view(card)}>
+				<TarotCardThumbnail {card} />
+			</button>
 		{/each}
 	</div>
 </div>
