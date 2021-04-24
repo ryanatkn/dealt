@@ -7,8 +7,8 @@ this is a public domain junkyard of experiments in
 
 ## contents
 
-- fakd: fake data for the real world 🐿️ **work in progress**
 - [tarot](src/tarot/) — [dealt.dev/tarot](https://dealt.dev/tarot)
+- fakd: fake data for the real world 🐿️ **work in progress**
 
 ## usage
 
