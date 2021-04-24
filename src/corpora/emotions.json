@@ -1,6 +1,6 @@
 {
 	"description": "emotion families and their states of varying intensity",
-	"source": ["http://atlasofemotions.org", "https://github.com/dariusk/corpora"],
+	"source": ["http://atlasofemotions.org"],
 	"emotions": [
 		{
 			"emotion": "anger",
