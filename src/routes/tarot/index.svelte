@@ -43,7 +43,7 @@
 		</div>
 		<div class="cards">
 			{#each cards as card (card.id)}
-				<button on:click={() => view(card)}>
+				<button class="card" on:click={() => view(card)}>
 					<TarotCardThumbnail {card} />
 				</button>
 			{/each}
@@ -93,5 +93,9 @@
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
+	}
+	button.card {
+		padding: 0;
+		margin: 0;
 	}
 </style>
