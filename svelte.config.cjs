@@ -7,8 +7,8 @@ module.exports = {
 	preprocess: typescript(),
 	kit: {
 		adapter: staticAdapter(),
-		appDir: 'app', // because _app is ignored by GitHub pages by default
 		target: '#svelte',
+		appDir: 'app', // because _app is ignored by GitHub pages by default
 		files: {assets: 'src/static'},
 		vite: {
 			ssr: {
