@@ -95,7 +95,18 @@
 		justify-content: center;
 	}
 	button.card {
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		padding: 0;
 		margin: 0;
+		background: none;
+		border: 0;
+	}
+	button.card:hover {
+		transform: rotate(1deg);
+	}
+	button.card:active {
+		transform: rotate(-1deg);
 	}
 </style>
