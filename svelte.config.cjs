@@ -9,6 +9,7 @@ module.exports = {
 		adapter: staticAdapter(),
 		appDir: 'app', // because _app is ignored by GitHub pages by default
 		target: '#svelte',
+		files: {assets: 'src/static'},
 		vite: {
 			ssr: {
 				noExternal: Object.keys(pkg.dependencies || {}),
