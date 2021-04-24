@@ -8,6 +8,8 @@ this is a public domain junkyard of experiments in
 ## contents
 
 - [tarot](src/tarot/) — [dealt.dev/tarot](https://dealt.dev/tarot)
+- [src/corpora](src/corpora/) — various datasets, mostly adapted from
+  [dariusk/corpora](https://github.com/dariusk/corpora)
 - fakd: fake data for the real world 🐿️ **work in progress**
 
 ## usage
