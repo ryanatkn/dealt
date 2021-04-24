@@ -15,6 +15,9 @@
 	let drawnCards: TarotCard[] = [];
 	let viewingCards: TarotCard[] = [];
 
+	$: lastDrawnCard = last(drawnCards);
+	$: lastViewingCard = last(viewingCards);
+
 	const draw = (count: number): void => {
 		drawnCards = drawCards(cards, count);
 		viewingCards = [];
@@ -53,7 +56,7 @@
 		<Overlay close={() => (drawnCards = [])}>
 			{#each drawnCards as card (card.id)}
 				<DrawnTarotCard {card} shadow={toRandomShadow()} />
-				{#if card !== last(drawnCards)}
+				{#if card !== lastDrawnCard}
 					<hr />
 				{/if}
 			{/each}
@@ -63,7 +66,7 @@
 		<Overlay close={() => (viewingCards = [])}>
 			{#each viewingCards as card (card.id)}
 				<TarotCardDetail {card} />
-				{#if card !== last(viewingCards)}
+				{#if card !== lastViewingCard}
 					<hr />
 				{/if}
 			{/each}
