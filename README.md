@@ -2,7 +2,7 @@
 
 > giving meaning a chance :dragon: [dealt.dev](https://dealt.dev)
 
-this is a junkyard of experiments in
+this is a public domain junkyard of experiments in
 [procedural generation](https://en.wikipedia.org/wiki/Procedural_generation)
 
 ## contents
