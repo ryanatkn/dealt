@@ -33,5 +33,5 @@ export const randomItem = <T>(arr: T[]): T | undefined => arr[randomInt(0, arr.l
 export const last = <T>(array: T[]): T | undefined => array[array.length - 1];
 
 // TODO replace this with generated metadata
-export const TAROT_CARD_MIN_WIDTH = 200;
-export const TAROT_CARD_MIN_HEIGHT = 340;
+export const TAROT_CARD_MIN_WIDTH = 234;
+export const TAROT_CARD_MIN_HEIGHT = 350;
