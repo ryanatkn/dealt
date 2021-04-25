@@ -6,7 +6,7 @@
 	import TarotCardDetail from '../../tarot/TarotCardDetail.svelte';
 	import DrawnTarotCard from '../../tarot/DrawnTarotCard.svelte';
 	import {cards as cardsData} from '../../tarot/tarot.json';
-	import {drawCards, last} from '../../tarot/tarot';
+	import {drawCards, last, TAROT_CARD_MIN_WIDTH, TAROT_CARD_MIN_HEIGHT} from '../../tarot/tarot';
 	import type {TarotCard} from '../../tarot/tarot';
 	import {shuffle} from '$lib/random';
 
@@ -38,7 +38,9 @@
 
 <svelte:window on:keydown={onKeyDown} />
 
-<section>
+<section
+	style="--tarot_card_min_width: {TAROT_CARD_MIN_WIDTH}px; --tarot_card_min_height: {TAROT_CARD_MIN_HEIGHT}px;"
+>
 	<div>
 		<div class="draw-card-buttons">
 			<button on:click={() => draw(1)}>draw a card</button>

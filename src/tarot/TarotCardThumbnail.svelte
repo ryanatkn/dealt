@@ -8,6 +8,8 @@
 
 <style>
 	.card {
-		max-width: 200px;
+		/* TODO generated metadata */
+		width: var(--tarot_card_min_width);
+		min-height: var(--tarot_card_min_height);
 	}
 </style>

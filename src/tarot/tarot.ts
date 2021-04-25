@@ -31,3 +31,7 @@ export const randomInt = (min: number, max: number): number =>
 	Math.floor(randomFloat() * (max - min + 1)) + min;
 export const randomItem = <T>(arr: T[]): T | undefined => arr[randomInt(0, arr.length - 1)];
 export const last = <T>(array: T[]): T | undefined => array[array.length - 1];
+
+// TODO replace this with generated metadata
+export const TAROT_CARD_MIN_WIDTH = 200;
+export const TAROT_CARD_MIN_HEIGHT = 340;

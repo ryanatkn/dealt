@@ -42,6 +42,9 @@
 	}
 	img {
 		margin: 20px;
+		/* TODO generated metadata */
+		min-width: var(--tarot_card_min_width);
+		min-height: var(--tarot_card_min_height);
 	}
 	.content {
 		min-width: 240px;
