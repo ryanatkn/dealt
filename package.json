@@ -27,7 +27,7 @@
     "url": "https://felt.social"
   },
   "engines": {
-    "node": ">=12"
+    "node": ">=14.16"
   },
   "type": "module",
   "devDependencies": {
