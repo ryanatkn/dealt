@@ -1,4 +1,5 @@
 <script lang="ts">
+	// source: "https://en.wikipedia.org/wiki/File:Gemini.svg"
 	export let fill = 'red';
 </script>
 

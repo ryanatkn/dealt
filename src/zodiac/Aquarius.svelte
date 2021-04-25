@@ -1,4 +1,5 @@
 <script lang="ts">
+	// source: "https://en.wikipedia.org/wiki/File:Aquarius.svg"
 	export let fill = 'red';
 </script>
 

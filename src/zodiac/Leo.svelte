@@ -1,4 +1,5 @@
 <script lang="ts">
+	// source: "https://en.wikipedia.org/wiki/File:Leo.svg"
 	export let fill = 'red';
 </script>
 
