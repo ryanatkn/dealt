@@ -22,9 +22,9 @@
     "web"
   ],
   "author": {
-    "name": "Ryan Atkinson",
-    "email": "ryanatkn@gmail.com",
-    "url": "https://ryanatkn.com"
+    "name": "Felt.coop",
+    "email": "team@felt.social",
+    "url": "https://felt.social"
   },
   "engines": {
     "node": ">=12"
