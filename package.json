@@ -5,8 +5,11 @@
   "license": "Unlicense",
   "homepage": "https://dealt.dev",
   "scripts": {
-    "start": "echo :D",
-    "typecheck": "tsc --noEmit"
+    "dev": "gro dev",
+    "build": "gro build",
+    "test": "gro test",
+    "start": "gro start",
+    "deploy": "gro deploy"
   },
   "repository": {
     "type": "git",
