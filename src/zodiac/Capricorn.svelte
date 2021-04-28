@@ -1,6 +1,6 @@
 <script lang="ts">
 	// source: "https://en.wikipedia.org/wiki/File:Capricorn.svg"
-	export let fill = 'red';
+	export let fill = '#ff3e00';
 </script>
 
 <svg

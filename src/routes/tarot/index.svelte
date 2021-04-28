@@ -2,7 +2,7 @@
 	import Overlay from '$lib/Overlay.svelte';
 	import {toRandomShadow} from '$lib/shadow';
 	import AboutLink from '$lib/AboutLink.svelte';
-	import TarotCardThumbnail from '../../tarot/TarotCardThumbnail.svelte';
+	import TarotCardButton from '../../tarot/TarotCardButton.svelte';
 	import TarotCardDetail from '../../tarot/TarotCardDetail.svelte';
 	import DrawnTarotCard from '../../tarot/DrawnTarotCard.svelte';
 	import {cards as cardsData} from '../../tarot/tarot.json';
@@ -48,9 +48,7 @@
 		</div>
 		<div class="cards">
 			{#each cards as card (card.id)}
-				<button class="card" on:click={() => view(card)}>
-					<TarotCardThumbnail {card} />
-				</button>
+				<TarotCardButton {card} click={view} />
 			{/each}
 		</div>
 	</div>
@@ -98,20 +96,5 @@
 		flex-wrap: wrap;
 		align-items: center;
 		justify-content: center;
-	}
-	button.card {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		padding: 0;
-		margin: 0;
-		background: none;
-		border: 0;
-	}
-	button.card:hover {
-		transform: rotate(1deg);
-	}
-	button.card:active {
-		transform: rotate(-1deg);
 	}
 </style>
