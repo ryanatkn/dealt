@@ -1,7 +1,7 @@
 {
 	"description": "regional winds and weather phenomena",
 	"source": [
-		"https://en.wikipedia.org/wiki/List_of_local_winds",
+		"https://wikipedia.org/wiki/List_of_local_winds",
 		"http://www.ggweather.com/windsoftheworld.htm",
 		"https://github.com/dariusk/corpora"
 	],

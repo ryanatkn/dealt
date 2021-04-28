@@ -1,5 +1,5 @@
 <script lang="ts">
-	// source: "https://en.wikipedia.org/wiki/File:Aries.svg"
+	// source: "https://wikipedia.org/wiki/File:Aries.svg"
 	export let fill = '#ff3e00';
 </script>
 

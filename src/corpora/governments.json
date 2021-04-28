@@ -1,7 +1,7 @@
 {
 	"description": "forms of government",
 	"source": [
-		"https://en.wikipedia.org/wiki/List_of_forms_of_government",
+		"https://wikipedia.org/wiki/List_of_forms_of_government",
 		"https://github.com/dariusk/corpora"
 	],
 	"governmentForms": [

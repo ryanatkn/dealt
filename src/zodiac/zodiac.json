@@ -1,11 +1,11 @@
 {
 	"description": "zodiac signs and associated information, Western and Eastern",
-	"source": "https://en.wikipedia.org/wiki/Astrological_sign",
+	"source": "https://wikipedia.org/wiki/Astrological_sign",
 	"western_zodiac": {
 		"Aries": {
 			"longitude_start": "0",
 			"longitude_end": "30",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Aries.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Aries.svg",
 			"char": "♈",
 			"gloss": "The Ram",
 			"element": "Fire",
@@ -16,7 +16,7 @@
 		"Taurus": {
 			"longitude_start": "30",
 			"longitude_end": "60",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Taurus.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Taurus.svg",
 			"char": "♉",
 			"gloss": "The Bull",
 			"element": "Earth",
@@ -27,7 +27,7 @@
 		"Gemini": {
 			"longitude_start": "60",
 			"longitude_end": "90",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Gemini.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Gemini.svg",
 			"char": "♊",
 			"gloss": "The Twins",
 			"element": "Air",
@@ -38,7 +38,7 @@
 		"Cancer": {
 			"longitude_start": "90",
 			"longitude_end": "120",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Cancer.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Cancer.svg",
 			"char": "♋",
 			"gloss": "The Crab",
 			"element": "Water",
@@ -49,7 +49,7 @@
 		"Leo": {
 			"longitude_start": "120",
 			"longitude_end": "150",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Leo.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Leo.svg",
 			"char": "♌",
 			"gloss": "The Lion",
 			"element": "Fire",
@@ -60,7 +60,7 @@
 		"Virgo": {
 			"longitude_start": "150",
 			"longitude_end": "180",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Virgo.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Virgo.svg",
 			"char": "♍",
 			"gloss": "The Maiden",
 			"element": "Earth",
@@ -71,7 +71,7 @@
 		"Libra": {
 			"longitude_start": "180",
 			"longitude_end": "210",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Libra.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Libra.svg",
 			"char": "♎",
 			"gloss": "The Scales",
 			"element": "Air",
@@ -82,7 +82,7 @@
 		"Scorpio": {
 			"longitude_start": "210",
 			"longitude_end": "240",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Scorpio.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Scorpio.svg",
 			"char": "♏",
 			"gloss": "The Scorpion",
 			"element": "Water",
@@ -93,7 +93,7 @@
 		"Sagittarius": {
 			"longitude_start": "240",
 			"longitude_end": "270",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Sagittarius.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Sagittarius.svg",
 			"char": "♐",
 			"gloss": "The Archer",
 			"element": "Fire",
@@ -104,7 +104,7 @@
 		"Capricorn": {
 			"longitude_start": "270",
 			"longitude_end": "300",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Capricorn.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Capricorn.svg",
 			"char": "♑",
 			"gloss": "The Mountain Sea-goat",
 			"element": "Earth",
@@ -115,7 +115,7 @@
 		"Aquarius": {
 			"longitude_start": "300",
 			"longitude_end": "330",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Aquarius.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Aquarius.svg",
 			"char": "♒",
 			"gloss": "The Water-bearer",
 			"element": "Air",
@@ -126,7 +126,7 @@
 		"Pisces": {
 			"longitude_start": "330",
 			"longitude_end": "360",
-			"svg_symbol": "https://en.wikipedia.org/wiki/File:Pisces.svg",
+			"svg_symbol": "https://wikipedia.org/wiki/File:Pisces.svg",
 			"char": "♓",
 			"gloss": "The Fish",
 			"element": "Water",

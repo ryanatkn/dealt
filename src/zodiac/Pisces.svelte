@@ -1,5 +1,5 @@
 <script lang="ts">
-	// source: "https://en.wikipedia.org/wiki/File:Pisces.svg"
+	// source: "https://wikipedia.org/wiki/File:Pisces.svg"
 	export let fill = '#ff3e00';
 </script>
 
