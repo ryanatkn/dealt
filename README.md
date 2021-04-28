@@ -1,6 +1,6 @@
 # dealt
 
-> giving meaning a chance :dragon: [dealt.dev](https://dealt.dev)
+> giving meaning a chance 🔮 [dealt.dev](https://dealt.dev)
 
 this is a public domain junkyard of experiments in
 [procedural generation](https://wikipedia.org/wiki/Procedural_generation)
