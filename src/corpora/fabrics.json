@@ -1,6 +1,6 @@
 {
 	"description": "natural fabrics",
-	"source": "https://github.com/dariusk/corpora",
+	"source": ["https://github.com/dariusk/corpora", "https://en.wikipedia.org"],
 	"fabrics": [
 		{"name": "acrylic", "source": "https://en.wikipedia.org/wiki/Acrylic_fiber"},
 		{"name": "alpaca", "source": "https://en.wikipedia.org/wiki/Alpaca_fiber"},
