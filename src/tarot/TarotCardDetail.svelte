@@ -13,25 +13,28 @@
 </script>
 
 <div class="tarot-card-detail">
-	<img src="/tarot/images/{card.id}.jpg" alt={card.name} />
-	<div class="content">
-		<h1>{card.name}</h1>
-		<p class="keywords">{card.keywords.join(', ')}</p>
-		<section class="meanings light">
-			<ul>
-				{#each lightMeanings as meaning (meaning)}
-					<li>{meaning}</li>
-				{/each}
-			</ul>
-		</section>
-		<section class="meanings shadow">
-			<ul>
-				{#each shadowMeanings as meaning (meaning)}
-					<li>{meaning}</li>
-				{/each}
-			</ul>
-		</section>
+	<div class="info">
+		<img src="/tarot/images/{card.id}.jpg" alt={card.name} />
+		<div class="content">
+			<h1>{card.name}</h1>
+			<p class="keywords">{card.keywords.join(', ')}</p>
+			<section class="meanings light">
+				<ul>
+					{#each lightMeanings as meaning (meaning)}
+						<li>{meaning}</li>
+					{/each}
+				</ul>
+			</section>
+			<section class="meanings shadow">
+				<ul>
+					{#each shadowMeanings as meaning (meaning)}
+						<li>{meaning}</li>
+					{/each}
+				</ul>
+			</section>
+		</div>
 	</div>
+	<hr />
 	<div style="display: contents; --tarot_card_min_width: 100%;">
 		<TarotCardImage {card} />
 		<TarotCardImage {card} shadow={true} />
@@ -41,32 +44,25 @@
 <style>
 	.tarot-card-detail {
 		display: flex;
+		flex-direction: column;
+	}
+	.info {
+		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		align-items: flex-start; /* prevents aspect ratio changes */
-		padding: 20px;
+		padding: 10px;
 	}
 	img {
 		/* TODO generated metadata */
 		min-width: var(--tarot_card_min_width);
 		min-height: var(--tarot_card_min_height);
-		margin-bottom: 20px;
+		padding: 10px;
 	}
 	.content {
 		min-width: 240px;
-		margin-left: 20px;
-		margin-bottom: 20px;
+		padding: 10px;
 		flex: 1;
-	}
-	h1 {
-		/* TODO globally style all headings */
-		margin-top: 0;
-	}
-	section {
-		margin-bottom: 20px;
-	}
-	section:last-child {
-		margin-bottom: 0;
 	}
 	.meanings {
 		border: 1px solid var(--border-color);

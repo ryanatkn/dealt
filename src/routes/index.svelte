@@ -36,7 +36,7 @@
 		margin: 4rem auto;
 		max-width: 14rem;
 		text-align: center;
-		border-bottom: 4px solid var(--light_text_color);
+		border-bottom: 4px dashed var(--light_text_color);
 	}
 	h1.shadow {
 		color: var(--shadow_text_color);

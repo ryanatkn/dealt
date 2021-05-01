@@ -19,48 +19,38 @@
 	<div class="content">
 		<h1>{card.name}</h1>
 		<p class="keywords">{card.keywords.join(', ')}</p>
-		<section class="meanings" class:shadow class:light={!shadow}>
+		<div class="meanings" class:shadow class:light={!shadow}>
 			<ul>
 				{#each meanings as meaning (meaning)}
 					<li>{meaning}</li>
 				{/each}
 			</ul>
-		</section>
+		</div>
 	</div>
 </div>
 
 <style>
 	.tarot-card {
-		padding: 20px;
+		padding: 10px;
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: center;
 		align-items: flex-start; /* prevents aspect ratio changes */
 	}
-	.image {
-		margin-bottom: 20px;
-	}
 	.keywords {
 		color: var(--light_text_color);
+	}
+	.image {
+		display: flex;
+		padding: 10px;
 	}
 	.tarot-card.shadow .keywords {
 		color: var(--shadow_text_color);
 	}
 	.content {
 		min-width: 240px;
-		margin-bottom: 20px;
-		margin-left: 20px;
+		padding: 10px;
 		flex: 1;
-	}
-	h1 {
-		/* TODO globally style all headings */
-		margin-top: 0;
-	}
-	section {
-		margin-bottom: 20px;
-	}
-	section:last-child {
-		margin-bottom: 0;
 	}
 	.meanings {
 		border: 1px solid var(--light_border_color);
