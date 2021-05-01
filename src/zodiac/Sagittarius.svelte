@@ -1,6 +1,6 @@
 <script lang="ts">
 	// source: "https://wikipedia.org/wiki/File:Sagittarius.svg"
-	export let fill = '#ff3e00';
+	export let fill = 'var(--shadow_text_color)';
 </script>
 
 <svg

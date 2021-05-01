@@ -1,6 +1,6 @@
 <script lang="ts">
 	// source: "https://wikipedia.org/wiki/File:Leo.svg"
-	export let fill = '#ff3e00';
+	export let fill = 'var(--shadow_text_color)';
 </script>
 
 <svg width="300" height="400" version="1.1" xmlns="http://www.w3.org/2000/svg" stroke={fill}>

@@ -1,21 +1,21 @@
 <script lang="ts">
 	import Overlay from '$lib/Overlay.svelte';
-	import {toRandomShadow} from '$lib/shadow';
 	import AboutLink from '$lib/AboutLink.svelte';
 	import TarotCardButton from '../../tarot/TarotCardButton.svelte';
 	import TarotCardDetail from '../../tarot/TarotCardDetail.svelte';
-	import DrawnTarotCard from '../../tarot/DrawnTarotCard.svelte';
+	import DrawnTarotCards from '../../tarot/DrawnTarotCards.svelte';
 	import {cards as cardsData} from '../../tarot/tarot.json';
 	import {drawCards, last, TAROT_CARD_MIN_WIDTH, TAROT_CARD_MIN_HEIGHT} from '../../tarot/tarot';
-	import type {TarotCard} from '../../tarot/tarot';
+	import type {TarotCard} from '../../tarot/tarot.js';
 	import {shuffle} from '$lib/random';
+
+	// TODO refactor, extract some components
 
 	const cards: TarotCard[] = shuffle(cardsData);
 
 	let drawnCards: TarotCard[] = [];
 	let viewingCards: TarotCard[] = [];
 
-	$: lastDrawnCard = last(drawnCards);
 	$: lastViewingCard = last(viewingCards);
 
 	const draw = (count: number): void => {
@@ -54,12 +54,7 @@
 	</div>
 	{#if drawnCards.length}
 		<Overlay close={() => (drawnCards = [])}>
-			{#each drawnCards as card (card.id)}
-				<DrawnTarotCard {card} shadow={toRandomShadow()} />
-				{#if card !== lastDrawnCard}
-					<hr />
-				{/if}
-			{/each}
+			<DrawnTarotCards cards={drawnCards} />
 		</Overlay>
 	{/if}
 	{#if viewingCards.length}

@@ -48,3 +48,5 @@ export const randomItem: <T>(arr: T[], random?: ToRandomFloat) => T | undefined 
 	arr,
 	random = randomFloat,
 ) => arr[randomInt(0, arr.length - 1, random)];
+
+export const randomBoolean: () => boolean = () => randomFloat() > 0.5;

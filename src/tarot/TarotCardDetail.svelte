@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type {TarotCard} from './tarot.js';
 	import {shuffle} from '$lib/random';
+	import TarotCardImage from './TarotCardImage.svelte';
 
 	// TODO consider a different version of this component for small screens
 	// breakpoints just don't give the best UX without a ton of complexity
@@ -31,6 +32,10 @@
 			</ul>
 		</section>
 	</div>
+	<div style="display: contents; --tarot_card_min_width: 100%;">
+		<TarotCardImage {card} />
+		<TarotCardImage {card} shadow={true} />
+	</div>
 </div>
 
 <style>
@@ -39,16 +44,18 @@
 		flex-wrap: wrap;
 		justify-content: center;
 		align-items: flex-start; /* prevents aspect ratio changes */
+		padding: 20px;
 	}
 	img {
-		margin: 20px;
 		/* TODO generated metadata */
 		min-width: var(--tarot_card_min_width);
 		min-height: var(--tarot_card_min_height);
+		margin-bottom: 20px;
 	}
 	.content {
 		min-width: 240px;
-		margin: 20px;
+		margin-left: 20px;
+		margin-bottom: 20px;
 		flex: 1;
 	}
 	h1 {

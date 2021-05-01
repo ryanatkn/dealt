@@ -5,7 +5,7 @@
 
 	export let activeZodiac: number | undefined;
 
-	const toColor = (active: boolean): string => (active ? '#9e00ff' : '#ff3e00');
+	const toColor = (active: boolean): string => (active ? '#9e00ff' : 'var(--shadow_text_color)');
 	const toScale = (_index: number): number => 0.55 + randomFloat() / 2;
 	$: scales = Object.keys(zodiacComponents).map((_, i) => toScale(i));
 </script>

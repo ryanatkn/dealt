@@ -1,8 +1,9 @@
 <script>
-	import {provideShadow} from '$lib/shadow';
+	import {provideShadow, provideShadow2} from '$lib/shadow';
 	import '../app.css';
 
 	provideShadow();
+	provideShadow2();
 </script>
 
 <svelte:head>
@@ -31,7 +32,7 @@
 		height: 100%;
 		overflow-y: scroll;
 		overflow-x: auto;
-		padding: 1em;
+		padding: 20px;
 		margin: 0 auto;
 	}
 </style>
