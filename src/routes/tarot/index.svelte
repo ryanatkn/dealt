@@ -83,8 +83,8 @@
 		padding: 10px 20px;
 		font-size: 24px;
 		margin: 0 10px;
-		color: var(--font-color);
-		background-color: var(--bg-color-fg);
+		color: var(--font_color);
+		background-color: var(--bg_color_fg);
 	}
 	.cards {
 		display: flex;

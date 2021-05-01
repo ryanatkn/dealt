@@ -17,29 +17,31 @@ html {
 
 :root {
 	/* TODO refactor with felt */
-	--bg-color: rgba(8, 0, 0, 1);
-	--bg-color-overlay: rgba(8, 0, 0, 0.65);
-	--bg-color-backdrop: rgba(8, 0, 0, 0.8);
-	--bg-color-fg: rgba(255, 247, 247, 0.08);
-	--border-color: rgba(255, 247, 247, 0.2);
-	--font-color: #ddd7d7;
-	--font-color-heading: #d7c7c7;
-	--font-size: 18px;
-	--shadow_text_color: hsl(318, 90%, 50%);
-	--light_text_color: hsl(105, 80%, 50%);
-	--shadow_border_color: hsla(15, 50%, 50%, 0.4);
-	--light_border_color: hsla(105, 50%, 50%, 0.4);
+	--light_hue: 105;
+	--shadow_hue: 303;
+	--bg_color: hsl(var(--shadow_hue), 100%, 2%);
+	--bg_color_overlay: hsla(var(--shadow_hue), 100%, 2%, 0.65);
+	--bg_color_backdrop: hsla(var(--shadow_hue), 100%, 2%, 0.8);
+	--bg_color_fg: hsla(var(--shadow_hue), 100%, 98%, 0.08);
+	--border_color: hsla(var(--shadow_hue), 100%, 98%, 0.2);
+	--font_color: hsl(var(--shadow_hue), 8%, 85%);
+	--font_color_heading: hsl(var(--shadow_hue), 17%, 81%);
+	--font_size: 18px;
+	--shadow_text_color: hsl(var(--shadow_hue), 90%, 50%);
+	--light_text_color: hsl(var(--light_hue), 80%, 50%);
+	--shadow_border_color: hsla(var(--shadow_hue), 50%, 50%, 0.4);
+	--light_border_color: hsla(var(--light_hue), 50%, 50%, 0.4);
 	--spacing_lg: 20px;
 }
 
 body {
 	overflow: hidden;
 	height: 100%;
-	background-color: var(--bg-color);
-	color: var(--font-color);
+	background-color: var(--bg_color);
+	color: var(--font_color);
 	padding: 0;
 	margin: 0;
-	font-size: var(--font-size);
+	font-size: var(--font_size);
 	font-family: sans-serif;
 }
 
@@ -53,7 +55,7 @@ h3,
 h4,
 h5,
 h6 {
-	color: var(--font-color-heading);
+	color: var(--font_color_heading);
 }
 
 ul {
@@ -61,7 +63,7 @@ ul {
 }
 
 blockquote {
-	border-left: 4px double var(--border-color);
+	border-left: 4px double var(--border_color);
 	margin: 10px 0;
 	padding-left: 15px;
 }
@@ -70,7 +72,7 @@ hr {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	border-top: 1px solid var(--border-color);
+	border-top: 1px solid var(--border_color);
 	height: 0;
 	width: 100%;
 }

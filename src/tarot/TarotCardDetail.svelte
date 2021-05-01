@@ -65,15 +65,15 @@
 		flex: 1;
 	}
 	.meanings {
-		border: 1px solid var(--border-color);
-		background-color: var(--bg-color-fg);
+		border: 1px solid var(--border_color);
+		background-color: var(--bg_color_fg);
 		padding: 0 10px;
 	}
 	.light {
-		box-shadow: 10px 10px 40px 15px var(--bg-color-fg) inset;
+		box-shadow: 10px 10px 40px 15px var(--bg_color_fg) inset;
 	}
 	.shadow {
-		box-shadow: 10px 10px 40px 15px var(--bg-color-backdrop) inset;
+		box-shadow: 10px 10px 40px 15px var(--bg_color_backdrop) inset;
 	}
 	li {
 		list-style: circle;

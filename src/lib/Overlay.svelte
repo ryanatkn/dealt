@@ -33,7 +33,7 @@
 		position: fixed;
 		left: 0;
 		top: 0;
-		background-color: var(--bg-color-overlay);
+		background-color: var(--bg_color_overlay);
 	}
 	.overlay-wrapper-inner {
 		/* this extra layer is needed because padding and scroll bars get wonky - so .overlay-wrapper has no padding */
@@ -43,8 +43,8 @@
 	.content-wrapper {
 		margin: auto;
 		max-width: 800px; /* TODO max-column-width */
-		background-color: var(--bg-color-backdrop);
-		border: 1px solid var(--border-color);
-		box-shadow: 4px 12px 24px var(--bg-color-backdrop); /* TODO does this perform ok on all devices? */
+		background-color: var(--bg_color_backdrop);
+		border: 1px solid var(--border_color);
+		box-shadow: 4px 12px 24px var(--bg_color_backdrop); /* TODO does this perform ok on all devices? */
 	}
 </style>
