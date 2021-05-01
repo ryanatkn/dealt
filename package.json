@@ -34,9 +34,9 @@
   },
   "type": "module",
   "devDependencies": {
-    "@feltcoop/gro": "^0.21.4",
-    "@sveltejs/adapter-static": "next",
-    "@sveltejs/kit": "^1.0.0-next.84",
+    "@feltcoop/gro": "^0.21.5",
+    "@sveltejs/adapter-static": "^1.0.0-next.7",
+    "@sveltejs/kit": "^1.0.0-next.94",
     "prettier": "~2.2.1",
     "prettier-plugin-svelte": "^2.2.0",
     "svelte": "^3.29.0",
