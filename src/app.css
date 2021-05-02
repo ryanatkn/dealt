@@ -58,6 +58,10 @@ h6 {
 	color: var(--font_color_heading);
 }
 
+h1 {
+	margin: 10px 0 20px;
+}
+
 ul {
 	padding-left: 25px;
 }

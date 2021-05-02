@@ -78,4 +78,7 @@
 	li {
 		list-style: circle;
 	}
+	section:last-child {
+		margin-bottom: 0;
+	}
 </style>
