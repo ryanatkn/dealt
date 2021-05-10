@@ -4,6 +4,7 @@
 	import Zodiac from '../zodiac/Zodiac.svelte';
 	import {useShadow, useShadow2} from '$lib/shadow';
 	import {randomZodiac} from '../zodiac/zodiac';
+	import TarThumbnail from '../tar/TarThumbnail.svelte';
 
 	const shadow = useShadow();
 	const shadow2 = useShadow2();
@@ -15,6 +16,9 @@
 		<h1 class:shadow class:shadow2>dealt</h1>
 	</header>
 	<TarotThumbnail {shadow} />
+</section>
+<section>
+	<TarThumbnail />
 </section>
 <section>
 	<AboutLink />
