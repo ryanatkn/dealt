@@ -1,9 +1,11 @@
-const {typescript} = require('svelte-preprocess-esbuild');
-const staticAdapter = require('@sveltejs/adapter-static');
-const pkg = require('./package.json');
+import {readFileSync} from 'fs';
+import {typescript} from 'svelte-preprocess-esbuild';
+import staticAdapter from '@sveltejs/adapter-static';
+
+const pkg = JSON.parse(readFileSync('./package.json', 'utf8'));
 
 /** @type {import('@sveltejs/kit').Config} */
-module.exports = {
+export default {
 	preprocess: typescript(),
 	kit: {
 		adapter: staticAdapter(),
