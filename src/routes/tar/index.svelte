@@ -1,9 +1,9 @@
 <script lang="ts">
-	import collisions from '@ryanatkn/collisions';
+	import {Collisions} from '@ryanatkn/collisions';
 
 	import AboutLink from '$lib/AboutLink.svelte';
 
-	console.log('collisions', collisions);
+	console.log('collisions', Collisions);
 
 	const onKeyDown = (e: KeyboardEvent) => {
 		console.log('e.key', e.key);
