@@ -84,3 +84,10 @@ hr {
 section {
 	margin-bottom: var(--spacing_lg);
 }
+
+a:hover {
+	color: var(--light_text_color);
+}
+a:active {
+	color: var(--shadow_text_color);
+}
