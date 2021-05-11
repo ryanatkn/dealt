@@ -10,8 +10,8 @@ the eventual goal is to give **you** and **me** the power of **tools**, together
 ## contents
 
 - [tarot](src/tarot/) — [dealt.dev/tarot](https://www.dealt.dev/tarot)
-- [tar](src/tar/) — [dealt.dev/tar](https://www.dealt.dev/tar) — **t**echnology **a**rcade **r**oom
-  _(work in progress collisions demo)_
+- [tar](src/tar/) — [dealt.dev/tar](https://www.dealt.dev/tar) —
+  work in progress collisions demo
 - [src/corpora](src/corpora/) — various datasets, mostly adapted from
   [dariusk/corpora](https://github.com/dariusk/corpora)
 - fakd: fake data for the real world 🐿️ **work in progress**
