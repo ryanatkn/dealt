@@ -1,6 +1,6 @@
 <script lang="ts">
 	// import {DEFAULT_LOG_LEVEL} from '@feltcoop/gro';
-	import AboutLink from '$lib/AboutLink.svelte';
+	import Footer from '$lib/Footer.svelte';
 	import TarotThumbnail from '../tarot/TarotThumbnail.svelte';
 	import Zodiac from '../zodiac/Zodiac.svelte';
 	import {useShadow, useShadow2} from '$lib/shadow';
@@ -24,7 +24,7 @@
 	<TarThumbnail />
 </section>
 <section>
-	<AboutLink />
+	<Footer />
 </section>
 <section class="zodiac">
 	<Zodiac {activeZodiac} />

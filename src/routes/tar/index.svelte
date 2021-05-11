@@ -1,5 +1,5 @@
 <script lang="ts">
-	import AboutLink from '$lib/AboutLink.svelte';
+	import Footer from '$lib/Footer.svelte';
 	import StressTest from '../../tar/StressTest.svelte';
 
 	const onKeyDown = (e: KeyboardEvent) => {
@@ -13,5 +13,5 @@
 	<StressTest />
 </section>
 <section>
-	<AboutLink />
+	<Footer />
 </section>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Overlay from '$lib/Overlay.svelte';
-	import AboutLink from '$lib/AboutLink.svelte';
+	import Footer from '$lib/Footer.svelte';
 	import TarotCardButton from '../../tarot/TarotCardButton.svelte';
 	import TarotCardDetail from '../../tarot/TarotCardDetail.svelte';
 	import DrawnTarotCards from '../../tarot/DrawnTarotCards.svelte';
@@ -69,7 +69,7 @@
 	{/if}
 </section>
 <section>
-	<AboutLink />
+	<Footer />
 </section>
 
 <style>
