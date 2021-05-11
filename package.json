@@ -35,7 +35,7 @@
   "type": "module",
   "devDependencies": {
     "@feltcoop/gro": "^0.21.5",
-    "@ryanatkn/collisions": "^2.0.19",
+    "@ryanatkn/collisions": "^2.0.20",
     "@sveltejs/adapter-static": "^1.0.0-next.9",
     "@sveltejs/kit": "^1.0.0-next.104",
     "prettier": "~2.2.1",
