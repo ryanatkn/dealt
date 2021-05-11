@@ -1,6 +1,6 @@
-import {Collisions, Result, Body} from '@ryanatkn/collisions';
+import {Collisions, Body} from '@ryanatkn/collisions';
 
-const result = new Result();
+const result = Collisions.createResult();
 const width = 800;
 const height = 600;
 const count = 500;
