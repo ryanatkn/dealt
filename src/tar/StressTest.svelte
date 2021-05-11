@@ -6,16 +6,16 @@
 
 	let displayBVH = false;
 
-	let stress: StressSimulation;
+	let sim: StressSimulation;
 	$: {
-		if (wrapperEl && canvasEl && !stress) {
-			stress = new StressSimulation(wrapperEl, canvasEl);
-			console.log('stress', stress);
-			(window as any).stress = stress;
+		if (wrapperEl && canvasEl && !sim) {
+			sim = new StressSimulation(wrapperEl, canvasEl);
+			console.log('sim', sim);
+			(window as any).sim = sim;
 		}
 	}
 
-	$: stress && (stress.displayBVH = displayBVH);
+	$: sim && (sim.displayBVH = displayBVH);
 </script>
 
 <section>
