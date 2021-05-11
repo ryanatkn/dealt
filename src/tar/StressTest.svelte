@@ -1,17 +1,36 @@
 <script lang="ts">
-	import {Stress} from './Stress';
+	import {StressSimulation} from './StressSimulation';
 
 	let wrapperEl: HTMLElement;
 	let canvasEl: HTMLCanvasElement;
 
-	let stress: Stress;
+	let displayBVH = false;
+
+	let stress: StressSimulation;
 	$: {
 		if (wrapperEl && canvasEl && !stress) {
-			stress = new Stress(wrapperEl, canvasEl);
+			stress = new StressSimulation(wrapperEl, canvasEl);
 			console.log('stress', stress);
 			(window as any).stress = stress;
 		}
 	}
+
+	$: stress && (stress.displayBVH = displayBVH);
 </script>
 
-<div bind:this={wrapperEl}><canvas bind:this={canvasEl} /></div>
+<section>
+	<label
+		><input type="checkbox" bind:checked={displayBVH} />
+		show bounding volume hierarchy
+	</label>
+</section>
+<section bind:this={wrapperEl}><canvas bind:this={canvasEl} /></section>
+
+<style>
+	section {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-direction: column;
+	}
+</style>

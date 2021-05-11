@@ -15,7 +15,7 @@ interface StressBody extends Body {
 	direction_y?: number;
 }
 
-export class Stress {
+export class StressSimulation {
 	element: HTMLElement;
 	canvas: HTMLCanvasElement;
 	context: CanvasRenderingContext2D;
@@ -61,7 +61,6 @@ export class Stress {
 			<div><b>Total:</b> ${count}</div>
 			<div><b>Polygons:</b> ${this.polygons}</div>
 			<div><b>Circles:</b> ${this.circles}</div>
-			<div><label><input id="bvh" type="checkbox"> Show Bounding Volume Hierarchy</label></div>
 		`;
 
 		this.element.appendChild(this.canvas);
