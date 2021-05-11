@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "giving meaning a chance",
   "license": "Unlicense",
-  "homepage": "https://dealt.dev",
+  "homepage": "https://www.dealt.dev",
   "scripts": {
     "dev": "gro dev",
     "build": "gro build",

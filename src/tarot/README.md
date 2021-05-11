@@ -1,6 +1,6 @@
 # tarot
 
-> [dealt.dev/tarot](https://dealt.dev/tarot)
+> [dealt.dev/tarot](https://www.dealt.dev/tarot)
 
 ## credits
 
