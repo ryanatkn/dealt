@@ -30,6 +30,8 @@ node build
 ## credits :turtle:<sub>:turtle:</sub><sub><sub>:turtle:</sub></sub>
 
 [@dariusk/corpora](https://github.com/dariusk/corpora) ∙
+[@ryanatkn/collisions](https://github.com/ryanatkn/collisions/) ∙
+[@Sinova/Collisions](https://github.com/Sinova/Collisions/) ∙
 [Svelte](https://github.com/sveltejs/svelte) ∙
 [SvelteKit](https://github.com/sveltejs/kit) ∙
 [Vite](https://github.com/vitejs/vite) ∙
