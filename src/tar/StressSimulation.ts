@@ -1,8 +1,8 @@
 import {Collisions, Body} from '@ryanatkn/collisions';
 
 const result = Collisions.createResult();
-const width = 800;
-const height = 600;
+const width = 1280;
+const height = 640;
 const count = 500;
 const speed = 1;
 const size = 5;
