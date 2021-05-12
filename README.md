@@ -2,11 +2,6 @@
 
 > giving meaning a chance 🔮 [dealt.dev](https://www.dealt.dev)
 
-this is a public domain junkyard of experiments in
-[procedural generation](https://wikipedia.org/wiki/Procedural_generation)
-
-the eventual goal is to give **you** and **me** the power of **tools**, together
-
 ## contents
 
 - [tarot](src/tarot/) — [dealt.dev/tarot](https://www.dealt.dev/tarot)
