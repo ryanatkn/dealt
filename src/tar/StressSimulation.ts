@@ -101,9 +101,10 @@ export class StressSimulation {
 			const potentials: StressBody[] = body.potentials() as any;
 
 			for (const body2 of potentials) {
-				if (body.collides(body2, result)) {
-					body.x -= result.overlap * result.overlap_x;
-					body.y -= result.overlap * result.overlap_y;
+				// TODO fix type to remove `as any`
+				if (body.collides(body2 as any, result)) {
+					body.x -= result.overlap! * result.overlap_x;
+					body.y -= result.overlap! * result.overlap_y;
 
 					let dot = body.direction_x! * result.overlap_y + body.direction_y! * -result.overlap_x;
 
