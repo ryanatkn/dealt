@@ -17,7 +17,7 @@
 	const cards = drawCards(3);
 </script>
 
-<Thumbnail href="tarot/">
+<Thumbnail href="tarot">
 	<div class="cards">
 		{#each cards as card (card)}
 			<img class="card" class:shadow src="/tarot/images/{card}.jpg" alt="tarot card {card}" />
