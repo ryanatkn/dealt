@@ -1,0 +1,68 @@
+{
+  "name": "@feltcoop/dealt",
+  "version": "0.0.0",
+  "description": "giving meaning a chance",
+  "license": "Unlicense",
+  "homepage": "https://www.dealt.dev",
+  "scripts": {
+    "dev": "gro dev",
+    "build": "gro build",
+    "test": "gro test",
+    "start": "gro start",
+    "deploy": "gro deploy"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryanatkn/dealt.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ryanatkn/dealt/issues"
+  },
+  "keywords": [
+    "run",
+    "node",
+    "code",
+    "web"
+  ],
+  "author": {
+    "name": "Felt.coop",
+    "email": "team@felt.social",
+    "url": "https://felt.social"
+  },
+  "engines": {
+    "node": ">=14.16"
+  },
+  "type": "module",
+  "dependencies": {
+    "@feltcoop/felt": "^0.1.2"
+  },
+  "devDependencies": {
+    "@feltcoop/gro": "^0.25.2",
+    "@ryanatkn/collisions": "^2.0.25",
+    "@sveltejs/adapter-static": "^1.0.0-next.13",
+    "@sveltejs/kit": "^1.0.0-next.115",
+    "prettier": "~2.2.1",
+    "prettier-plugin-svelte": "^2.2.0",
+    "svelte": "^3.38.2",
+    "svelte-preprocess-esbuild": "^2.0.0",
+    "tslib": "^2.2.0",
+    "typescript": "^4.3.2"
+  },
+  "prettier": {
+    "useTabs": true,
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "all",
+    "bracketSpacing": false,
+    "svelteSortOrder": "options-scripts-markup-styles",
+    "svelteBracketNewLine": true,
+    "overrides": [
+      {
+        "files": "package.json",
+        "options": {
+          "useTabs": false
+        }
+      }
+    ]
+  }
+}
