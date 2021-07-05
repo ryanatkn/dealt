@@ -34,6 +34,7 @@ node build
 [SvelteKit](https://github.com/sveltejs/kit) ∙
 [Vite](https://github.com/vitejs/vite) ∙
 [Gro](https://github.com/feltcoop/gro) ∙
+[Felt](https://github.com/feltcoop/felt) ∙
 [Rollup](https://github.com/rollup/rollup) ∙
 [TypeScript](https://github.com/microsoft/TypeScript) ∙
 [esbuild](https://github.com/evanw/esbuild) ∙
