@@ -1,12 +1,12 @@
-import {randomFloat} from '$lib/random';
+import {random_item, random_int} from '@feltcoop/felt/util/random.js';
 
-export type TarotSuit = 'major' | 'wands' | 'cups' | 'swords' | 'coins';
+export type Tarot_Suit = 'major' | 'wands' | 'cups' | 'swords' | 'coins';
 
-export interface TarotCard {
+export interface Tarot_Card {
 	id: number;
 	name: string;
 	rank: number;
-	suit: TarotSuit;
+	suit: Tarot_Suit;
 	keywords: string[];
 	meanings: {
 		light: string[];
@@ -14,23 +14,18 @@ export interface TarotCard {
 	};
 }
 
-export const drawCards = (cards: TarotCard[], count: number): TarotCard[] => {
+export const draw_cards = (cards: Tarot_Card[], count: number): Tarot_Card[] => {
 	if (count >= cards.length) return cards;
-	const drawn = new Set<TarotCard>();
+	const drawn = new Set<Tarot_Card>();
 	while (drawn.size < count) {
-		drawn.add(randomItem(cards)!);
+		drawn.add(random_item(cards)!);
 	}
 	return Array.from(drawn);
 };
 
 const TAROT_COUNT = 78;
 
-export const randomCardIndex = () => randomInt(0, TAROT_COUNT - 1);
-// TODO import these from Gro - problem with Vite importing the undeclared exports
-export const randomInt = (min: number, max: number): number =>
-	Math.floor(randomFloat() * (max - min + 1)) + min;
-export const randomItem = <T>(arr: T[]): T | undefined => arr[randomInt(0, arr.length - 1)];
-export const last = <T>(array: T[]): T | undefined => array[array.length - 1];
+export const random_card_index = () => random_int(0, TAROT_COUNT - 1);
 
 // TODO replace this with generated metadata
 export const TAROT_CARD_MIN_WIDTH = 234;

@@ -1,15 +1,15 @@
 <script lang="ts">
-	import {StressSimulation} from './StressSimulation';
+	import {Stress_Simulation} from './Stress_Simulation';
 
 	let wrapperEl: HTMLElement;
 	let canvasEl: HTMLCanvasElement;
 
 	let displayBVH = false;
 
-	let sim: StressSimulation;
+	let sim: Stress_Simulation;
 	$: {
 		if (wrapperEl && canvasEl && !sim) {
-			sim = new StressSimulation(wrapperEl, canvasEl);
+			sim = new Stress_Simulation(wrapperEl, canvasEl);
 			console.log('sim', sim);
 			(window as any).sim = sim;
 		}

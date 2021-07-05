@@ -10,17 +10,17 @@ const size = 5;
 let frame = 0;
 let fps_total = 0;
 
-interface StressBody extends Body {
+interface Stress_Body extends Body {
 	direction_x?: number;
 	direction_y?: number;
 }
 
-export class StressSimulation {
+export class Stress_Simulation {
 	element: HTMLElement;
 	canvas: HTMLCanvasElement;
 	context: CanvasRenderingContext2D;
 	collisions = new Collisions();
-	bodies: StressBody[] = [];
+	bodies: Stress_Body[] = [];
 	polygons = 0;
 	circles = 0;
 	displayBVH = false;
@@ -54,7 +54,7 @@ export class StressSimulation {
 		]);
 
 		for (let i = 0; i < count; ++i) {
-			this.createShape(!random(0, 49));
+			this.create_shape(!random(0, 49));
 		}
 
 		this.element.innerHTML = `
@@ -98,7 +98,7 @@ export class StressSimulation {
 			body.x += body.direction_x! * speed;
 			body.y += body.direction_y! * speed;
 
-			const potentials: StressBody[] = body.potentials() as any;
+			const potentials: Stress_Body[] = body.potentials() as any;
 
 			for (const body2 of potentials) {
 				// TODO fix type to remove `as any`
@@ -142,14 +142,14 @@ export class StressSimulation {
 		this.context.fillText(`${average_fps}fps`, 10, 30);
 	}
 
-	createShape(large: boolean) {
+	create_shape(large: boolean) {
 		const min_size = size * 0.75 * (large ? 3 : 1);
 		const max_size = size * 1.25 * (large ? 5 : 1);
 		const x = random(0, width);
 		const y = random(0, height);
 		const direction = (random(0, 360) * Math.PI) / 180;
 
-		let body: StressBody;
+		let body: Stress_Body;
 
 		if (random(0, 2)) {
 			body = this.collisions.createCircle(x, y, random(min_size, max_size));
@@ -178,6 +178,7 @@ export class StressSimulation {
 	}
 }
 
+// TODO extract
 function random(min: number, max: number): number {
 	return Math.floor(Math.random() * max) + min;
 }

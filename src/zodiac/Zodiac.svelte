@@ -1,17 +1,17 @@
 <script lang="ts">
-	import {randomFloat} from '$lib/random';
+	import {random_float} from '$lib/random';
 
-	import {zodiacComponents} from './zodiacComponents';
+	import {zodiac_components} from './zodiac_components';
 
-	export let activeZodiac: number | undefined;
+	export let active_zodiac: number | undefined;
 
-	const toColor = (active: boolean): string => (active ? '#9e00ff' : 'var(--shadow_text_color)');
-	const toScale = (_index: number): number => 0.55 + randomFloat() / 2;
-	$: scales = Object.keys(zodiacComponents).map((_, i) => toScale(i));
+	const to_color = (active: boolean): string => (active ? '#9e00ff' : 'var(--shadow_text_color)');
+	const to_scale = (_index: number): number => 0.55 + random_float() / 2;
+	$: scales = Object.keys(zodiac_components).map((_, i) => to_scale(i));
 </script>
 
-{#each zodiacComponents as component, i (component)}
+{#each zodiac_components as component, i (component)}
 	<div style="transform: scale3d({scales[i]}, {scales[i]}, {scales[i]});">
-		<svelte:component this={component} fill={toColor(i === activeZodiac)} />
+		<svelte:component this={component} fill={to_color(i === active_zodiac)} />
 	</div>
 {/each}

@@ -1,15 +1,15 @@
 <script lang="ts">
 	// import {DEFAULT_LOG_LEVEL} from '@feltcoop/gro';
 	import Footer from '$lib/Footer.svelte';
-	import TarotThumbnail from '../tarot/TarotThumbnail.svelte';
+	import Tarot_Thumbnail from '../tarot/Tarot_Thumbnail.svelte';
 	import Zodiac from '../zodiac/Zodiac.svelte';
-	import {useShadow, useShadow2} from '$lib/shadow';
-	import {randomZodiac} from '../zodiac/zodiac';
-	import TarThumbnail from '../tar/TarThumbnail.svelte';
+	import {get_shadow, get_shadow2} from '$lib/shadow';
+	import {random_zodiac} from '../zodiac/zodiac';
+	import Tar_Thumbnail from '../tar/Tar_Thumbnail.svelte';
 
-	const shadow = useShadow();
-	const shadow2 = useShadow2();
-	const activeZodiac = randomZodiac();
+	const shadow = get_shadow();
+	const shadow2 = get_shadow2();
+	const active_zodiac = random_zodiac();
 
 	// console.log('DEFAULT_LOG_LEVEL', DEFAULT_LOG_LEVEL);
 </script>
@@ -18,16 +18,16 @@
 	<header>
 		<h1 class:shadow class:shadow2>dealt</h1>
 	</header>
-	<TarotThumbnail {shadow} />
+	<Tarot_Thumbnail {shadow} />
 </section>
 <section>
-	<TarThumbnail />
+	<Tar_Thumbnail />
 </section>
 <section>
 	<Footer />
 </section>
 <section class="zodiac">
-	<Zodiac {activeZodiac} />
+	<Zodiac {active_zodiac} />
 </section>
 
 <style>

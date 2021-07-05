@@ -1,7 +1,7 @@
-import {randomFloat} from '$lib/random';
+import {random_float} from '$lib/random';
 
-export const randomZodiac: () => number = () => randomInt(0, 11);
+export const random_zodiac: () => number = () => random_int(0, 11);
 
 // TODO copypasta from tarot/tarot.js
-export const randomInt = (min: number, max: number): number =>
-	Math.floor(randomFloat() * (max - min + 1)) + min;
+export const random_int = (min: number, max: number): number =>
+	Math.floor(random_float() * (max - min + 1)) + min;

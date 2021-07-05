@@ -1,52 +1,55 @@
 import {browser} from '$app/env';
 
+// TODO upstream to felt -- implements deterministic random numbers for SSR
+
 export const VARY_RANDOM = 0.42;
 
 // TODO copypasta from `corpus-activity-streams` then refactored
 // TODO import random utils from `felt` using `uid` probably
-export const toRandomFloat: ToRandomFloat = () => Math.random();
-export interface ToRandomFloat {
+export const to_random_float: To_Random_Float = () => Math.random();
+export interface To_Random_Float {
 	(): number;
 }
-export interface ToToRandomFloat {
-	(i?: number): ToRandomFloat;
+export interface To_To_Random_Float {
+	(i?: number): To_Random_Float;
 }
 // TODO get a good small seeded implementation or something
-export const toToDeterministicRandomFloat: ToToRandomFloat = (i = 0) => () =>
+export const to_to_deterministic_random_float: To_To_Random_Float = (i = 0) => () =>
 	VARY_RANDOM + i++ / 10000000000;
 
-export const randomFloat: ToRandomFloat = browser ? toRandomFloat : toToDeterministicRandomFloat();
-
-export const identity: <T>(t: T) => T = (t) => t;
+export const random_float: To_Random_Float = browser
+	? to_random_float
+	: to_to_deterministic_random_float();
 
 // TODO upstream to `felt`
 // mutates `array` - clone first for immutability
-export const shuffle: <T>(array: T[], random?: ToRandomFloat) => T[] = (
+export const shuffle: <T>(array: T[], random?: To_Random_Float) => T[] = (
 	array,
-	random = randomFloat,
+	random = random_float,
 ) => {
 	const len = array.length;
 	const max = len - 1;
 	for (let i = 0; i < len; i++) {
-		const destIndex = randomInt(0, max, random);
-		if (i === destIndex) continue;
-		const destItem = array[destIndex];
-		array[destIndex] = array[i];
+		const dest_index = random_int(0, max, random);
+		if (i === dest_index) continue;
+		const destItem = array[dest_index];
+		array[dest_index] = array[i];
 		array[i] = destItem;
 	}
 	return array;
 };
 
 // TODO replace from gro
-export const randomInt: (min: number, max: number, random?: ToRandomFloat) => number = (
+export const random_int: (min: number, max: number, random?: To_Random_Float) => number = (
 	min,
 	max,
-	random = randomFloat,
+	random = random_float,
 ) => Math.floor(random() * (max - min + 1)) + min;
 
-export const randomItem: <T>(arr: T[], random?: ToRandomFloat) => T | undefined = (
+export const random_item: <T>(arr: T[], random?: To_Random_Float) => T | undefined = (
 	arr,
-	random = randomFloat,
-) => arr[randomInt(0, arr.length - 1, random)];
+	random = random_float,
+) => arr[random_int(0, arr.length - 1, random)];
 
-export const randomBoolean: () => boolean = () => randomFloat() > 0.5;
+export const random_bool: (random?: To_Random_Float) => boolean = (random = random_float) =>
+	random() > 0.5;

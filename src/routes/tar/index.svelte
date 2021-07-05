@@ -1,16 +1,16 @@
 <script lang="ts">
 	import Footer from '$lib/Footer.svelte';
-	import StressTest from '../../tar/StressTest.svelte';
+	import Stress_Test from '../../tar/Stress_Test.svelte';
 	import {icons} from '@feltcoop/felt';
-	const onKeyDown = (e: KeyboardEvent) => {
+	const on_keydown = (e: KeyboardEvent) => {
 		console.log('e.key', e.key);
 	};
 </script>
 
-<svelte:window on:keydown={onKeyDown} />
+<svelte:window on:keydown={on_keydown} />
 
 <section>
-	<StressTest />
+	<Stress_Test />
 </section>
 <section>
 	<Footer />

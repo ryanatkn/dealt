@@ -9,5 +9,13 @@ export default {
 		target: '#svelte',
 		appDir: 'app', // because _app is ignored by GitHub pages by default
 		files: {assets: 'src/static'},
+		vite: {
+			ssr: {
+				noExternal: ['@feltcoop/felt'],
+			},
+			optimizeDeps: {
+				exclude: ['@feltcoop/felt'],
+			},
+		},
 	},
 };
