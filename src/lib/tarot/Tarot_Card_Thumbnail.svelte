@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type {TarotCard} from './tarot.js';
+	import type {Tarot_Card} from './tarot.js';
 
-	export let card: TarotCard;
+	export let card: Tarot_Card;
 </script>
 
 <img class="card" src="/tarot/images/{card.id}.jpg" alt={card.name} on:click />

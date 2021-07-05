@@ -1,7 +1,4 @@
 <script lang="ts">
-	export let contentStyle = '';
-	export let contentClass = 'p-1';
-
 	export let close: () => void;
 
 	// TODO close with escape key
@@ -12,7 +9,7 @@
 <div class="overlay-wrapper" on:click={close}>
 	<div class="overlay-wrapper-inner">
 		<div class="content-wrapper p-3" on:click|stopPropagation>
-			<div class="content {contentClass}" style={contentStyle}>
+			<div class="content p-1">
 				<slot />
 			</div>
 		</div>

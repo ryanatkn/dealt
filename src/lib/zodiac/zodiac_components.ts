@@ -13,7 +13,7 @@ import Scorpio from './Scorpio.svelte';
 import Taurus from './Taurus.svelte';
 import Virgo from './Virgo.svelte';
 
-export const zodiacComponents: typeof SvelteComponent[] = [
+export const zodiac_components: typeof SvelteComponent[] = [
 	Aquarius,
 	Aries,
 	Cancer,

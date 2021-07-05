@@ -1,42 +1,44 @@
 <script lang="ts">
 	import Overlay from '$lib/Overlay.svelte';
 	import Footer from '$lib/Footer.svelte';
-	import TarotCardButton from '../../tarot/TarotCardButton.svelte';
-	import TarotCardDetail from '../../tarot/TarotCardDetail.svelte';
-	import DrawnTarotCards from '../../tarot/DrawnTarotCards.svelte';
-	import {cards as cardsData} from '../../tarot/tarot.json';
-	import {drawCards, last, TAROT_CARD_MIN_WIDTH, TAROT_CARD_MIN_HEIGHT} from '../../tarot/tarot';
-	import type {TarotCard} from '../../tarot/tarot.js';
+	import {last} from '@feltcoop/felt/util/array.js';
+
+	import Tarot_Card_Button from '$lib/tarot/Tarot_Card_Button.svelte';
+	import Tarot_Card_Detail from '$lib/tarot/Tarot_Card_Detail.svelte';
+	import Drawn_Tarot_Cards from '$lib/tarot/Drawn_Tarot_Cards.svelte';
+	import {cards as cards_data} from '$lib/tarot/tarot.json';
+	import {draw_cards, TAROT_CARD_MIN_WIDTH, TAROT_CARD_MIN_HEIGHT} from '$lib/tarot/tarot';
+	import type {Tarot_Card} from '$lib/tarot/tarot.js';
 	import {shuffle} from '$lib/random';
 
 	// TODO refactor, extract some components
 
-	const cards: TarotCard[] = shuffle(cardsData);
+	const cards: Tarot_Card[] = shuffle(cards_data);
 
-	let drawnCards: TarotCard[] = [];
-	let viewingCards: TarotCard[] = [];
+	let drawn_cards: Tarot_Card[] = [];
+	let viewing_cards: Tarot_Card[] = [];
 
-	$: lastViewingCard = last(viewingCards);
+	$: last_viewing_card = last(viewing_cards);
 
 	const draw = (count: number): void => {
-		drawnCards = drawCards(cards, count);
-		viewingCards = [];
+		drawn_cards = draw_cards(cards, count);
+		viewing_cards = [];
 	};
 
-	const view = (card: TarotCard): void => {
-		drawnCards = [];
-		viewingCards = [card];
+	const view = (card: Tarot_Card): void => {
+		drawn_cards = [];
+		viewing_cards = [card];
 	};
 
-	const onKeyDown = (e: KeyboardEvent) => {
+	const on_keydown = (e: KeyboardEvent) => {
 		if (e.key === 'Escape') {
-			drawnCards = []; // TODO should be hide modal
-			viewingCards = [];
+			drawn_cards = []; // TODO should be hide modal
+			viewing_cards = [];
 		}
 	};
 </script>
 
-<svelte:window on:keydown={onKeyDown} />
+<svelte:window on:keydown={on_keydown} />
 
 <section
 	style="--tarot_card_min_width: {TAROT_CARD_MIN_WIDTH}px; --tarot_card_min_height: {TAROT_CARD_MIN_HEIGHT}px;"
@@ -48,20 +50,20 @@
 		</div>
 		<div class="cards">
 			{#each cards as card (card.id)}
-				<TarotCardButton {card} click={view} />
+				<Tarot_Card_Button {card} click={view} />
 			{/each}
 		</div>
 	</div>
-	{#if drawnCards.length}
-		<Overlay close={() => (drawnCards = [])}>
-			<DrawnTarotCards cards={drawnCards} />
+	{#if drawn_cards.length}
+		<Overlay close={() => (drawn_cards = [])}>
+			<Drawn_Tarot_Cards cards={drawn_cards} />
 		</Overlay>
 	{/if}
-	{#if viewingCards.length}
-		<Overlay close={() => (viewingCards = [])}>
-			{#each viewingCards as card (card.id)}
-				<TarotCardDetail {card} />
-				{#if card !== lastViewingCard}
+	{#if viewing_cards.length}
+		<Overlay close={() => (viewing_cards = [])}>
+			{#each viewing_cards as card (card.id)}
+				<Tarot_Card_Detail {card} />
+				{#if card !== last_viewing_card}
 					<hr />
 				{/if}
 			{/each}

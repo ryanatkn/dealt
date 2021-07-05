@@ -1,13 +1,13 @@
 <script>
-	import {provideShadow, provideShadow2} from '$lib/shadow';
+	import {set_shadow, set_shadow2} from '$lib/shadow';
 	import '../app.css';
 
-	provideShadow();
-	provideShadow2();
+	set_shadow();
+	set_shadow2();
 </script>
 
 <svelte:head>
-	<link rel="icon" href="/favicon.ico" />
+	<link rel="icon" href="/favicon.png" />
 </svelte:head>
 
 <noscript>

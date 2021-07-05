@@ -1,15 +1,15 @@
 <script lang="ts">
-	import type {TarotCard} from './tarot.js';
+	import type {Tarot_Card} from './tarot.js';
 	import {shuffle} from '$lib/random';
-	import TarotCardImage from './TarotCardImage.svelte';
+	import Tarot_Card_Image from './Tarot_Card_Image.svelte';
 
 	// TODO consider a different version of this component for small screens
 	// breakpoints just don't give the best UX without a ton of complexity
 
-	export let card: TarotCard;
+	export let card: Tarot_Card;
 
-	$: lightMeanings = shuffle(card.meanings.light);
-	$: shadowMeanings = shuffle(card.meanings.shadow);
+	$: light_meanings = shuffle(card.meanings.light);
+	$: shadow_meanings = shuffle(card.meanings.shadow);
 </script>
 
 <div class="tarot-card-detail">
@@ -20,14 +20,14 @@
 			<p class="keywords">{card.keywords.join(', ')}</p>
 			<section class="meanings light">
 				<ul>
-					{#each lightMeanings as meaning (meaning)}
+					{#each light_meanings as meaning (meaning)}
 						<li>{meaning}</li>
 					{/each}
 				</ul>
 			</section>
 			<section class="meanings shadow">
 				<ul>
-					{#each shadowMeanings as meaning (meaning)}
+					{#each shadow_meanings as meaning (meaning)}
 						<li>{meaning}</li>
 					{/each}
 				</ul>
@@ -36,8 +36,8 @@
 	</div>
 	<hr />
 	<div style="display: contents; --tarot_card_min_width: 100%;">
-		<TarotCardImage {card} />
-		<TarotCardImage {card} shadow={true} />
+		<Tarot_Card_Image {card} />
+		<Tarot_Card_Image {card} shadow={true} />
 	</div>
 </div>
 

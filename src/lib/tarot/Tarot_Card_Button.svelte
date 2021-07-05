@@ -1,12 +1,12 @@
 <script lang="ts">
-	import TarotCardThumbnail from './TarotCardThumbnail.svelte';
-	import type {TarotCard} from './tarot.js';
-	import {randomBoolean} from '$lib/random';
+	import Tarot_Card_Thumbnail from './Tarot_Card_Thumbnail.svelte';
+	import type {Tarot_Card} from './tarot.js';
+	import {random_bool} from '$lib/random';
 
-	export let card: TarotCard;
+	export let card: Tarot_Card;
 	export let shadow = false;
-	export let click: (card: TarotCard) => void; // TODO `onClick`? `act`?
-	export let odd = randomBoolean();
+	export let click: (card: Tarot_Card) => void; // TODO `onClick`? `act`?
+	export let odd = random_bool();
 </script>
 
 <button
@@ -14,9 +14,9 @@
 	class:shadow
 	class:odd
 	on:click={() => click(card)}
-	on:mouseover={() => (odd = randomBoolean())}
+	on:mouseover={() => (odd = random_bool())}
 >
-	<TarotCardThumbnail {card} />
+	<Tarot_Card_Thumbnail {card} />
 </button>
 
 <style>

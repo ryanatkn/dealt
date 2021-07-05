@@ -1,12 +1,12 @@
 <script lang="ts">
 	import {shuffle} from '$lib/random';
-	import type {TarotCard} from './tarot.js';
-	import TarotCardImage from './TarotCardImage.svelte';
+	import type {Tarot_Card} from './tarot.js';
+	import Tarot_Card_Image from './Tarot_Card_Image.svelte';
 
 	// TODO consider a different version of this component for small screens
 	// breakpoints just don't give the best UX without a ton of complexity
 
-	export let card: TarotCard;
+	export let card: Tarot_Card;
 	export let shadow = false;
 
 	$: meanings = shuffle(shadow ? card.meanings.shadow : card.meanings.light);
@@ -14,7 +14,7 @@
 
 <div class="tarot-card" class:shadow>
 	<div class="image">
-		<TarotCardImage {card} {shadow} />
+		<Tarot_Card_Image {card} {shadow} />
 	</div>
 	<div class="content">
 		<h1>{card.name}</h1>
