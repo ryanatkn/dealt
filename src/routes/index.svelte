@@ -1,11 +1,11 @@
 <script lang="ts">
 	// import {DEFAULT_LOG_LEVEL} from '@feltcoop/gro';
 	import Footer from '$lib/Footer.svelte';
-	import Tarot_Thumbnail from '../tarot/Tarot_Thumbnail.svelte';
-	import Zodiac from '../zodiac/Zodiac.svelte';
+	import Tarot_Thumbnail from '$lib/tarot/Tarot_Thumbnail.svelte';
+	import Zodiac from '$lib/zodiac/Zodiac.svelte';
 	import {get_shadow, get_shadow2} from '$lib/shadow';
-	import {random_zodiac} from '../zodiac/zodiac';
-	import Tar_Thumbnail from '../tar/Tar_Thumbnail.svelte';
+	import {random_zodiac} from '$lib/zodiac/zodiac';
+	import Tar_Thumbnail from '$lib/tar/Tar_Thumbnail.svelte';
 
 	const shadow = get_shadow();
 	const shadow2 = get_shadow2();

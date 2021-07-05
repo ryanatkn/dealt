@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Footer from '$lib/Footer.svelte';
-	import Stress_Test from '../../tar/Stress_Test.svelte';
+	import Stress_Test from '$lib/tar/Stress_Test.svelte';
 	import {icons} from '@feltcoop/felt';
 	const on_keydown = (e: KeyboardEvent) => {
 		console.log('e.key', e.key);
