@@ -1,1 +1,0 @@
-import{r}from"./shadow-3e266022.js";const a=(r,a)=>{if(a>=r.length)return r;const s=new Set;for(;s.size<a;)s.add(e(r));return Array.from(s)},s=()=>t(0,77),t=(a,s)=>Math.floor(r()*(s-a+1))+a,e=r=>r[t(0,r.length-1)],o=r=>r[r.length-1],n=234,f=350;export{n as T,f as a,a as d,o as l,s as r};
