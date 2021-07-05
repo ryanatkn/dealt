@@ -14,8 +14,10 @@ export interface To_To_Random_Float {
 	(i?: number): To_Random_Float;
 }
 // TODO get a good small seeded implementation or something
-export const to_to_deterministic_random_float: To_To_Random_Float = (i = 0) => () =>
-	VARY_RANDOM + i++ / 10000000000;
+export const to_to_deterministic_random_float: To_To_Random_Float =
+	(i = 0) =>
+	() =>
+		VARY_RANDOM + i++ / 10000000000;
 
 export const random_float: To_Random_Float = browser
 	? to_random_float

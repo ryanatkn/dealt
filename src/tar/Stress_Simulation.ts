@@ -23,7 +23,7 @@ export class Stress_Simulation {
 	bodies: Stress_Body[] = [];
 	polygons = 0;
 	circles = 0;
-	displayBVH = false;
+	display_bvh = false;
 	frame: number; // `requestAnimationFrame`
 
 	constructor(element: HTMLElement, canvas: HTMLCanvasElement) {
@@ -130,7 +130,7 @@ export class Stress_Simulation {
 		this.context.stroke();
 
 		// Render the BVH
-		if (this.displayBVH) {
+		if (this.display_bvh) {
 			this.context.strokeStyle = '#00FF00';
 			this.context.beginPath();
 			this.collisions.drawBVH(this.context);

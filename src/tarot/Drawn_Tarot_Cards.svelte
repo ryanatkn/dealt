@@ -8,13 +8,13 @@
 
 	export let cards: Tarot_Card[];
 
-	$: lastDrawnCard = last(cards);
+	$: last_drawn_card = last(cards);
 	$: shadows = cards.map(() => to_random_shadow());
 </script>
 
 {#each cards as card, i (card.id)}
 	<Drawn_Tarot_Card {card} shadow={shadows[i]} />
-	{#if card !== lastDrawnCard}
+	{#if card !== last_drawn_card}
 		<hr />
 	{/if}
 {/each}
