@@ -1,5 +1,4 @@
 <script lang="ts">
-	// import {DEFAULT_LOG_LEVEL} from '@feltcoop/gro';
 	import Footer from '$lib/Footer.svelte';
 	import Tarot_Thumbnail from '$lib/tarot/Tarot_Thumbnail.svelte';
 	import Zodiac from '$lib/zodiac/Zodiac.svelte';
@@ -10,8 +9,6 @@
 	const shadow = get_shadow();
 	const shadow2 = get_shadow2();
 	const active_zodiac = random_zodiac();
-
-	// console.log('DEFAULT_LOG_LEVEL', DEFAULT_LOG_LEVEL);
 </script>
 
 <section>

@@ -1,20 +1,13 @@
 <script lang="ts">
 	import Thumbnail from '$lib/Thumbnail.svelte';
-	import {random_card_index} from './tarot';
+	import {card_indices} from '$lib/tarot/tarot';
+	import {random_items} from '$lib/random';
 
 	// this is lightweight: it doesn't depend on the card data
 
 	export let shadow = false;
 
-	const draw_cards = (count: number): number[] => {
-		const drawn = new Set<number>();
-		while (drawn.size < count) {
-			drawn.add(random_card_index());
-		}
-		return Array.from(drawn);
-	};
-
-	const cards = draw_cards(3);
+	const cards = random_items(card_indices, 3);
 </script>
 
 <Thumbnail href="tarot">
