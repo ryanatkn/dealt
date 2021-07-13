@@ -14,7 +14,10 @@ export interface Tarot_Card {
 	};
 }
 
-const TAROT_COUNT = 78;
+export const TAROT_COUNT = 78;
+
+// TODO extract to felt as `range`
+export const card_indices: number[] = Array.from({length: TAROT_COUNT}, (_, i) => i);
 
 export const random_card_index = () => random_int(0, TAROT_COUNT - 1);
 
