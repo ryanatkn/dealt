@@ -1,4 +1,4 @@
-import {random_int} from '$lib/random.js';
+import {random_int} from '$lib/random';
 
 export type Tarot_Suit = 'major' | 'wands' | 'cups' | 'swords' | 'coins';
 
