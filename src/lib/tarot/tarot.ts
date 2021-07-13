@@ -1,4 +1,4 @@
-import {random_item, random_int} from '@feltcoop/felt/util/random.js';
+import {random_int} from '$lib/random.js';
 
 export type Tarot_Suit = 'major' | 'wands' | 'cups' | 'swords' | 'coins';
 
@@ -13,15 +13,6 @@ export interface Tarot_Card {
 		shadow: string[];
 	};
 }
-
-export const draw_cards = (cards: Tarot_Card[], count: number): Tarot_Card[] => {
-	if (count >= cards.length) return cards;
-	const drawn = new Set<Tarot_Card>();
-	while (drawn.size < count) {
-		drawn.add(random_item(cards)!);
-	}
-	return Array.from(drawn);
-};
 
 const TAROT_COUNT = 78;
 

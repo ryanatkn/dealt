@@ -7,9 +7,9 @@
 	import Tarot_Card_Detail from '$lib/tarot/Tarot_Card_Detail.svelte';
 	import Drawn_Tarot_Cards from '$lib/tarot/Drawn_Tarot_Cards.svelte';
 	import {cards as cards_data} from '$lib/tarot/tarot.json';
-	import {draw_cards, TAROT_CARD_MIN_WIDTH, TAROT_CARD_MIN_HEIGHT} from '$lib/tarot/tarot';
+	import {TAROT_CARD_MIN_WIDTH, TAROT_CARD_MIN_HEIGHT} from '$lib/tarot/tarot';
 	import type {Tarot_Card} from '$lib/tarot/tarot.js';
-	import {shuffle} from '$lib/random';
+	import {random_items, shuffle} from '$lib/random';
 
 	// TODO refactor, extract some components
 
@@ -21,7 +21,7 @@
 	$: last_viewing_card = last(viewing_cards);
 
 	const draw = (count: number): void => {
-		drawn_cards = draw_cards(cards, count);
+		drawn_cards = random_items(cards, count);
 		viewing_cards = [];
 	};
 
