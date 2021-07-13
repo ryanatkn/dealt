@@ -4,10 +4,10 @@
 
 ## contents
 
-- [tarot](src/tarot) — [dealt.dev/tarot](https://www.dealt.dev/tarot)
-- [tar](src/tar) — [dealt.dev/tar](https://www.dealt.dev/tar) —
+- [tarot](/src/lib/tarot) — [dealt.dev/tarot](https://www.dealt.dev/tarot)
+- [tar](/src/lib/tar) — [dealt.dev/tar](https://www.dealt.dev/tar) —
   work in progress collisions demo
-- [src/corpora](src/corpora/) — various datasets, mostly adapted from
+- [src/corpora](/src/lib/corpora/) — various datasets, mostly adapted from
   [dariusk/corpora](https://github.com/dariusk/corpora)
 - fakd: fake data for the real world 🐿️ **work in progress**
 
@@ -44,11 +44,11 @@ node build
 
 also:
 
-[tarot card images and interpretations](src/tarot)
+[tarot card images and interpretations](/src/lib/tarot)
 
 ## license 🐦
 
-[tarot card interpretations data](src/tarot/tarot.json)
+[tarot card interpretations data](/src/lib/tarot/tarot.json)
 adapted from
 [Mark McElroy's work](https://madebymark.com/2014/07/06/my-latest-book-belongs-to-you/)
 via [dariusk/corpora](https://github.com/dariusk/corpora) (public domain, CC0)

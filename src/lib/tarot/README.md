@@ -4,7 +4,7 @@
 
 ## credits
 
-[tarot card interpretations data](src/tarot/tarot.json)
+[tarot card interpretations data](/src/lib/tarot/tarot.json)
 adapted from
 [Mark McElroy's work](https://madebymark.com/2014/07/06/my-latest-book-belongs-to-you/)
 via [dariusk/corpora](https://github.com/dariusk/corpora) (public domain, CC0)
