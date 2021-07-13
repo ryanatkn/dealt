@@ -10,10 +10,10 @@ export default {
 		files: {assets: 'src/static'},
 		vite: {
 			ssr: {
-				noExternal: ['@feltcoop/felt'],
+				noExternal: ['@feltcoop/felt', '@ryanatkn/collisions'],
 			},
 			optimizeDeps: {
-				exclude: ['@feltcoop/felt'],
+				exclude: ['@feltcoop/felt', '@ryanatkn/collisions'],
 			},
 		},
 	},
