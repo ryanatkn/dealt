@@ -1,5 +1,5 @@
 // TODO generate
-declare module '$lib/corpora/settings.json' {
+declare module '$lib/corpora/natures.json' {
 	export type Nature = 'neutral' | 'good' | 'evil';
 	const data: {
 		summary: string;

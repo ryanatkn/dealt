@@ -40,39 +40,41 @@
 
 <svelte:window on:keydown={on_keydown} />
 
-<section
-	style="--tarot_card_min_width: {TAROT_CARD_MIN_WIDTH}px; --tarot_card_min_height: {TAROT_CARD_MIN_HEIGHT}px;"
->
-	<div>
-		<div class="draw-card-buttons">
-			<button on:click={() => draw(1)}>draw a card</button>
-			<button on:click={() => draw(3)}> draw three cards </button>
+<main>
+	<section
+		style="--tarot_card_min_width: {TAROT_CARD_MIN_WIDTH}px; --tarot_card_min_height: {TAROT_CARD_MIN_HEIGHT}px;"
+	>
+		<div>
+			<div class="draw-card-buttons">
+				<button on:click={() => draw(1)}>draw a card</button>
+				<button on:click={() => draw(3)}> draw three cards </button>
+			</div>
+			<div class="cards">
+				{#each cards as card (card.id)}
+					<Tarot_Card_Button {card} click={view} />
+				{/each}
+			</div>
 		</div>
-		<div class="cards">
-			{#each cards as card (card.id)}
-				<Tarot_Card_Button {card} click={view} />
-			{/each}
-		</div>
-	</div>
-	{#if drawn_cards.length}
-		<Overlay close={() => (drawn_cards = [])}>
-			<Drawn_Tarot_Cards cards={drawn_cards} />
-		</Overlay>
-	{/if}
-	{#if viewing_cards.length}
-		<Overlay close={() => (viewing_cards = [])}>
-			{#each viewing_cards as card (card.id)}
-				<Tarot_Card_Detail {card} />
-				{#if card !== last_viewing_card}
-					<hr />
-				{/if}
-			{/each}
-		</Overlay>
-	{/if}
-</section>
-<section>
-	<Footer />
-</section>
+		{#if drawn_cards.length}
+			<Overlay close={() => (drawn_cards = [])}>
+				<Drawn_Tarot_Cards cards={drawn_cards} />
+			</Overlay>
+		{/if}
+		{#if viewing_cards.length}
+			<Overlay close={() => (viewing_cards = [])}>
+				{#each viewing_cards as card (card.id)}
+					<Tarot_Card_Detail {card} />
+					{#if card !== last_viewing_card}
+						<hr />
+					{/if}
+				{/each}
+			</Overlay>
+		{/if}
+	</section>
+	<section>
+		<Footer />
+	</section>
+</main>
 
 <style>
 	.draw-card-buttons {

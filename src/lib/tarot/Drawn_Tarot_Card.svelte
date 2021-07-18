@@ -1,7 +1,7 @@
 <script lang="ts">
 	import {shuffle} from '$lib/util/random';
-	import type {Tarot_Card} from './tarot.js';
-	import Tarot_Card_Image from './Tarot_Card_Image.svelte';
+	import type {Tarot_Card} from '$lib/tarot/tarot.js';
+	import Tarot_Card_Image from '$lib/tarot/Tarot_Card_Image.svelte';
 
 	// TODO consider a different version of this component for small screens
 	// breakpoints just don't give the best UX without a ton of complexity
