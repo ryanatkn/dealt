@@ -1,19 +1,19 @@
 <script lang="ts">
-	import Overlay from '$lib/Overlay.svelte';
-	import Footer from '$lib/Footer.svelte';
+	import Overlay from '$lib/ui/Overlay.svelte';
+	import Footer from '$lib/ui/Footer.svelte';
 	import {last} from '@feltcoop/felt/util/array.js';
 
 	import Tarot_Card_Button from '$lib/tarot/Tarot_Card_Button.svelte';
 	import Tarot_Card_Detail from '$lib/tarot/Tarot_Card_Detail.svelte';
 	import Drawn_Tarot_Cards from '$lib/tarot/Drawn_Tarot_Cards.svelte';
-	import {cards as cards_data} from '$lib/tarot/tarot.json';
+	import tarot_data from '$lib/tarot/tarot.json';
 	import {TAROT_CARD_MIN_WIDTH, TAROT_CARD_MIN_HEIGHT} from '$lib/tarot/tarot';
 	import type {Tarot_Card} from '$lib/tarot/tarot.js';
-	import {random_items, shuffle} from '$lib/random';
+	import {random_items, shuffle} from '$lib/util/random';
 
 	// TODO refactor, extract some components
 
-	const cards: Tarot_Card[] = shuffle(cards_data);
+	const cards: Tarot_Card[] = shuffle(tarot_data.cards);
 
 	let drawn_cards: Tarot_Card[] = [];
 	let viewing_cards: Tarot_Card[] = [];

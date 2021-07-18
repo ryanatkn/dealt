@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {random_float} from '$lib/random';
+	import {random_float} from '$lib/util/random';
 	import {zodiac_components} from './zodiac_components';
 
 	export let active_zodiac: number | undefined;

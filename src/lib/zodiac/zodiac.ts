@@ -1,4 +1,4 @@
-import {random_float} from '$lib/random';
+import {random_float} from '$lib/util/random';
 
 export const random_zodiac: () => number = () => random_int(0, 11);
 

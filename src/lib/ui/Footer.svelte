@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Thumbnail from '$lib/Thumbnail.svelte';
+	import Thumbnail from '$lib/ui/Thumbnail.svelte';
 </script>
 
 <footer>

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import Footer from '$lib/Footer.svelte';
+	import Footer from '$lib/ui/Footer.svelte';
 	import Tarot_Thumbnail from '$lib/tarot/Tarot_Thumbnail.svelte';
 	import Zodiac from '$lib/zodiac/Zodiac.svelte';
-	import {get_shadow, get_shadow2} from '$lib/shadow';
+	import {get_shadow, get_shadow2} from '$lib/ui/shadow';
 	import {random_zodiac} from '$lib/zodiac/zodiac';
 	import Tar_Thumbnail from '$lib/tar/Tar_Thumbnail.svelte';
 

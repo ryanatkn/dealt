@@ -2,7 +2,7 @@
 	import {last} from '@feltcoop/felt/util/array.js';
 
 	import type {Tarot_Card} from './tarot.js';
-	import {to_random_shadow} from '$lib/shadow';
+	import {to_random_shadow} from '$lib/ui/shadow';
 	import Drawn_Tarot_Card from './Drawn_Tarot_Card.svelte';
 	import Tarot_Card_Image from './Tarot_Card_Image.svelte';
 

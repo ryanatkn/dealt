@@ -1,5 +1,5 @@
 <script lang="ts">
-	import {shuffle} from '$lib/random';
+	import {shuffle} from '$lib/util/random';
 	import type {Tarot_Card} from './tarot.js';
 	import Tarot_Card_Image from './Tarot_Card_Image.svelte';
 

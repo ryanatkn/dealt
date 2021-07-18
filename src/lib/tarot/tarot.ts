@@ -1,4 +1,4 @@
-import {random_int} from '$lib/random';
+import {random_int} from '$lib/util/random';
 
 export type Tarot_Suit = 'major' | 'wands' | 'cups' | 'swords' | 'coins';
 

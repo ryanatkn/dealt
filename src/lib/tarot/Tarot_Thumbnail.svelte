@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Thumbnail from '$lib/Thumbnail.svelte';
+	import Thumbnail from '$lib/ui/Thumbnail.svelte';
 	import {card_indices} from '$lib/tarot/tarot';
-	import {random_items} from '$lib/random';
+	import {random_items} from '$lib/util/random';
 
 	// this is lightweight: it doesn't depend on the card data
 

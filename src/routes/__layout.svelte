@@ -1,6 +1,6 @@
 <script>
-	import {set_shadow, set_shadow2} from '$lib/shadow';
-	import '../app.css';
+	import {set_shadow, set_shadow2} from '$lib/ui/shadow';
+	import '$lib/ui/app.css';
 
 	set_shadow();
 	set_shadow2();

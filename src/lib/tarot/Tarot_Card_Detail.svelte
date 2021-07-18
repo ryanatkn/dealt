@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type {Tarot_Card} from './tarot.js';
-	import {shuffle} from '$lib/random';
+	import {shuffle} from '$lib/util/random';
 	import Tarot_Card_Image from './Tarot_Card_Image.svelte';
 
 	// TODO consider a different version of this component for small screens

@@ -1,6 +1,6 @@
 import {getContext, setContext} from 'svelte';
 
-import {random_float} from '$lib/random';
+import {random_float} from '$lib/util/random';
 
 export const to_random_shadow = (): boolean => random_float() > 0.5;
 

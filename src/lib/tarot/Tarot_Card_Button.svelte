@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Tarot_Card_Thumbnail from './Tarot_Card_Thumbnail.svelte';
 	import type {Tarot_Card} from './tarot.js';
-	import {random_bool} from '$lib/random';
+	import {random_bool} from '$lib/util/random';
 
 	export let card: Tarot_Card;
 	export let shadow = false;
