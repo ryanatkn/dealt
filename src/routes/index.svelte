@@ -11,21 +11,23 @@
 	const active_zodiac = random_zodiac();
 </script>
 
-<section>
-	<header>
-		<h1 class:shadow class:shadow2>dealt</h1>
-	</header>
-	<Tarot_Thumbnail {shadow} />
-</section>
-<section>
-	<Tar_Thumbnail />
-</section>
-<section>
-	<Footer />
-</section>
-<section class="zodiac">
-	<Zodiac {active_zodiac} />
-</section>
+<main>
+	<section>
+		<header>
+			<h1 class:shadow class:shadow2>dealt</h1>
+		</header>
+		<Tarot_Thumbnail {shadow} />
+	</section>
+	<section>
+		<Tar_Thumbnail />
+	</section>
+	<section>
+		<Footer />
+	</section>
+	<section class="zodiac">
+		<Zodiac {active_zodiac} />
+	</section>
+</main>
 
 <style>
 	header {

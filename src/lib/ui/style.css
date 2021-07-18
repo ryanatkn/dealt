@@ -91,3 +91,12 @@ a:hover {
 a:active {
 	color: var(--shadow_text_color);
 }
+
+/* TODO breaks keyboard scrolling */
+main {
+	height: 100%;
+	overflow-y: scroll;
+	overflow-x: auto;
+	padding: 20px;
+	margin: 0 auto;
+}

@@ -1,11 +1,15 @@
 <script lang="ts">
+	import {page} from '$app/stores';
+
 	import Thumbnail from '$lib/ui/Thumbnail.svelte';
 </script>
 
 <footer>
 	<p>public domain <a href="https://github.com/feltcoop/dealt/blob/main/license">🐦</a></p>
-	<Thumbnail href="https://github.com/ryanatkn/dealt"><p>source code and credits</p></Thumbnail>
-	<a href="/">🔮</a>
+	<Thumbnail href="https://github.com/feltcoop/dealt"><p>source code and credits</p></Thumbnail>
+	{#if $page.path !== '/'}
+		<a href="/">🔮</a>
+	{/if}
 </footer>
 
 <style>

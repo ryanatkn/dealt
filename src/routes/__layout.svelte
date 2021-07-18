@@ -1,6 +1,6 @@
 <script>
 	import {set_shadow, set_shadow2} from '$lib/ui/shadow';
-	import '$lib/ui/app.css';
+	import '$lib/ui/style.css';
 
 	set_shadow();
 	set_shadow2();
@@ -16,23 +16,11 @@
 			<p>JavaScript is disabled. If you enable it, fun and surprising things could happen!</p>
 			<p>
 				This website tries to respect you and your machines, and its
-				<a href="https://github.com/ryanatkn/dealt">source code</a>
+				<a href="https://github.com/feltcoop/dealt">source code</a>
 				is open for inspection and criticism.
 			</p>
 		</div>
 	</section>
 </noscript>
 
-<main>
-	<slot />
-</main>
-
-<style>
-	main {
-		height: 100%;
-		overflow-y: scroll;
-		overflow-x: auto;
-		padding: 20px;
-		margin: 0 auto;
-	}
-</style>
+<slot />

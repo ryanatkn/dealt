@@ -13,10 +13,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ryanatkn/dealt.git"
+    "url": "git+https://github.com/feltcoop/dealt.git"
   },
   "bugs": {
-    "url": "https://github.com/ryanatkn/dealt/issues"
+    "url": "https://github.com/feltcoop/dealt/issues"
   },
   "keywords": [
     "run",
