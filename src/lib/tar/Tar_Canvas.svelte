@@ -8,56 +8,32 @@
 	export let sim: Simulation;
 
 	let canvas_el: HTMLCanvasElement;
-	let ctx: CanvasRenderingContext2D | null = null;
 	let canvas_width: number;
 	let canvas_height: number;
-
-	const draw_canvas = (
-		canvas: HTMLCanvasElement,
-		width: number,
-		height: number,
-		sim: Simulation,
-	): void => {
-		if (canvas_width !== width) {
-			console.log('setting canvas width', width);
-			canvas.width = canvas_width = width;
-		}
-		if (canvas_height !== height) {
-			console.log('setting canvas height', width);
-			canvas.height = canvas_height = height;
-		}
-		if (!ctx) {
-			console.log('getting context2d');
-			ctx = canvas.getContext('2d');
-		}
-		if (!ctx) throw Error('Failed to get canvas context');
-
-		ctx.clearRect(0, 0, width, height);
-		ctx.beginPath();
-		ctx.lineWidth = 2;
-		ctx.strokeStyle = 'cornflowerblue';
-		for (const entity of sim.entities) {
-			ctx.moveTo(entity.x - 1, entity.y - 1);
-			ctx.lineTo(entity.x + 1, entity.y - 1);
-			ctx.lineTo(entity.x + 1, entity.y + 1);
-			ctx.lineTo(entity.x - 1, entity.y + 1);
-			ctx.lineTo(entity.x - 1, entity.y - 1);
-		}
-		ctx.moveTo(0, height / 2);
-		ctx.lineTo(100, 100);
-		ctx.lineTo(120, 120);
-		ctx.lineTo(80, 150);
-		ctx.lineTo(100, 100);
-		ctx.stroke();
-		ctx.closePath();
-	};
 
 	let running = true;
 
 	onMount(() => {
-		const loop = () => {
-			if (!running || !canvas_el) return;
-			draw_canvas(canvas_el, width, height, sim);
+		// TODO extract to a game loop
+		sim.set_canvas(canvas_el);
+		let last_time: number | null = null;
+		const loop = (time: number) => {
+			if (!running || !canvas_el) {
+				sim.unset_canvas();
+				return;
+			}
+			if (last_time === null) {
+				last_time = time;
+			} else {
+				const dt = time - last_time;
+				last_time = time;
+				if (canvas_width !== width || canvas_height !== height) {
+					sim.set_dimensions(width, height);
+					canvas_width = width;
+					canvas_height = height;
+				}
+				sim.update(dt);
+			}
 			requestAnimationFrame(loop);
 		};
 		requestAnimationFrame(loop);
