@@ -1,6 +1,6 @@
 {
-	"description": "musical Instruments",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "musical Instruments",
+	"source": ["https://github.com/dariusk/corpora"],
 	"instruments": [
 		"accordian",
 		"air horn",

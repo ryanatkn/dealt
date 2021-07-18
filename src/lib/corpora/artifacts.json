@@ -1,6 +1,6 @@
 {
-	"description": "artifact archetypes",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "artifact archetypes",
+	"source": ["https://github.com/dariusk/corpora"],
 	"artifacts": [
 		{
 			"name": "book",

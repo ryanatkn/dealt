@@ -1,6 +1,6 @@
 {
-	"description": "spices",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "spices",
+	"source": ["https://github.com/dariusk/corpora"],
 	"spices": [
 		"Aonori",
 		"Ajwain",

@@ -1,6 +1,6 @@
 {
-	"description": "ways to enter or exit a place",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "ways to enter or exit a place",
+	"source": ["https://github.com/dariusk/corpora"],
 	"passages": [
 		"avenue",
 		"conveyor",

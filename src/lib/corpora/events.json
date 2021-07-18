@@ -1,6 +1,6 @@
 {
-	"description": "archetypal events",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "archetypal events",
+	"source": ["https://github.com/dariusk/corpora"],
 	"events": [
 		{
 			"name": "arrival",

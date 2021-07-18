@@ -1,6 +1,6 @@
 {
-	"description": "vegetables",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "vegetables",
+	"source": ["https://github.com/dariusk/corpora"],
 	"vegetables": [
 		"amaranth",
 		"anise",

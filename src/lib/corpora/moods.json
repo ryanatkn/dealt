@@ -1,6 +1,6 @@
 {
-	"description": "words that naturally complete the phrase 'They were feeling...'.",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "words that naturally complete the phrase 'They were feeling...'.",
+	"source": ["https://github.com/dariusk/corpora"],
 	"moods": [
 		"abandoned",
 		"absent minded",

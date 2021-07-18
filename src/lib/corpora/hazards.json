@@ -1,7 +1,7 @@
 {
-	"description": "environmental hazards",
+	"summary": "environmental hazards",
 	"source": ["https://github.com/EnvironmentOntology/envo", "https://github.com/dariusk/corpora"],
-	"entries": [
+	"hazards": [
 		"lava flow",
 		"volcanic eruption",
 		"explosive eruption",

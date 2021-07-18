@@ -1,6 +1,6 @@
 {
-	"description": "fruits",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "fruits",
+	"source": ["https://github.com/dariusk/corpora"],
 	"fruits": [
 		"apple",
 		"apricot",

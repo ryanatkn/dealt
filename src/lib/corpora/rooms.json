@@ -1,6 +1,6 @@
 {
-	"description": "different kinds of rooms",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "different kinds of rooms",
+	"source": ["https://github.com/dariusk/corpora"],
 	"rooms": [
 		"aerary",
 		"aircraft cabin",

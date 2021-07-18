@@ -1,6 +1,6 @@
 {
-	"description": "flowers",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "flowers",
+	"source": ["https://github.com/dariusk/corpora"],
 	"flowers": [
 		"anemone",
 		"amaryllis",

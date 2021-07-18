@@ -1,6 +1,6 @@
 {
-	"description": "setting and location archetypes",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "setting and location archetypes",
+	"source": ["https://github.com/dariusk/corpora"],
 	"settings": [
 		{
 			"name": "void",

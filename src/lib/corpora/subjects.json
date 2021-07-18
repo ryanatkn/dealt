@@ -1,5 +1,5 @@
 {
-	"description": "Academic subjects",
+	"summary": "Academic subjects",
 	"source": ["https://nces.ed.gov/pubs2002/cip2000/", "https://github.com/dariusk/corpora"],
 	"subjects": [
 		"Accounting",

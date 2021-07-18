@@ -1,5 +1,5 @@
 {
-	"description": "geographic features",
+	"summary": "geographic features",
 	"source": ["https://github.com/EnvironmentOntology/envo", "https://github.com/dariusk/corpora"],
 	"features": [
 		"ocean",

@@ -1,6 +1,6 @@
 {
-	"description": "zodiac signs and associated information, Western and Eastern",
-	"source": "https://wikipedia.org/wiki/Astrological_sign",
+	"summary": "zodiac signs and associated information, Western and Eastern",
+	"source": ["https://wikipedia.org/wiki/Astrological_sign"],
 	"western_zodiac": {
 		"Aries": {
 			"longitude_start": "0",

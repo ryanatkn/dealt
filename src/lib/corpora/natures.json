@@ -1,0 +1,5 @@
+{
+	"summary": "inclinations towards goodness or badness or neutralness",
+	"source": ["https://github.com/dariusk/corpora"],
+	"natures": ["neutral", "good", "evil"]
+}

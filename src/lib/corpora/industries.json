@@ -1,5 +1,5 @@
 {
-	"description": "industries",
+	"summary": "industries",
 	"source": ["http://robertwdempsey.com/liindustries", "https://github.com/dariusk/corpora"],
 	"industries": [
 		"Accounting",

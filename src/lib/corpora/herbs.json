@@ -1,6 +1,6 @@
 {
-	"description": "herbs",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "herbs",
+	"source": ["https://github.com/dariusk/corpora"],
 	"herbs": [
 		"Angelica",
 		"Basil",

@@ -1,5 +1,5 @@
 {
-	"description": "emotion families and their states of varying intensity",
+	"summary": "emotion families and their states of varying intensity",
 	"source": ["http://atlasofemotions.org"],
 	"emotions": [
 		{

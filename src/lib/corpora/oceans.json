@@ -1,5 +1,5 @@
 {
-	"description": "oceans",
+	"summary": "oceans",
 	"source": ["http://en.wikipedia.org/wiki/List_of_seas", "https://github.com/dariusk/corpora"],
 	"oceans": ["Pacific", "Atlantic", "Indian", "Southern", "Arctic"]
 }

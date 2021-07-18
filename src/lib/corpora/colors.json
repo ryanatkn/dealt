@@ -1,6 +1,6 @@
 {
-	"description": "named HTML colors",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "named HTML colors",
+	"source": ["https://github.com/dariusk/corpora"],
 	"colors": [
 		{
 			"color": "AliceBlue",

@@ -1,5 +1,5 @@
 {
-	"description": "natural fabrics",
+	"summary": "natural fabrics",
 	"source": ["https://github.com/dariusk/corpora", "https://wikipedia.org"],
 	"fabrics": [
 		{"name": "acrylic", "source": "https://wikipedia.org/wiki/Acrylic_fiber"},

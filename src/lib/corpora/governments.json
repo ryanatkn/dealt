@@ -1,10 +1,10 @@
 {
-	"description": "forms of government",
+	"summary": "forms of government",
 	"source": [
 		"https://wikipedia.org/wiki/List_of_forms_of_government",
 		"https://github.com/dariusk/corpora"
 	],
-	"governmentForms": [
+	"governments": [
 		"autocracy",
 		"democracy",
 		"oligarchy",

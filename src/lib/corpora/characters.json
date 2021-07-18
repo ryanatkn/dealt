@@ -1,6 +1,6 @@
 {
-	"description": "common character archetypes",
-	"source": "https://github.com/dariusk/corpora",
+	"summary": "common character archetypes",
+	"source": ["https://github.com/dariusk/corpora"],
 	"characters": [
 		{
 			"name": "hero",
