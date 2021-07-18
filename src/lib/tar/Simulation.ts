@@ -1,12 +1,13 @@
-// import {Collisions, Body} from '@ryanatkn/collisions';
+import {Collisions} from '@ryanatkn/collisions';
 
 import type {Entity} from '$lib/tar/entity';
 
-// const result = Collisions.createResult();
+const result = Collisions.createResult();
 
 export class Simulation {
-	player: Entity = {name: 'player', x: 100, y: 100, speed: 10};
-	entities: Entity[] = [this.player];
+	collisions = new Collisions();
+	bodies: Entity[] = [];
+	player: Entity;
 
 	width: number = -1;
 	height: number = -1;
@@ -14,7 +15,33 @@ export class Simulation {
 	canvas: HTMLCanvasElement | null = null;
 	ctx: CanvasRenderingContext2D | null = null;
 
-	constructor() {}
+	constructor() {
+		const {collisions, bodies} = this;
+
+		// TODO factor this out
+		// create the controllable player
+		const player: Entity = collisions.createCircle(100, 100, 5) as any;
+		player.speed = 5;
+		player.direction_x = 0;
+		player.direction_y = 0;
+		bodies.push(player);
+		this.player = player;
+
+		// create some obstacles
+		const thing1: Entity = collisions.createCircle(200, 100, 30) as any;
+		thing1.speed = 5;
+		thing1.direction_x = 0;
+		thing1.direction_y = 0;
+		const thing2: Entity = collisions.createCircle(200, 200, 30) as any;
+		thing2.speed = 5;
+		thing2.direction_x = 0;
+		thing2.direction_y = 0;
+		const thing3: Entity = collisions.createCircle(100, 200, 30) as any;
+		thing3.speed = 5;
+		thing3.direction_x = 0;
+		thing3.direction_y = 0;
+		this.bodies.push(thing1, thing2, thing3);
+	}
 
 	// TODO remove 2d canvas, use WebGL instead -- Pixi?
 	set_canvas(canvas: HTMLCanvasElement): void {
@@ -41,28 +68,46 @@ export class Simulation {
 	}
 
 	// TODO
-	update(_dt: number) {
-		const {canvas, ctx, width, height, entities} = this;
-		if (!canvas || !ctx) {
-			throw Error('Expected canvas and rendering context');
+	update(dt: number) {
+		const {bodies} = this;
+
+		for (let i = 0; i < bodies.length; ++i) {
+			const body = bodies[i];
+
+			const speed = body.speed * dt;
+
+			body.x += body.direction_x! * speed;
+			body.y += body.direction_y! * speed;
+
+			// TODO fix these types in the collisions library
+			const potentials: Entity[] = body.potentials() as any;
+
+			for (const body2 of potentials) {
+				// TODO fix type to remove `as any`
+				if (body.collides(body2 as any, result)) {
+					body.x -= result.overlap! * result.overlap_x;
+					body.y -= result.overlap! * result.overlap_y;
+
+					let dot = body.direction_x! * result.overlap_y + body.direction_y! * -result.overlap_x;
+
+					body.direction_x = 2 * dot * result.overlap_y - body.direction_x!;
+					body.direction_y = 2 * dot * -result.overlap_x - body.direction_y!;
+
+					dot = body2.direction_x! * result.overlap_y + body2.direction_y! * -result.overlap_x;
+
+					body2.direction_x = 2 * dot * result.overlap_y - body2.direction_x!;
+					body2.direction_y = 2 * dot * -result.overlap_x - body2.direction_y!;
+				}
+			}
 		}
 
+		const {ctx, width, height} = this;
+		if (!ctx) throw Error('Expected rendering context');
+
 		ctx.clearRect(0, 0, width, height);
-		ctx.beginPath();
-		ctx.lineWidth = 2;
 		ctx.strokeStyle = 'cornflowerblue';
-		for (const entity of entities) {
-			ctx.moveTo(entity.x - 1, entity.y - 1);
-			ctx.lineTo(entity.x + 1, entity.y - 1);
-			ctx.lineTo(entity.x + 1, entity.y + 1);
-			ctx.lineTo(entity.x - 1, entity.y + 1);
-			ctx.lineTo(entity.x - 1, entity.y - 1);
-		}
-		ctx.moveTo(0, height / 2);
-		ctx.lineTo(100, 100);
-		ctx.lineTo(120, 120);
-		ctx.lineTo(80, 150);
-		ctx.lineTo(100, 100);
+		ctx.beginPath();
+		this.collisions.draw(ctx); // TODO probably extract out of the library
 		ctx.stroke();
 		ctx.closePath();
 	}
