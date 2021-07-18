@@ -77,27 +77,26 @@ export class Simulation {
 
 			const speed = body.speed * dt;
 
-			body.x += body.direction_x! * speed;
-			body.y += body.direction_y! * speed;
+			body.x += body.direction_x * speed;
+			body.y += body.direction_y * speed;
 
 			// TODO fix these types in the collisions library
 			const potentials: Entity[] = body.potentials() as any;
 
 			for (const body2 of potentials) {
-				// TODO fix type to remove `as any`
 				if (body.collides(body2 as any, result)) {
 					body.x -= result.overlap! * result.overlap_x;
 					body.y -= result.overlap! * result.overlap_y;
 
-					let dot = body.direction_x! * result.overlap_y + body.direction_y! * -result.overlap_x;
+					let dot = body.direction_x * result.overlap_y + body.direction_y * -result.overlap_x;
 
-					body.direction_x = 2 * dot * result.overlap_y - body.direction_x!;
-					body.direction_y = 2 * dot * -result.overlap_x - body.direction_y!;
+					body.direction_x = 2 * dot * result.overlap_y - body.direction_x;
+					body.direction_y = 2 * dot * -result.overlap_x - body.direction_y;
 
-					dot = body2.direction_x! * result.overlap_y + body2.direction_y! * -result.overlap_x;
+					dot = body2.direction_x * result.overlap_y + body2.direction_y * -result.overlap_x;
 
-					body2.direction_x = 2 * dot * result.overlap_y - body2.direction_x!;
-					body2.direction_y = 2 * dot * -result.overlap_x - body2.direction_y!;
+					body2.direction_x = 2 * dot * result.overlap_y - body2.direction_x;
+					body2.direction_y = 2 * dot * -result.overlap_x - body2.direction_y;
 				}
 			}
 		}
