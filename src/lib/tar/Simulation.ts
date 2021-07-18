@@ -69,6 +69,7 @@ export class Simulation {
 
 	// TODO
 	update(dt: number) {
+		this.collisions.update();
 		const {bodies} = this;
 
 		for (let i = 0; i < bodies.length; ++i) {
