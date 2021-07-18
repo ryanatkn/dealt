@@ -21,7 +21,7 @@ export class Simulation {
 		// TODO factor this out
 		// create the controllable player
 		const player: Entity = collisions.createCircle(100, 100, 5) as any;
-		player.speed = 5;
+		player.speed = 0.2;
 		player.direction_x = 0;
 		player.direction_y = 0;
 		bodies.push(player);
@@ -29,15 +29,15 @@ export class Simulation {
 
 		// create some obstacles
 		const thing1: Entity = collisions.createCircle(200, 100, 30) as any;
-		thing1.speed = 5;
+		thing1.speed = 0.1;
 		thing1.direction_x = 0;
 		thing1.direction_y = 0;
-		const thing2: Entity = collisions.createCircle(200, 200, 30) as any;
-		thing2.speed = 5;
+		const thing2: Entity = collisions.createCircle(180, 180, 30) as any;
+		thing2.speed = 0.1;
 		thing2.direction_x = 0;
 		thing2.direction_y = 0;
 		const thing3: Entity = collisions.createCircle(100, 200, 30) as any;
-		thing3.speed = 5;
+		thing3.speed = 0.1;
 		thing3.direction_x = 0;
 		thing3.direction_y = 0;
 		this.bodies.push(thing1, thing2, thing3);
@@ -72,26 +72,40 @@ export class Simulation {
 		this.collisions.update();
 		const {bodies} = this;
 
+		// update player direction from input
+		this.player.direction_x = this.moving_left ? -1 : this.moving_right ? 1 : 0;
+		this.player.direction_y = this.moving_up ? -1 : this.moving_down ? 1 : 0;
+
+		let speed: number;
+		let direction_x: number;
+		let direction_y: number;
+		let dot: number;
+		let potentials: Entity[];
+		let body: Entity;
+
+		// apply collisions
 		for (let i = 0; i < bodies.length; ++i) {
-			const body = bodies[i];
+			body = bodies[i];
 
-			const speed = body.speed * dt;
+			speed = body.speed * dt;
+			direction_x = body.direction_x;
+			direction_y = body.direction_y;
 
-			body.x += body.direction_x * speed;
-			body.y += body.direction_y * speed;
+			body.x += direction_x * speed;
+			body.y += direction_y * speed;
 
 			// TODO fix these types in the collisions library
-			const potentials: Entity[] = body.potentials() as any;
+			potentials = body.potentials() as any; // TODO pass in array arg, like the pattern with `result`
 
 			for (const body2 of potentials) {
 				if (body.collides(body2 as any, result)) {
 					body.x -= result.overlap! * result.overlap_x;
 					body.y -= result.overlap! * result.overlap_y;
 
-					let dot = body.direction_x * result.overlap_y + body.direction_y * -result.overlap_x;
+					dot = direction_x * result.overlap_y + direction_y * -result.overlap_x;
 
-					body.direction_x = 2 * dot * result.overlap_y - body.direction_x;
-					body.direction_y = 2 * dot * -result.overlap_x - body.direction_y;
+					body.direction_x = 2 * dot * result.overlap_y - direction_x;
+					body.direction_y = 2 * dot * -result.overlap_x - direction_y;
 
 					dot = body2.direction_x * result.overlap_y + body2.direction_y * -result.overlap_x;
 
@@ -112,32 +126,62 @@ export class Simulation {
 		ctx.closePath();
 	}
 
-	// TODO extract to input manager
-	handle_input(e: KeyboardEvent) {
-		const {key} = e;
+	// TODO extract to input manager and rewrite
+	moving_left = false;
+	moving_right = false;
+	moving_up = false;
+	moving_down = false;
+	handle_keydown(key: string) {
 		switch (key) {
 			case 'ArrowLeft':
 			case 'a': {
-				this.player.x -= this.player.speed;
+				this.moving_left = true;
 				break;
 			}
 			case 'ArrowRight':
 			case 'd': {
-				this.player.x += this.player.speed;
+				this.moving_right = true;
 				break;
 			}
 			case 'ArrowUp':
 			case 'w': {
-				this.player.y -= this.player.speed;
+				this.moving_up = true;
 				break;
 			}
 			case 'ArrowDown':
 			case 's': {
-				this.player.y += this.player.speed;
+				this.moving_down = true;
 				break;
 			}
 			default: {
-				console.log('key', key);
+				console.log('unhandled keydown', key);
+			}
+		}
+	}
+	handle_keyup(key: string) {
+		switch (key) {
+			case 'ArrowLeft':
+			case 'a': {
+				this.moving_left = false;
+				break;
+			}
+			case 'ArrowRight':
+			case 'd': {
+				this.moving_right = false;
+				break;
+			}
+			case 'ArrowUp':
+			case 'w': {
+				this.moving_up = false;
+				break;
+			}
+			case 'ArrowDown':
+			case 's': {
+				this.moving_down = false;
+				break;
+			}
+			default: {
+				console.log('unhandled keyup', key);
 			}
 		}
 	}

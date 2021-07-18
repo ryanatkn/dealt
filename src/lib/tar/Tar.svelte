@@ -10,7 +10,10 @@
 	const sim = new Simulation();
 
 	const on_keydown = (e: KeyboardEvent) => {
-		sim.handle_input(e);
+		sim.handle_keydown(e.key);
+	};
+	const on_keyup = (e: KeyboardEvent) => {
+		sim.handle_keyup(e.key);
 	};
 </script>
 
@@ -19,7 +22,7 @@
 	<Tar_Canvas {width} {height} {sim} />
 </div>
 
-<svelte:window on:keydown={on_keydown} />
+<svelte:window on:keydown={on_keydown} on:keyup={on_keyup} />
 
 <style>
 	.tar {
