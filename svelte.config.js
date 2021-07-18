@@ -6,7 +6,7 @@ export default {
 	preprocess: typescript(),
 	kit: {
 		adapter: staticAdapter(),
-		target: '#svelte',
+		target: '#root',
 		files: {assets: 'src/static'},
 		vite: {
 			ssr: {

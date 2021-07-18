@@ -1,30 +1,30 @@
 <script lang="ts">
 	import Tar_Canvas from '$lib/tar/Tar_Canvas.svelte';
+	import {Simulation} from '$lib/tar/Simulation';
 
 	let height: number;
 	let width: number;
 
-	// TODO game loop
+	// TODO game loop to drive sim
 
-	const player = {name: 'player', x: 100, y: 100, speed: 10};
-	const entities = [player];
+	const sim = new Simulation();
 
 	const on_keydown = (e: KeyboardEvent) => {
-		if (e.key === 'ArrowLeft') {
-			player.x -= player.speed;
-		} else if (e.key === 'ArrowRight') {
-			player.x += player.speed;
-		} else if (e.key === 'ArrowUp') {
-			player.y -= player.speed;
-		} else if (e.key === 'ArrowDown') {
-			player.y += player.speed;
-		} else {
-			console.log('e.key', e.key);
-		}
+		sim.handle_input(e);
 	};
 </script>
 
-<!-- TODO window width/height -->
-<Tar_Canvas {width} {height} {entities} />
+<!-- TODO maybe instead use ResizeObserver? ? -->
+<div class="tar" bind:clientHeight={height} bind:clientWidth={width}>
+	<Tar_Canvas {width} {height} {sim} />
+</div>
 
-<svelte:window bind:innerHeight={height} bind:innerWidth={width} on:keydown={on_keydown} />
+<svelte:window on:keydown={on_keydown} />
+
+<style>
+	.tar {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+</style>

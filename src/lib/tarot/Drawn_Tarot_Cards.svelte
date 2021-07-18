@@ -1,10 +1,10 @@
 <script lang="ts">
 	import {last} from '@feltcoop/felt/util/array.js';
 
-	import type {Tarot_Card} from './tarot.js';
+	import type {Tarot_Card} from '$lib/tarot/tarot.js';
 	import {to_random_shadow} from '$lib/ui/shadow';
-	import Drawn_Tarot_Card from './Drawn_Tarot_Card.svelte';
-	import Tarot_Card_Image from './Tarot_Card_Image.svelte';
+	import Drawn_Tarot_Card from '$lib/tarot/Drawn_Tarot_Card.svelte';
+	import Tarot_Card_Image from '$lib/tarot/Tarot_Card_Image.svelte';
 
 	export let cards: Tarot_Card[];
 
