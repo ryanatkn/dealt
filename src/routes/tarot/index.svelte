@@ -29,16 +29,7 @@
 		drawn_cards = [];
 		viewing_cards = [card];
 	};
-
-	const on_keydown = (e: KeyboardEvent) => {
-		if (e.key === 'Escape') {
-			drawn_cards = []; // TODO should be hide modal
-			viewing_cards = [];
-		}
-	};
 </script>
-
-<svelte:window on:keydown={on_keydown} />
 
 <main>
 	<section
@@ -55,25 +46,25 @@
 				{/each}
 			</div>
 		</div>
-		{#if drawn_cards.length}
-			<Overlay close={() => (drawn_cards = [])}>
-				<Drawn_Tarot_Cards cards={drawn_cards} />
-			</Overlay>
-		{/if}
-		{#if viewing_cards.length}
-			<Overlay close={() => (viewing_cards = [])}>
-				{#each viewing_cards as card (card.id)}
-					<Tarot_Card_Detail {card} />
-					{#if card !== last_viewing_card}
-						<hr />
-					{/if}
-				{/each}
-			</Overlay>
-		{/if}
 	</section>
 	<section>
 		<Footer />
 	</section>
+	{#if drawn_cards.length}
+		<Overlay close={() => (drawn_cards = [])}>
+			<Drawn_Tarot_Cards cards={drawn_cards} />
+		</Overlay>
+	{/if}
+	{#if viewing_cards.length}
+		<Overlay close={() => (viewing_cards = [])}>
+			{#each viewing_cards as card (card.id)}
+				<Tarot_Card_Detail {card} />
+				{#if card !== last_viewing_card}
+					<hr />
+				{/if}
+			{/each}
+		</Overlay>
+	{/if}
 </main>
 
 <style>

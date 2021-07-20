@@ -13,15 +13,23 @@
 	// TODO see this issue for other possible implementations:
 	// https://github.com/sveltejs/svelte/issues/3105
 	onMount(() => {
-		// TODO I think SvelteKit's adding `tabindex` is causing keyboard scrolling to break
-		// super hacky but w/e, and still doesn't work with keyboard until overlay is clicked (focus doesn't work?)
+		// TODO using `body` here doesn't mesh with `absolute` positioning (so it only works fullscreen right now)
+		// maybe we should parameterize the component by its container, and mount it there (how? a selector? what about SSR?)
 		document.body.classList.add('noscroll');
 		el.focus();
 		return () => {
 			document.body.classList.remove('noscroll');
 		};
 	});
+
+	const on_keydown = (e: KeyboardEvent) => {
+		if (e.key === 'Escape') {
+			close();
+		}
+	};
 </script>
+
+<svelte:window on:keydown={on_keydown} />
 
 <!-- TODO maybe instead of stopping propagation on the pane, check the target -->
 <div class="overlay" on:click={close} bind:this={el} tabindex="-1">
@@ -43,7 +51,7 @@
 		overflow-y: scroll;
 		height: 100%;
 		width: 100%;
-		position: fixed;
+		position: absolute;
 		left: 0;
 		top: 0;
 		background-color: var(--bg_color_overlay);
