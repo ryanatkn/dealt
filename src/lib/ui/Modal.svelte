@@ -3,8 +3,6 @@
 
 	export let close: () => void;
 
-	// TODO rename to Modal?
-	// TODO close with escape key
 	// TODO extract ModalContent?
 	// TODO mount transition animation
 
@@ -23,6 +21,7 @@
 	});
 
 	const on_keydown = (e: KeyboardEvent) => {
+		// TODO check input?
 		if (e.key === 'Escape') {
 			close();
 		}
@@ -32,6 +31,7 @@
 <svelte:window on:keydown={on_keydown} />
 
 <!-- TODO maybe instead of stopping propagation on the pane, check the target -->
+<!-- the `tabindex` enables scrolling because SvelteKit puts it on the body -->
 <div class="modal" on:click={close} bind:this={el} tabindex="-1">
 	<div class="pane-wrapper">
 		<div class="pane" on:click|stopPropagation>
