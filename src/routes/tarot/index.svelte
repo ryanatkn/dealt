@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Overlay from '$lib/ui/Overlay.svelte';
+	import Modal from '$lib/ui/Modal.svelte';
 	import Footer from '$lib/ui/Footer.svelte';
 	import {last} from '@feltcoop/felt/util/array.js';
 
@@ -51,19 +51,19 @@
 		<Footer />
 	</section>
 	{#if drawn_cards.length}
-		<Overlay close={() => (drawn_cards = [])}>
+		<Modal close={() => (drawn_cards = [])}>
 			<Drawn_Tarot_Cards cards={drawn_cards} />
-		</Overlay>
+		</Modal>
 	{/if}
 	{#if viewing_cards.length}
-		<Overlay close={() => (viewing_cards = [])}>
+		<Modal close={() => (viewing_cards = [])}>
 			{#each viewing_cards as card (card.id)}
 				<Tarot_Card_Detail {card} />
 				{#if card !== last_viewing_card}
 					<hr />
 				{/if}
 			{/each}
-		</Overlay>
+		</Modal>
 	{/if}
 </main>
 

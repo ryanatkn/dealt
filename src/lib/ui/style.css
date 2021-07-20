@@ -8,7 +8,7 @@
 	--light_hue: 105;
 	--shadow_hue: 303;
 	--bg_color: hsl(var(--shadow_hue), 100%, 2%);
-	--bg_color_overlay: hsla(var(--shadow_hue), 100%, 2%, 0.65);
+	--bg_color_modal: hsla(var(--shadow_hue), 100%, 2%, 0.65);
 	--bg_color_backdrop: hsla(var(--shadow_hue), 100%, 2%, 0.8);
 	--bg_color_fg: hsla(var(--shadow_hue), 100%, 98%, 0.08);
 	--border_color: hsla(var(--shadow_hue), 100%, 98%, 0.2);

@@ -5,7 +5,7 @@
 
 	// TODO rename to Modal?
 	// TODO close with escape key
-	// TODO extract OverlayContent?
+	// TODO extract ModalContent?
 	// TODO mount transition animation
 
 	let el: HTMLElement;
@@ -32,7 +32,7 @@
 <svelte:window on:keydown={on_keydown} />
 
 <!-- TODO maybe instead of stopping propagation on the pane, check the target -->
-<div class="overlay" on:click={close} bind:this={el} tabindex="-1">
+<div class="modal" on:click={close} bind:this={el} tabindex="-1">
 	<div class="pane-wrapper">
 		<div class="pane" on:click|stopPropagation>
 			<slot />
@@ -41,20 +41,15 @@
 </div>
 
 <style>
-	.overlay {
-		/*
-			this keeps the overlay centered over the content,
-			assuming the main app container has a scrollbar.
-			(which it always does in this app, so far)
-			TODO really, this should match the detected scrollbar state of the app container
-		*/
+	.modal {
 		overflow-y: scroll;
 		height: 100%;
 		width: 100%;
 		position: absolute;
 		left: 0;
 		top: 0;
-		background-color: var(--bg_color_overlay);
+		/* TODO different variable name */
+		background-color: var(--bg_color_modal);
 	}
 	.pane-wrapper {
 		/* this extra layer is needed because padding and scroll bars get wonky */
@@ -66,6 +61,7 @@
 	}
 	.pane {
 		max-width: 800px; /* TODO max-column-width */
+		/* TODO different variable name */
 		background-color: var(--bg_color_backdrop);
 		border: 1px solid var(--border_color);
 		box-shadow: 4px 12px 24px var(--bg_color_backdrop); /* TODO does this perform ok on all devices? */
