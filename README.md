@@ -87,7 +87,7 @@ by Stefan Hedman ([@schteppe](https://github.com/schteppe),
 [Moss](https://github.com/ryanatkn/moss) ∙
 [Fuz](https://github.com/ryanatkn/fuz) ∙
 [Gro](https://github.com/ryanatkn/gro) ∙
-[@ryanatkn/belt](https://github.com/ryanatkn/belt) ∙
+[@ryanatkn/belt](https://github.com/ryanatkn/belt)
 & [more](package.json)
 
 ## License [🐦](https://wikipedia.org/wiki/Free_and_open-source_software)
