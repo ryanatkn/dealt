@@ -2,7 +2,7 @@
 	import type {Controller} from '$lib/controller.svelte.js';
 	import Global_Keyboard_Input from '$lib/Global_Keyboard_Input.svelte';
 	import Global_Gamepad_Input from '$lib/Global_Gamepad_Input.svelte';
-	import {editor_context} from './editor.svelte.js';
+	import {editor_context} from '$lib/editor.svelte.js';
 
 	interface Props {
 		controller?: Controller;

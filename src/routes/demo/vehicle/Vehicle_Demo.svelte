@@ -22,7 +22,7 @@
 	import {renderer_components} from '$lib/renderer_components.js';
 	import {Editor, editor_context} from '$lib/editor.svelte.js';
 	import {parse_project_json} from '$lib/project.svelte.js';
-	import User_Input_Info from '$lib/User_Input_Info.svelte';
+	import Help_Button from '$lib/Help_Button.svelte';
 
 	// TODO end state reached by pushing all harmful units offscreen.
 	// Need a polygon for the interior bounds (if it doesn't already exist?) -
@@ -46,23 +46,24 @@
 	scene.json_initial = scene.json; // TODO @many hacky, need to shake out the serialization/saving/initial data/resetting flows in all of the objects
 
 	onMount(() => {
-		const unwatch = clock.watch(onupdate);
-		clock.start();
+		const was_playing = editor.playing;
+		editor.playing = true; // TODO hacky
+		editor.player_input_enabled = false; // TODO @many hack to disable player input for some demos
+		const unwatch = scene.onupdate(onupdate);
 		return () => {
 			unwatch();
-			clock.stop();
+			editor.playing = was_playing;
+			editor.player_input_enabled = true; // TODO @many hack to disable player input for some demos
 		};
 	});
 
-	const onupdate = (dt: number) => {
-		const players = scene.filter_units_by_behavior('Player_Controller_Behavior');
-		if (players) {
-			for (const player of players) {
+	const onupdate = (_dt: number) => {
+		if (editor.players) {
+			for (const player of editor.players) {
 				handle_input(player);
 				process_game_logic(player);
 			}
 		}
-		scene.update(dt);
 	};
 
 	const handle_input = (player: Unit) => {
@@ -128,7 +129,7 @@
 					/>
 				{/if}
 			</div>
-			<p class="mt_lg width_sm"><User_Input_Info edit /></p>
+			<p class="mt_lg width_sm"><Help_Button /></p>
 		</div>
 		{#if editor.editing}
 			<div class="controls_wrapper">

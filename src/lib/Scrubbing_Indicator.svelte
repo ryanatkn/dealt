@@ -53,7 +53,7 @@
 	line {
 		stroke: var(--color_d_3);
 		stroke-width: var(--border_width_4);
-		box-shadow: var(--shadow_xl) var(--shadow_f_md);
+		/* TODO box shadow? */
 		opacity: var(--fade_2);
 	}
 </style>

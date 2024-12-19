@@ -18,6 +18,7 @@ import {Point} from '$lib/point.js';
 import {Polygon} from '$lib/polygon.js';
 import {colliding} from '$lib/colliding.js';
 import type {Project} from '$lib/project.svelte.js';
+import type {Editor} from '$lib/editor.svelte.js';
 
 export type Scene_Id = Id | Flavored<number, 'Scene_Id'>;
 
@@ -130,6 +131,7 @@ export class Scene implements Serializable<Scene_Json> {
 
 	readonly project: Project;
 	// These are all copied from the `project` for convenience.
+	readonly editor: Editor;
 	readonly clock: Clock;
 	readonly renderer: Renderer;
 	readonly collisions: Collisions;
@@ -143,6 +145,7 @@ export class Scene implements Serializable<Scene_Json> {
 		const {project, scene_json} = options;
 
 		this.project = project;
+		this.editor = project.editor;
 		this.clock = project.clock;
 		this.renderer = project.renderer;
 		this.collisions = project.collisions;
@@ -243,7 +246,7 @@ export class Scene implements Serializable<Scene_Json> {
 	};
 
 	exit(): void {
-		alert('you reached the portal! but it just loops you back to the start... for now'); // eslint-disable-line no-alert
+		alert('you reached the portal! but it just loops you back to the start.. for now'); // eslint-disable-line no-alert
 		this.controller.reset(); // TODO @many hack - keyup isn't running with the alert, so this is just a quick fix
 		this.reset();
 	}
@@ -284,18 +287,45 @@ export class Scene implements Serializable<Scene_Json> {
 		// }
 		// this.time += dt; // TODO maybe don't track this on the stage? clock?
 
-		this.controller.update(dt);
+		const {editor, controller} = this;
+
+		controller.update(dt);
+
+		// TODO hacky
+		if (editor.players && editor.player_input_enabled) {
+			for (const player of editor.players) {
+				if (!player.dead) {
+					player.direction_x = controller.moving_x;
+					player.direction_y = controller.moving_y;
+				}
+				player.teleporting_x = controller.teleporting_x ?? 0;
+				player.teleporting_y = controller.teleporting_y ?? 0;
+			}
+		}
+
+		// TODO @many this is a hack copied over from the clock to let demos properly sequence updates
+		for (const cb of this.callbacks) {
+			cb(dt);
+		}
 
 		this.simulation.update(this.units, dt, handle_collision);
-
-		// console.log(`[scene] update`, this.time);
 
 		// TODO how to do this? systems?
 		for (const unit of this.units) {
 			unit.update(dt);
 		}
-		// Item.draw_queue.clear();
-		// if (this.needs_draw_mask) this.draw_mask();
+
+		// console.log(`[scene] update`, this.time);
+	}
+
+	// TODO @many this is a hack copied over from the clock to let demos properly sequence updates
+	callbacks: Set<Scene_Update_Callback> = new Set();
+	onupdate(callback: Scene_Update_Callback): () => void {
+		this.callbacks.add(callback);
+		return () => this.unwatch(callback);
+	}
+	unwatch(callback: Scene_Update_Callback): void {
+		this.callbacks.delete(callback);
 	}
 
 	// TODO id lookup?
@@ -372,6 +402,9 @@ export class Scene implements Serializable<Scene_Json> {
 		return this.units.filter((unit) => colliding(selection_polygon, unit.body));
 	};
 }
+
+// TODO @many this is a hack copied over from the clock to let demos properly sequence updates
+export type Scene_Update_Callback = (dt: number) => void;
 
 export type Unit_Filter = (unit: Unit, index: number, array: Array<Unit>) => boolean;
 

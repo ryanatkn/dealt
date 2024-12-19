@@ -14,7 +14,7 @@
 	import Fps_Indicator from '$lib/Fps_Indicator.svelte';
 	import type {Editor} from '$lib/editor.svelte.js';
 	import Project_Renderer from '$lib/Project_Renderer.svelte';
-	import User_Input_Info from './User_Input_Info.svelte';
+	import Help_Button from '$lib/Help_Button.svelte';
 
 	// TODO border or some other active highlight on hover
 
@@ -59,7 +59,7 @@
 				<Fps_Indicator />
 			</div>
 			<Scene_Controls {project} />
-			<div class="row align_items_stretch shadow_inset_xs">
+			<div class="row align_items_stretch shadow_inset_xs pl_md">
 				{#each renderer_types as renderer_type (renderer_type)}
 					<button
 						type="button"
@@ -74,7 +74,7 @@
 			</div>
 			<div class="row pl_md">
 				<span>
-					<User_Input_Info play edit />
+					<Help_Button />
 				</span>
 			</div>
 		</div>

@@ -21,7 +21,7 @@ import type {Controller} from '$lib/controller.svelte.js';
 import {create_scene_empty} from '$lib/scenes.js';
 import type {App} from '$lib/app.svelte.js';
 import {load_from_storage, set_in_storage} from '$lib/storage.js';
-import type {Editor} from './editor.svelte.js';
+import type {Editor} from '$lib/editor.svelte.js';
 
 export type Project_Id = Id | Flavored<number, 'Project_Id'>;
 

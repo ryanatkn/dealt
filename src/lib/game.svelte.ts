@@ -1,5 +1,5 @@
 import type {Serializable} from '$lib/serializable.js';
-import type {Project} from './project.svelte.js';
+import type {Project} from '$lib/project.svelte.js';
 
 // TODO implement - need to clarify relationship with `Project` and `Editor`
 

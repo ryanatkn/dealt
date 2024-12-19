@@ -208,17 +208,7 @@ export class Editor implements Serializable<Editor_Json> {
 	// TODO refactor (with demos too)
 	// TODO need to separate fixed and framerate-based updaters
 	update = (dt: number): void => {
-		const {scene, controller} = this.project;
-		// TODO hacky
-		if (this.players) {
-			for (const player of this.players) {
-				player.direction_x = controller.moving_x;
-				player.direction_y = controller.moving_y;
-				player.teleporting_x = controller.teleporting_x ?? 0;
-				player.teleporting_y = controller.teleporting_y ?? 0;
-			}
-		}
-		scene.update(dt);
+		this.project.scene.update(dt);
 	};
 
 	play_level = (): void => {
@@ -242,6 +232,8 @@ export class Editor implements Serializable<Editor_Json> {
 	players: Array<Unit> | undefined = $derived(
 		this.project.scene.filter_units_by_behavior('Player_Controller_Behavior'),
 	);
+
+	player_input_enabled = $state(true); // TODO @many hack to disable player input for some demos
 
 	toggle_playing = (): void => {
 		if (this.playing) {

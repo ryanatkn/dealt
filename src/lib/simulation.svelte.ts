@@ -25,11 +25,12 @@ export class Simulation {
 
 		var unit_speed: number;
 
-		// simulate each entitity
-		// TODO consider batching by component (ECS)
+		// TODO needs a lot of work
+		// run the sim for each entitity
 		for (const unit of units) {
 			// if (e.disable_simulation) continue;
 
+			// TODO hacky just to get some basic behavior
 			if (!unit.dead) {
 				unit_speed = unit.speed * final_dt;
 				if (unit_speed !== 0) {
@@ -48,7 +49,7 @@ export class Simulation {
 
 			for (const body of unit.body.potentials()) {
 				if (colliding(unit.body, body, cr)) {
-					// TODO refactor both the collision logic and removal, should have a "dead" state or behavior
+					// TODO abysmal hack, refactor both the collision logic and removal, should have a "dead" state or behavior
 					if (
 						body.unit.behaviors.has('Harmful_Behavior') &&
 						unit.behaviors.has('Player_Controller_Behavior')

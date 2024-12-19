@@ -16,6 +16,7 @@
 	import {Renderer} from '$lib/renderer.svelte.js';
 	import {parse_project_json} from '$lib/project.svelte.js';
 	import Fps_Indicator from '$lib/Fps_Indicator.svelte';
+	import Help_Button from '$lib/Help_Button.svelte';
 	import {Editor, editor_context} from '$lib/editor.svelte.js';
 	import {renderer_components} from '$lib/renderer_components.js';
 	import {clock_context} from '$lib/clock.svelte.js';
@@ -23,7 +24,6 @@
 	const renderer = new Renderer(renderer_components, 'pixi', 0, 0);
 
 	const app = app_context.set(new App({renderer}));
-	const {clock} = app;
 	clock_context.set(app.clock);
 	if (BROWSER) (globalThis as any).app = app;
 	// TODO @many add game
@@ -38,25 +38,12 @@
 	scene.json_initial = scene.json; // TODO @many hacky, need to shake out the serialization/saving/initial data/resetting flows in all of the objects
 
 	onMount(() => {
-		const unwatch = clock.watch(onupdate);
-		clock.start();
+		const was_playing = editor.playing;
+		editor.playing = true; // TODO hacky
 		return () => {
-			unwatch();
-			clock.stop();
+			editor.playing = was_playing;
 		};
 	});
-
-	const onupdate = (dt: number) => {
-		const players = scene.filter_units_by_behavior('Player_Controller_Behavior');
-		if (players) {
-			for (const player of players) {
-				if (player.dead) continue;
-				player.direction_x = scene.controller.moving_x;
-				player.direction_y = scene.controller.moving_y;
-			}
-		}
-		scene.update(dt);
-	};
 </script>
 
 <Dealt>
@@ -95,9 +82,12 @@
 						<Scene_Controls {project} />
 						<Fps_Indicator />
 					</div>
-					<Renderer_Controls {renderer} omit_size row />
+					<div class="row gap_md">
+						<Renderer_Controls {renderer} omit_size row />
+						<Help_Button />
+					</div>
 					<!-- TODO add a help button that shows the `Help_Dialog` -->
-					<!-- <p class="mt_lg"><User_Input_Info /></p> -->
+					<!-- <p class="mt_lg"><Help_Button /></p> -->
 					<div class="row mt_xs">
 						<Unit_Layers_Controls {editor} />
 					</div>

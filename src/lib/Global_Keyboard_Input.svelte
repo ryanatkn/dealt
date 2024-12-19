@@ -3,7 +3,6 @@
 
 	import type {Controller} from '$lib/controller.svelte.js';
 	import {editor_context} from '$lib/editor.svelte.js';
-	import {app_context} from '$lib/app.svelte.js';
 	import {enable_global_hotkeys} from '$lib/dom.js';
 
 	// TODO shift+click on the unit lists/layers should add them
@@ -15,7 +14,6 @@
 
 	const {controller}: Props = $props();
 
-	const app = app_context.get();
 	const editor = editor_context.get();
 
 	const onkeydown = (e: KeyboardEvent) => {
@@ -41,15 +39,6 @@
 			return;
 		} else if (key === '~' && !ctrlKey && !altKey) {
 			editor.editing = !editor.editing;
-			swallow(e);
-			return;
-		} else if (key === 'Escape' && !ctrlKey && !altKey) {
-			// TODO use `Dialogs`
-			if (editor.show_scene_menu) {
-				editor.show_scene_menu = false;
-			} else {
-				app.toggle_main_menu();
-			}
 			swallow(e);
 			return;
 		}

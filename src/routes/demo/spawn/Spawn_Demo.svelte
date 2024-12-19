@@ -12,7 +12,7 @@
 	import Scrubbable_Input from '$lib/Scrubbable_Input.svelte';
 	import Scene_Controls from '$lib/Scene_Controls.svelte';
 	import Renderer_Controls from '$lib/Renderer_Controls.svelte';
-	import User_Input_Info from '$lib/User_Input_Info.svelte';
+	import Help_Button from '$lib/Help_Button.svelte';
 	import {Renderer} from '$lib/renderer.svelte.js';
 	import {SPEED_DEFAULT, STRENGTH_MAX, Unit, type Unit_Scale} from '$lib/unit.svelte.js';
 	import Scene_Renderer from '$lib/Scene_Renderer.svelte';
@@ -41,7 +41,7 @@
 	);
 
 	const app = app_context.set(new App({renderer}));
-	const {clock, simulation} = app;
+	const {simulation} = app;
 	clock_context.set(app.clock);
 	if (BROWSER) (globalThis as any).app = app;
 	// TODO @many add game
@@ -72,11 +72,12 @@
 	// TODO select movement/collision behavior
 
 	onMount(() => {
-		const unwatch = clock.watch(onupdate);
-		clock.start();
+		const was_playing = editor.playing;
+		editor.playing = true; // TODO hacky
+		const unwatch = scene.onupdate(onupdate);
 		return () => {
 			unwatch();
-			clock.stop();
+			editor.playing = was_playing;
 		};
 	});
 
@@ -170,7 +171,7 @@
 		untrack(() => create_units(c, s, w, h));
 	});
 
-	const onupdate = (dt: number) => {
+	const onupdate = (_dt: number) => {
 		// console.log('[Spawn_Demo] onupdate');
 
 		for (let i = 0; i < scene.units.length; ++i) {
@@ -202,8 +203,6 @@
 				}
 			}
 		}
-
-		scene.update(dt);
 	};
 
 	const create_shape = (
@@ -339,7 +338,7 @@
 			{/if}
 		</div>
 		<p class="mt_lg">
-			<User_Input_Info no_movement edit />
+			<Help_Button />
 		</p>
 		<div>
 			<div>pointer_x: {editor.scene_interaction_surface_state.pointer_x}px</div>
