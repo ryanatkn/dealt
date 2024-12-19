@@ -75,6 +75,10 @@ by Stefan Hedman ([@schteppe](https://github.com/schteppe),
 [MIT](https://github.com/schteppe/poly-decomp.js/blob/master/LICENSE),
 [steffe.se](https://steffe.se)).
 
+Dealt's starting point was largely inspired by Amelia Wattenberger's
+[svg.wtf](https://svg.wtf/)
+([@wattenberger](https://github.com/wattenberger), [wattenberger.com](https://wattenberger.com/)).
+
 [PixiJS](https://github.com/pixijs/pixijs) ∙
 [Svelte](https://github.com/sveltejs/svelte) ∙
 [SvelteKit](https://github.com/sveltejs/kit) ∙
