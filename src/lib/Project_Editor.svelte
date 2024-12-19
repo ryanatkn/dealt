@@ -145,6 +145,7 @@
 		height: 100%;
 		padding: var(--space_xs) var(--space_md);
 		white-space: nowrap;
+		flex-shrink: 0;
 	}
 
 	.content {
