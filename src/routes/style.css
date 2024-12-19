@@ -67,3 +67,9 @@ input,
 select {
 	--border_radius: 2px;
 }
+
+.pane {
+	box-shadow: var(--shadow_bottom_md)
+		color-mix(in hsl, var(--shadow_color_f) var(--shadow_alpha_2), transparent);
+	border: var(--border_width) var(--border_style) var(--border_color_1);
+}

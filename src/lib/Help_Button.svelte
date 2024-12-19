@@ -18,7 +18,7 @@
 
 {#if show_dialog}
 	<Dialog onclose={() => (show_dialog = false)}>
-		<div class="content">
+		<div class="content pane">
 			<h2 class="mt_0">Global controls</h2>
 			{#if editor.player_input_enabled}
 				<p><strong>WASD</strong> and <strong>arrow keys</strong> to move the player</p>
@@ -44,11 +44,6 @@
 
 <style>
 	.content {
-		background-color: var(--bg);
 		padding: var(--space_md);
-		border-radius: var(--radius_sm);
-		border: var(--border_width) var(--border_style) var(--border_color_1);
-		box-shadow: var(--shadow_bottom_lg)
-			color-mix(in hsl, var(--shadow_color_f) var(--shadow_alpha_2), transparent);
 	}
 </style>
