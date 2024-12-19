@@ -1,147 +1,81 @@
-# @ryanatkn/fuz_template ❄
+# Dealt
 
-[<img src="/static/logo.svg" alt="a friendly pixelated spider facing you" align="right" width="192" height="192">](https://template.fuz.dev/)
+> toy 2D web game engine with a focus on topdown action RPGs 🔮
 
-> a static web app and Node library template with
-> [TypeScript](https://github.com/microsoft/TypeScript),
-> [Svelte](https://github.com/sveltejs/svelte),
-> [SvelteKit](https://github.com/sveltejs/kit),
-> [Vite](https://github.com/vitejs/vite),
-> [esbuild](https://github.com/evanw/esbuild),
-> [Fuz](https://github.com/ryanatkn/fuz),
-> and [Gro](https://github.com/ryanatkn/gro)
+[**dealt.dev**](https://www.dealt.dev/)
 
-[**template.fuz.dev**](https://template.fuz.dev/)
+> ⚠️ Dealt is pre-alpha and still experimenting with different patterns. (it's messy)
+> If you're interested in the code or design I'm seeking collaborators!
+> The first release took about a month of full-time work spread over 5 months,
+> and I plan to work on it long-term as a hobby and make games.
 
-## contents
+## About
 
-- [SvelteKit](https://github.com/sveltejs/kit) with [Svelte](https://github.com/sveltejs/svelte) and
-  [Vite](https://github.com/vitejs/vite)
-- [Moss](https://github.com/ryanatkn/moss): CSS framework and design system based on style variables
-- [Fuz](https://github.com/ryanatkn/fuz):
-  - Svelte UI library - [fuz.dev](https://www.fuz.dev/)
-  - is optional, to remove, `npm uninstall @ryanatkn/fuz` and delete the imports
-- [Gro](https://github.com/ryanatkn/gro):
-  - extends [SvelteKit](https://github.com/sveltejs/kit) and
-    [Vite](https://github.com/vitejs/vite)
-  - integrated [TypeScript](https://github.com/microsoft/TypeScript)
-    with [Svelte](https://github.com/sveltejs/svelte) and
-    [svelte-check](https://github.com/sveltejs/language-tools/tree/master/packages/svelte-check)
-  - testing with [uvu](https://github.com/lukeed/uvu)
-  - formatting with [Prettier](https://github.com/prettier/prettier)
-  - linting with [ESLint](https://github.com/eslint/eslint)
-    and [`@ryanatkn/eslint-config`](https://github.com/ryanatkn/eslint-config)
-  - also has [a task system](https://github.com/ryanatkn/gro/blob/main/src/lib/docs/task.md)
-    with a bunch of [builtins](https://github.com/ryanatkn/gro/blob/main/src/lib/docs/tasks.md),
-    [codegen](https://github.com/ryanatkn/gro/blob/main/src/lib/docs/gen.md),
-    and [other things](https://github.com/ryanatkn/gro/tree/main/src/lib/docs)
-- optional [utilities library `@ryanatkn/belt`](https://github.com/ryanatkn/belt)
+Dealt is a toy 2D web game engine that's designed primarily for topdown action RPGs.
+It's in early development and being built in public.
 
-## usage
+Dealt's goal is to be flexible for a variety of usecases,
+and have batteries included for super fun 2D action RPGs.
+These batteries can be ignored to create completely custom experiences
+like visualizations and simulations and websites with zap.
+The plan is to create a compelling game at the same time as its engine and editor.
 
-This project uses [SvelteKit](https://kit.svelte.dev/) with the static adapter
-and [Vite](https://vitejs.dev/),
-so the normal commands like `vite dev` work as expected.
-It also uses [Gro](https://github.com/ryanatkn/gro)
-for tasks like deploying and more.
+Players can create custom levels and mods along with full games,
+both with a drag-and-drop interface and using Dealt as a library in a dev environment.
 
-**⚠️ Important,** this template is designed for **public** open source projects.
-Its `package.json` has `"public": true` by default,
-which [tells Gro](https://github.com/ryanatkn/gro/blob/main/src/lib/docs/gro_plugin_sveltekit_frontend.md#well_known_package_json)
-to publish the `package.json` and a map of its `src/` directory
-to `static/.well-known/` during the build.
-This can leak sensitive information if you are not careful ⚠️
-To disable the feature, edit [package.json](/package.json):
+The tech:
 
-```diff
-// package.json
-- "public": true, // remove this to disable the public `.well-known` files
-+ "private": true, // if you want to disable npm publishing, add this
-```
+- UI with [Svelte](https://github.com/sveltejs/svelte)
+- TypeScript with a static SvelteKit frontend
+- GPU-accelerated rendering with [PixiJS](https://github.com/pixijs/pixijs)
+- efficient customizable arcade physics
+  based on [`collisions`](https://github.com/sinova/collisions)
+  and [`poly-decomp`](https://github.com/schteppe/poly-decomp.js)
+  (as integrated custom forks)
+- best-effort rendering compatibility with SVG in Svelte, raw SVG, and
+  [2D canvas](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
 
-> [Windows will not be suported](https://github.com/ryanatkn/fuz_template/issues/4)
-> because I chose Bash instead - [WSL](https://docs.microsoft.com/en-us/windows/wsl/about) works
+For programmers, Dealt is also an open source library (not yet published, will be soon)
+that exports its internals for custom usage in TypeScript and Svelte.
+Despite its focus on a particular kind of action RPG,
+Dealt also aims to be a flexible tool for making many kinds of experiences.
+Don't let my choices limit you!
+(hard limits include my choosing the web, two dimensions,
+Svelte, TypeScript, and <a href="https://pixijs.com/">PixiJS</a>)
 
-If you're logged into GitHub, click "Use this template" above or clone with
-[`degit`](https://github.com/Rich-Harris/degit):
+Visit [dealt.dev](https://www.dealt.dev/) to play around 🔮
 
-```bash
-npx degit ryanatkn/fuz_template cooltoy
-cd cooltoy
-npm i
-# then
-vite dev
-# or
-npm run dev
-# or
-gro dev # npm i -g @ryanatkn/gro
-gro sync # called by `gro dev`, refreshes generated files and calls `svelte-kit sync`
-```
+## Limitations
 
-> learn more about [SvelteKit](https://github.com/sveltejs/kit),
-> [Vite](https://github.com/vitejs/vite), [Gro](https://github.com/ryanatkn/gro),
-> and [Fuz](https://github.com/ryanatkn/fuz)
+- this is a toy, not a professional-grade game engine,
+  but in the distant future I hope to release commercial games with it
+- the editor will not support mobile devices and small screens for development,
+  but it will be possible to make mobile-friendly experiences for players
+- 2D rendering and physics
 
-The template includes
-[`@sveltejs/adapter-static`](https://github.com/sveltejs/kit/tree/master/packages/adapter-static)
-so it can [deploy](https://github.com/ryanatkn/gro/blob/main/src/lib/docs/deploy.md)
-with no further configuration.
-To learn how to swap it out for another deployment target, see
-[the SvelteKit adapter docs](https://kit.svelte.dev/docs#adapters).
+## Goals
 
-To make it your own, change `@ryanatkn/fuz_template` and `template.fuz.dev`
-to your project name in the following files:
+- create and share games in the browser with no server needed,
+  including arbitrary code extensions
+- unify the development and play experiences,
+  where the editor can be attached to a running game for realtime modifications,
+  but players don't pay the cost of the editor by default
+- snapshot game state and resume from any point (for development, debugging, and gameplay)
+- seamless UX between gameplay and web content (like the game wiki could be ingame,
+  and websites can be made with the game content rendered in various ways)
+- fun
 
-- [`package.json`](package.json)
-- [`svelte.config.js`](svelte.config.js)
-- [`src/routes/+layout.svelte`](src/routes/+layout.svelte)
-- [`src/routes/+page.svelte`](src/routes/+page.svelte)
-- update or delete [`src/static/CNAME`](src/static/CNAME)
-  and [.github/FUNDING.yml](.github/FUNDING.yml)
+## Credits 🐢<sub>🐢</sub><sub><sub>🐢</sub></sub>
 
-Then run `npm i` to update `package-lock.json`.
+Adapts [`collisions`](https://github.com/sinova/collisions)
+by Sinova ([@sinova](https://github.com/sinova),
+[MIT](https://github.com/Sinova/Collisions/blob/master/LICENSE))
+and [`poly-decomp`](https://github.com/schteppe/poly-decomp.js) by
+by Stefan Hedman ([@schteppe](https://github.com/schteppe),
+[MIT](https://github.com/schteppe/poly-decomp.js/blob/master/LICENSE),
+[steffe.se](https://steffe.se)).
 
-Optionally add a [license file](https://choosealicense.com/)
-and [`package.json` value](https://spdx.org/licenses/), like `"license": "MIT"`.
-
-## build
-
-```bash
-npm run build
-# or
-gro build
-```
-
-See [Gro's build docs](https://github.com/ryanatkn/gro/blob/main/src/lib/docs/build.md) for more.
-
-## test
-
-```bash
-npm test
-# or
-gro test
-gro test filepattern1 filepatternB
-gro test -- uvu --forwarded_args 'to uvu'
-```
-
-See [uvu](https://github.com/lukeed/uvu),
-[`src/lib/example.test.ts`](src/lib/example.test.ts),
-and [Gro's test docs](https://github.com/ryanatkn/gro/blob/main/src/lib/docs/test.md) for more.
-
-## deploy
-
-[Deploy](https://github.com/ryanatkn/gro/blob/main/src/lib/docs/deploy.md)
-(build, commit, and push) to the `deploy` branch, e.g. for GitHub Pages:
-
-```bash
-npm i -D @sveltejs/package # enables Gro's library plugin by default
-npm run deploy
-# or
-gro deploy
-```
-
-## credits 🐢<sub>🐢</sub><sub><sub>🐢</sub></sub>
-
+[PixiJS](https://github.com/pixijs/pixijs) ∙
 [Svelte](https://github.com/sveltejs/svelte) ∙
 [SvelteKit](https://github.com/sveltejs/kit) ∙
 [Vite](https://github.com/vitejs/vite) ∙
@@ -157,4 +91,6 @@ gro deploy
 [Zod](https://github.com/colinhacks/zod) ∙
 & [more](package.json)
 
-## [🐦](https://wikipedia.org/wiki/Free_and_open-source_software)
+## License [🐦](https://wikipedia.org/wiki/Free_and_open-source_software)
+
+[MIT](LICENSE)

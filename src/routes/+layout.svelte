@@ -5,12 +5,8 @@
 	import '$routes/style.css';
 
 	import Themed from '@ryanatkn/fuz/Themed.svelte';
-	import Dialog from '@ryanatkn/fuz/Dialog.svelte';
-	import Contextmenu_Root from '@ryanatkn/fuz/Contextmenu_Root.svelte';
-	import {contextmenu_action} from '@ryanatkn/fuz/contextmenu_state.svelte.js';
 	import type {Snippet} from 'svelte';
-
-	import Settings from '$routes/Settings.svelte';
+	import {sync_color_scheme, Themer} from '@ryanatkn/fuz/theme.svelte.js';
 
 	interface Props {
 		children: Snippet;
@@ -18,47 +14,15 @@
 
 	const {children}: Props = $props();
 
-	let show_settings = $state(false);
+	// TODO forcing dark mode is awkward
+	const themer = new Themer(undefined, 'dark');
+	sync_color_scheme(themer.color_scheme); // TODO probably shouldn't be needed
 </script>
 
 <svelte:head>
-	<title>@ryanatkn/fuz_template</title>
+	<title>Dealt</title>
 </svelte:head>
 
-<svelte:body
-	use:contextmenu_action={[
-		{
-			snippet: 'text',
-			props: {
-				content: 'Settings',
-				icon: '?',
-				run: () => {
-					show_settings = true;
-				},
-			},
-		},
-		{
-			snippet: 'text',
-			props: {
-				content: 'Reload',
-				icon: '⟳',
-				run: () => {
-					location.reload();
-				},
-			},
-		},
-	]}
-/>
-
-<Themed>
-	<Contextmenu_Root>
-		{@render children()}
-		{#if show_settings}
-			<Dialog onclose={() => (show_settings = false)}>
-				<div class="pane">
-					<Settings />
-				</div>
-			</Dialog>
-		{/if}
-	</Contextmenu_Root>
+<Themed {themer} color_scheme_fallback={themer.color_scheme}>
+	{@render children()}
 </Themed>

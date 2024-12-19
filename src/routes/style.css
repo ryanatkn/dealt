@@ -1,9 +1,69 @@
 /* global stylesheet imported by `src/routes/+layout.svelte */
 
-/*
-
-:root {
-  --some_stylish_property: 100%;
+:root,
+body {
+	width: 100%;
+	height: 100%;
 }
 
-*/
+:root {
+	--color_selected: var(--color_e_5);
+	--color_selected_1: color-mix(in hsl, var(--color_selected) 70%, transparent);
+	--color_selected_2: color-mix(in hsl, var(--color_selected) 45%, transparent);
+	--color_selected_3: color-mix(in hsl, var(--color_selected) 25%, transparent);
+	--color_selected_4: color-mix(in hsl, var(--color_selected) 13%, transparent);
+	--link_color: hsl(var(--hue_d) 61% 35%);
+	--outline_color: var(--border_color_d);
+	--input_fill: var(--fg_1);
+	--input_height: 2.8rem; /* TODO other vars? */
+	--input_width_sm: 80px; /* TODO @many upstream input_width_sm? rem? */
+	--input_height_sm: 2.2rem; /* TODO @many upstream input_height_sm? rem? */
+
+	/* TODO upstream to moss, is awkward with `bg_1` not meaning this,
+	need to clarify between opaque and transparent backgrounds */
+	--bg_lighter: rgb(37, 32, 30);
+	/* --bg_lightest: rgb(53, 45, 43); */
+}
+
+.bg_lighter {
+	background-color: var(--bg_lighter);
+}
+/* .bg_lightest {
+	background-color: var(--bg_lightest);
+} */
+
+/* TODO @many upstream input_width_sm? rem? */
+.input_width_sm {
+	width: var(--input_width_sm);
+}
+
+/* TODO add vars in Moss for this */
+input:hover,
+input.plain:hover,
+select:hover {
+	border-color: var(--border_color_d);
+}
+
+label:hover {
+	color: var(--color_d_4);
+}
+
+input.plain {
+	border-color: transparent;
+}
+
+/* TODO upstream a variable for moss */
+input[type='checkbox'] {
+	--size: var(--size_xl);
+}
+
+:root.dark {
+	--link_color: hsl(var(--hue_d) 61% 58%);
+}
+
+/* TODO upstream `--button/input_border_radius` probably, the `input_height` and `input_fill` above seem to work well */
+button,
+input,
+select {
+	--border_radius: 2px;
+}
