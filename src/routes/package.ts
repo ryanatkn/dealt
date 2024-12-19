@@ -44,7 +44,7 @@ export const package_json = {
 		'pixi.js': '^8.6.6',
 		prettier: '^3.4.2',
 		'prettier-plugin-svelte': '^3.3.2',
-		svelte: '5.13.0',
+		svelte: '^5.15.0',
 		'svelte-check': '^4.1.1',
 		tinybench: '^3.0.7',
 		tslib: '^2.8.1',
