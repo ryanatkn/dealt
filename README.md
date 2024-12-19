@@ -88,7 +88,6 @@ by Stefan Hedman ([@schteppe](https://github.com/schteppe),
 [Fuz](https://github.com/ryanatkn/fuz) ∙
 [Gro](https://github.com/ryanatkn/gro) ∙
 [@ryanatkn/belt](https://github.com/ryanatkn/belt) ∙
-[Zod](https://github.com/colinhacks/zod) ∙
 & [more](package.json)
 
 ## License [🐦](https://wikipedia.org/wiki/Free_and_open-source_software)
