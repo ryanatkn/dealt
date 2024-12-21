@@ -136,7 +136,7 @@
 						</section>
 						<section>
 							<h3>Edit scene</h3>
-							<Scene_Form scene={editor.project.scene} project={editor.project} />
+							<Scene_Form scene={editor.project.scene} />
 						</section>
 					</div>
 					<div class="pane p_lg mb_xl3">

@@ -3,14 +3,12 @@
 
 	import {check_scene_glyph, type Scene} from '$lib/scene.svelte.js';
 	import Scene_Delete_Button from '$lib/Scene_Delete_Button.svelte';
-	import type {Project} from '$lib/project.svelte.js';
 
 	interface Props {
 		scene: Scene;
-		project: Project;
 	}
 
-	const {scene, project}: Props = $props();
+	const {scene}: Props = $props();
 
 	let glyph_error_message: string | null = $state(null);
 </script>
@@ -52,7 +50,9 @@
 	<fieldset class="gap_md">
 		<!-- TODO this button is only to save changes to units -->
 		<button type="button" onclick={() => scene.save()} class="color_a"> save scene </button>
-		<button type="button" onclick={() => project.duplicate_scene(scene)}> duplicate scene </button>
+		<button type="button" onclick={() => scene.project.duplicate_scene(scene)}>
+			duplicate scene
+		</button>
 	</fieldset>
 	<fieldset>
 		<h3 class="color_c_5">Delete scene</h3>
