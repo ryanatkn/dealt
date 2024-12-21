@@ -25,7 +25,8 @@
 	// what if we showed presets you could release over to select
 </script>
 
-<!-- TODO hacky, needed because we may be inside a `svg` which breaks the layout, wouldn't need if we drew the line with HTML elements instead of SVG -->
+<!-- TODO hacky, needed instead of `position: fixed` because we may be inside a `svg`
+ which breaks the layout, wouldn't need if we drew the line with HTML elements instead of SVG -->
 <Teleport to={BROWSER ? document.body : null}>
 	<svg
 		class="scrubbing_indicator"

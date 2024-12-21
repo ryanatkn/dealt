@@ -112,6 +112,10 @@ export class Editor implements Serializable<Editor_Json> {
 		drag_start_y: null,
 		dragging_unit: null,
 		dragging_selection: false,
+		drag_start_client_x: null,
+		drag_start_client_y: null,
+		pointer_last_client_x: null,
+		pointer_last_client_y: null,
 	});
 
 	// TODO this does not stay in sync with `scene.layers`

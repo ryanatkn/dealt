@@ -12,12 +12,20 @@
 		drag_start_y: number | null;
 		dragging_unit: Unit | null;
 		dragging_selection: boolean;
+		// TODO maybe track an offset and use derived for these - seems like it needs bigger refactoring
+		drag_start_client_x: number | null;
+		drag_start_client_y: number | null;
+		pointer_last_client_x: number | null;
+		pointer_last_client_y: number | null;
 	}
 </script>
 
 <script lang="ts">
+	import {swallow} from '@ryanatkn/belt/dom.js';
+
 	import Unit_Handles from '$lib/Unit_Handles.svelte';
 	import Unit_Contextmenu from '$lib/Unit_Contextmenu.svelte';
+	import Scrubbing_Indicator from '$lib/Scrubbing_Indicator.svelte';
 	import type {Unit} from '$lib/unit.svelte.js';
 	import {Unit_Selection} from '$lib/unit_selection.svelte.js';
 	import type {Scene} from '$lib/scene.svelte.js';
@@ -97,6 +105,18 @@
 		}
 	};
 
+	const reset_state = () => {
+		scene_interaction_surface_state.pointer_down = false;
+		scene_interaction_surface_state.drag_start_x = null;
+		scene_interaction_surface_state.drag_start_y = null;
+		scene_interaction_surface_state.dragging_unit = null;
+		scene_interaction_surface_state.dragging_selection = false;
+		scene_interaction_surface_state.drag_start_client_x = null;
+		scene_interaction_surface_state.drag_start_client_y = null;
+		scene_interaction_surface_state.pointer_last_client_x = null;
+		scene_interaction_surface_state.pointer_last_client_y = null;
+	};
+
 	const duplicate_selected_units = (): void => {
 		const new_units: Array<Unit> = [];
 		for (const unit of unit_selection) {
@@ -118,6 +138,10 @@
 		scene_interaction_surface_state.pointer_down = true;
 		scene_interaction_surface_state.drag_start_x = scene_interaction_surface_state.pointer_x;
 		scene_interaction_surface_state.drag_start_y = scene_interaction_surface_state.pointer_y;
+		scene_interaction_surface_state.drag_start_client_x =
+			scene_interaction_surface_state.pointer_last_client_x = e.clientX;
+		scene_interaction_surface_state.drag_start_client_y =
+			scene_interaction_surface_state.pointer_last_client_y = e.clientY;
 
 		const duplicating = e.shiftKey && e.ctrlKey && !e.altKey;
 
@@ -184,15 +208,13 @@
 			}
 		}
 
-		scene_interaction_surface_state.pointer_down = false;
-		scene_interaction_surface_state.drag_start_x = null;
-		scene_interaction_surface_state.drag_start_y = null;
-		scene_interaction_surface_state.dragging_unit = null;
-		scene_interaction_surface_state.dragging_selection = false;
+		reset_state();
 	};
 
 	const onpointermove = (e: PointerEvent): void => {
 		update_pointer(e.offsetX, e.offsetY);
+		scene_interaction_surface_state.pointer_last_client_x = e.clientX;
+		scene_interaction_surface_state.pointer_last_client_y = e.clientY;
 
 		if (
 			scene_interaction_surface_state.pointer_down &&
@@ -267,6 +289,23 @@
 		}
 	};
 
+	const onkeydowncapture = (e: KeyboardEvent) => {
+		if (e.key === 'Escape' && scene_interaction_surface_state.dragging_unit) {
+			// Reset positions of all selected units
+			const dx =
+				scene_interaction_surface_state.pointer_x - scene_interaction_surface_state.drag_start_x!;
+			const dy =
+				scene_interaction_surface_state.pointer_y - scene_interaction_surface_state.drag_start_y!;
+			for (const unit of unit_selection) {
+				unit.x -= dx;
+				unit.y -= dy;
+			}
+
+			reset_state();
+			swallow(e);
+		}
+	};
+
 	// TODO there's a bug here where the selection doesn't update if the positions of things change via simulation,
 	// maybe just add an effect that calculates it every frame when the simulation is running? best way?
 	// this isn't quite right:
@@ -277,7 +316,7 @@
 </script>
 
 <!-- TODO ideally this uses the global value but I think we need to somehow set the app+editor that the global hotkeys use -->
-<svelte:window {onkeydown} {onkeyup} />
+<svelte:window {onkeydown} {onkeyup} {onkeydowncapture} />
 
 <Unit_Contextmenu {scene} unit={scene_interaction_surface_state.hovered_unit}>
 	<div
@@ -322,6 +361,14 @@
 			{/if}
 		</svg>
 	</div>
+	{#if scene_interaction_surface_state.dragging_unit}
+		<Scrubbing_Indicator
+			x_start={scene_interaction_surface_state.drag_start_client_x}
+			y_start={scene_interaction_surface_state.drag_start_client_y}
+			x_last={scene_interaction_surface_state.pointer_last_client_x}
+			y_last={scene_interaction_surface_state.pointer_last_client_y}
+		/>
+	{/if}
 </Unit_Contextmenu>
 
 <style>

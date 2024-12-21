@@ -187,14 +187,7 @@
 	/>
 </label>
 {#if pressing}
-	<Scrubbing_Indicator
-		{x_start}
-		{y_start}
-		{x_last}
-		{y_last}
-		container_width={innerWidth}
-		container_height={innerHeight}
-	/>
+	<Scrubbing_Indicator {x_start} {y_start} {x_last} {y_last} />
 {/if}
 
 <style>
