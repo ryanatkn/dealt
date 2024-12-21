@@ -23,7 +23,7 @@
 <ul class="unit_layers unstyled">
 	{#each project.scene.units as unit}
 		<Unit_Contextmenu scene={project.scene} {unit}>
-			<Unit_Layer {project} {unit} />
+			<Unit_Layer {unit} />
 		</Unit_Contextmenu>
 	{/each}
 </ul>

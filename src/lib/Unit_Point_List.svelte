@@ -1,16 +1,14 @@
 <script lang="ts">
 	import {slide} from 'svelte/transition';
 
-	import type {Project} from '$lib/project.svelte.js';
 	import type {Unit} from '$lib/unit.svelte.js';
 	import Scrubbable_Input from '$lib/Scrubbable_Input.svelte';
 
 	interface Props {
 		unit: Unit;
-		project: Project; // TODO probably add `project` to `Unit`?
 	}
 
-	const {unit, project}: Props = $props();
+	const {unit}: Props = $props();
 
 	const POSITION_STEP = 0.5;
 
@@ -29,9 +27,7 @@
 					value={point.x}
 					oninput={(v) => {
 						point.x = v;
-						// TODO @many horrible hacks to deal with syncing points data - problem is point forms now change when becoming concave
 						unit.update_points();
-						project.renderer.dirty++;
 					}}
 					step={POSITION_STEP}>x</Scrubbable_Input
 				>
@@ -43,9 +39,7 @@
 					value={point.y}
 					oninput={(v) => {
 						point.y = v;
-						// TODO @many horrible hacks to deal with syncing points data - problem is point forms now change when becoming concave
 						unit.update_points();
-						project.renderer.dirty++;
 					}}
 					step={POSITION_STEP}>y</Scrubbable_Input
 				>
@@ -57,8 +51,6 @@
 				disabled={remove_disabled}
 				onpointerup={() => {
 					unit.remove_point(point);
-					// TODO @many horrible hacks to deal with syncing points data - problem is point forms now change when becoming concave
-					project.renderer.dirty++;
 				}}>✕</button
 			>
 		</li>

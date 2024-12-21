@@ -19,7 +19,6 @@
 		if (el.width !== renderer.width) el.width = renderer.width;
 		if (el.height !== renderer.height) el.height = renderer.height;
 		if (!c2d) return;
-		renderer.dirty; // TODO hack for canvas specifically for points
 		draw(el, c2d);
 	});
 

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import {slide} from 'svelte/transition';
 
-	import type {Project} from '$lib/project.svelte.js';
 	import {Unit_Point, type Unit} from '$lib/unit.svelte.js';
 	import Scrubbable_Input from '$lib/Scrubbable_Input.svelte';
 	import Unit_Behavior_Controls from '$lib/Unit_Behavior_Handles.svelte';
@@ -11,10 +10,9 @@
 
 	interface Props {
 		unit: Unit;
-		project: Project;
 	}
 
-	const {unit, project}: Props = $props();
+	const {unit}: Props = $props();
 
 	// $inspect('project', project);
 
@@ -149,15 +147,13 @@
 						step={0.01}>scale</Scrubbable_Input
 					>
 				</div>
-				<Unit_Point_List {unit} {project} />
+				<Unit_Point_List {unit} />
 				<button
 					type="button"
 					title="add a point to this polygon"
 					class="plain justify_self_end"
 					onclick={() => {
 						unit.add_point(new Unit_Point(120, 200));
-						// TODO @many horrible hacks to deal with syncing points data - problem is point forms now change when becoming concave
-						project.renderer.dirty++;
 					}}>add point ◎</button
 				>
 			{/if}

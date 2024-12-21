@@ -68,9 +68,6 @@ export class Renderer {
 
 	colors: Renderer_Colors;
 
-	// TODO this is a hack to sync state for canvas to sync with points, maybe just remove it as a renderer?
-	dirty: number = $state(0);
-
 	constructor(
 		renderer_components: Record<Renderer_Type, Renderer_Component>,
 		type: Renderer_Type,
