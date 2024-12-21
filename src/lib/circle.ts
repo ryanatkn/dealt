@@ -27,7 +27,7 @@ SOFTWARE.
 */
 
 import {Body} from '$lib/body.js';
-import type {Unit_Scale} from '$lib/unit.svelte.js';
+import type {Unit_Radius, Unit_Scale} from '$lib/unit.svelte.js';
 
 /**
  * A circle used to detect collisions
@@ -37,7 +37,7 @@ export class Circle extends Body {
 	override readonly is_circle = true as const;
 	override readonly is_point = false as const;
 
-	radius: number;
+	radius: Unit_Radius;
 
 	scale: Unit_Scale;
 
@@ -48,7 +48,7 @@ export class Circle extends Body {
 	 * @param scale - The scale
 	 * @param padding - The amount to pad the bounding volume when testing for potential collisions
 	 */
-	constructor(x = 0, y = 0, radius = 0, scale = 1, padding = 0) {
+	constructor(x = 0, y = 0, radius: Unit_Radius = 0, scale: Unit_Scale = 1, padding = 0) {
 		super(x, y, padding);
 
 		this.radius = radius;

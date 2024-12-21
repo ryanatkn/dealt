@@ -68,7 +68,7 @@ export class Bvh {
 				body._dirty_coords ||
 				body.x !== body._x ||
 				body.y !== body._y ||
-				body.angle !== body._angle ||
+				body.rotation !== body._rotation ||
 				body.scale_x !== body._scale_x ||
 				body.scale_y !== body._scale_y
 			) {
@@ -259,7 +259,7 @@ export class Bvh {
 						body._dirty_coords ||
 						body.x !== body._x ||
 						body.y !== body._y ||
-						body.angle !== body._angle ||
+						body.rotation !== body._rotation ||
 						body.scale_x !== body._scale_x ||
 						body.scale_y !== body._scale_y
 					) {

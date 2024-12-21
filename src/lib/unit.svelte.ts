@@ -32,10 +32,10 @@ export type Unit_Scale = Flavored<number, 'Unit_Scale'>;
 export const parse_scale: (value: number) => Unit_Scale = identity;
 
 /**
- * `angle` in radians.
+ * `rotation` in radians.
  */
-export type Unit_Angle = Flavored<number, 'Unit_Angle'>;
-export const parse_angle = (value: number): Unit_Angle => value % (Math.PI * 2);
+export type Unit_Rotation = Flavored<number, 'Unit_Rotation'>;
+export const parse_rotation = (value: number): Unit_Rotation => value % (Math.PI * 2);
 
 export const STRENGTH_DEFAULT: Unit_Strength = 1;
 export const STRENGTH_MAX: Unit_Strength = 100_000_000_000;
@@ -73,7 +73,7 @@ export interface Unit_Json {
 	type: Unit_Type; // TODO `body_type`? or bigger rename to `geometry_type`?
 	x: number;
 	y: number;
-	angle: Unit_Angle;
+	rotation: Unit_Rotation;
 	velocity: number;
 	speed: number;
 	// TODO represent strength visually, and refactor to friction/mass?
@@ -103,7 +103,7 @@ export const default_unit_json = (): Unit_Json => ({
 	type: 'circle',
 	x: 0,
 	y: 0,
-	angle: 0,
+	rotation: 0,
 	velocity: 0,
 	speed: SPEED_DEFAULT,
 	strength: STRENGTH_DEFAULT,
@@ -167,20 +167,23 @@ export class Unit implements Serializable<Unit_Json> {
 	// 	this.body.y = y;
 	// }
 
-	#angle: Unit_Angle = $state()!;
-	get angle(): Unit_Angle {
-		return this.#angle;
+	#rotation: Unit_Rotation = $state()!;
+	/**
+	 * radians
+	 */
+	get rotation(): Unit_Rotation {
+		return this.#rotation;
 	}
-	set angle(v: Unit_Angle) {
-		if (this.#angle === v) return;
-		this.#angle = v;
-		if (this.body.is_polygon) this.body.angle = v;
-		for (const cb of this.#on_change_angle) cb(v);
+	set rotation(v: Unit_Rotation) {
+		if (this.#rotation === v) return;
+		this.#rotation = v;
+		if (this.body.is_polygon) this.body.rotation = v;
+		for (const cb of this.#on_change_rotation) cb(v);
 	}
 	/**
-	 * `angle` in degrees.
+	 * `rotation` in degrees.
 	 */
-	rotation: Unit_Angle = $derived((this.#angle * 360) / (Math.PI * 2));
+	rotation_degrees: Unit_Rotation = $derived((this.#rotation * 360) / (Math.PI * 2));
 
 	velocity: number = $state()!;
 
@@ -265,7 +268,7 @@ export class Unit implements Serializable<Unit_Json> {
 	points_serialized: string = $derived(serialize_points(this.#x, this.#y, this.#points));
 	// TODO @many hacky to get things working
 	transformed_points: Array<I_Point> = $derived(
-		transform_points(this.#points, this.#angle, this.#scale),
+		transform_points(this.#points, this.#rotation, this.#scale),
 	);
 	transformed_points_serialized: string = $derived(
 		serialize_points(this.#x, this.#y, this.transformed_points),
@@ -303,7 +306,7 @@ export class Unit implements Serializable<Unit_Json> {
 			type: this.type,
 			x: this.x,
 			y: this.y,
-			angle: this.angle,
+			rotation: this.rotation,
 			velocity: this.velocity,
 			speed: this.speed,
 			strength: this.strength,
@@ -347,7 +350,7 @@ export class Unit implements Serializable<Unit_Json> {
 		this.x = value.x ?? defaults.x;
 		this.y = value.y ?? defaults.y;
 
-		this.angle = value.angle ?? defaults.angle;
+		this.rotation = value.rotation ?? defaults.rotation;
 		this.velocity = value.velocity ?? defaults.velocity;
 		this.speed = value.speed ?? defaults.speed;
 		this.strength = value.strength ?? defaults.strength;
@@ -397,7 +400,7 @@ export class Unit implements Serializable<Unit_Json> {
 						partial?.x ?? this.#x,
 						partial?.y ?? this.#y,
 						partial?.points ?? this.#points,
-						partial?.angle ?? this.#angle,
+						partial?.rotation ?? this.#rotation,
 						partial?.scale ?? this.#scale,
 						partial?.scale ?? this.#scale,
 					)
@@ -428,7 +431,7 @@ export class Unit implements Serializable<Unit_Json> {
 	}
 
 	move_transformed_point(point: Unit_Point, dx: number, dy: number): void {
-		const untransformed = untransform_point(dx, dy, this.angle, this.scale);
+		const untransformed = untransform_point(dx, dy, this.rotation, this.scale);
 		point.x += untransformed.x;
 		point.y += untransformed.y;
 		this.update_points(); // TODO @many horrible hacks to deal with syncing points data - problem is point forms now change when becoming concave
@@ -489,7 +492,7 @@ export class Unit implements Serializable<Unit_Json> {
 		const dy = new_y - this.y;
 
 		// Transform world-space delta into local space, accounting for both rotation and scale
-		const local = untransform_point(dx, dy, this.angle, this.scale);
+		const local = untransform_point(dx, dy, this.rotation, this.scale);
 
 		// Adjust all points to maintain their world positions
 		for (const point of this.#points) {
@@ -526,17 +529,17 @@ export class Unit implements Serializable<Unit_Json> {
 		};
 	}
 
-	#on_change_angle: Set<(angle: number) => void> = new Set();
-	on_change_angle(cb: (angle: number) => void): Change_Unsubscriber {
-		this.#on_change_angle.add(cb);
-		cb(this.angle);
+	#on_change_rotation: Set<(rotation: Unit_Rotation) => void> = new Set();
+	on_change_rotation(cb: (rotation: Unit_Rotation) => void): Change_Unsubscriber {
+		this.#on_change_rotation.add(cb);
+		cb(this.rotation);
 		return () => {
-			this.#on_change_angle.delete(cb);
+			this.#on_change_rotation.delete(cb);
 		};
 	}
 
-	#on_change_scale: Set<(scale: number) => void> = new Set();
-	on_change_scale(cb: (scale: number) => void): Change_Unsubscriber {
+	#on_change_scale: Set<(scale: Unit_Scale) => void> = new Set();
+	on_change_scale(cb: (scale: Unit_Scale) => void): Change_Unsubscriber {
 		this.#on_change_scale.add(cb);
 		cb(this.#scale);
 		return () => {
@@ -544,8 +547,8 @@ export class Unit implements Serializable<Unit_Json> {
 		};
 	}
 
-	#on_change_radius: Set<(radius: number) => void> = new Set();
-	on_change_radius(cb: (radius: number) => void): Change_Unsubscriber {
+	#on_change_radius: Set<(radius: Unit_Radius) => void> = new Set();
+	on_change_radius(cb: (radius: Unit_Radius) => void): Change_Unsubscriber {
 		this.#on_change_radius.add(cb);
 		cb(this.#radius);
 		return () => {

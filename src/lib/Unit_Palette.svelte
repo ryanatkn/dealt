@@ -30,7 +30,7 @@
 				type: 'polygon',
 				x: 100 + Math.cos(add_count) * ((add_count + 10) * 2),
 				y: 100 + Math.sin(add_count) * ((add_count + 10) * 2),
-				angle: add_count * 0.8,
+				rotation: add_count * 0.8,
 				points: [
 					{x: -20, y: 12},
 					{x: 30, y: -15},

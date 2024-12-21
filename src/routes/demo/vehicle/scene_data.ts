@@ -11,7 +11,7 @@ export const scene_json: Scene_Json = {
 			type: 'polygon',
 			x: 409,
 			y: 302,
-			angle: -2.62,
+			rotation: -2.62,
 			strength: 20,
 			points: [
 				{x: -16, y: -20},
@@ -27,7 +27,7 @@ export const scene_json: Scene_Json = {
 			type: 'polygon',
 			x: 65,
 			y: 160,
-			angle: 0.4,
+			rotation: 0.4,
 			points: [
 				{x: -50, y: -50},
 				{x: 50, y: -50},
@@ -40,7 +40,7 @@ export const scene_json: Scene_Json = {
 			type: 'polygon',
 			x: 190,
 			y: 105,
-			angle: 0.4,
+			rotation: 0.4,
 			points: [
 				{x: -21, y: -22},
 				{x: 23, y: -24},
@@ -54,7 +54,7 @@ export const scene_json: Scene_Json = {
 			type: 'polygon',
 			x: 270,
 			y: 79,
-			angle: 0.4,
+			rotation: 0.4,
 			points: [
 				{x: -150, y: -30},
 				{x: 150, y: -30},
@@ -67,7 +67,7 @@ export const scene_json: Scene_Json = {
 			type: 'polygon',
 			x: 90,
 			y: 495,
-			angle: 0.2,
+			rotation: 0.2,
 			points: [
 				{x: -44, y: -54},
 				{x: 45, y: -54},
@@ -130,7 +130,7 @@ export const scene_json: Scene_Json = {
 			type: 'polygon',
 			x: 430,
 			y: 500,
-			angle: 1.7,
+			rotation: 1.7,
 			points: [
 				{x: -80, y: -30},
 				{x: 60, y: -20},
@@ -144,7 +144,7 @@ export const scene_json: Scene_Json = {
 			type: 'polygon',
 			x: 330,
 			y: 480,
-			angle: 1.7,
+			rotation: 1.7,
 			points: [
 				{x: -50, y: -40},
 				{x: 80, y: -30},
@@ -317,7 +317,7 @@ export const scene_json: Scene_Json = {
 			type: 'polygon',
 			x: 62,
 			y: 581,
-			angle: 3.01,
+			rotation: 3.01,
 			scale: 0.21,
 			points: [
 				{x: 227, y: 37},

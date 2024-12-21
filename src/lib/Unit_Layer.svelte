@@ -131,11 +131,11 @@
 				</div>
 				<div class="input_row">
 					<Scrubbable_Input
-						title="polygon angle"
+						title="polygon rotation"
 						input_classes="plain"
 						row
-						bind:value={unit.angle}
-						step={Math.PI / 360}>angle</Scrubbable_Input
+						bind:value={unit.rotation}
+						step={Math.PI / 360}>rotation</Scrubbable_Input
 					>
 				</div>
 				<div class="input_row mb_md">

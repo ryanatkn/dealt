@@ -27,7 +27,7 @@ SOFTWARE.
 */
 
 import {Body} from '$lib/body.js';
-import type {Unit_Angle} from '$lib/unit.svelte.js';
+import type {Unit_Rotation, Unit_Scale} from '$lib/unit.svelte.js';
 import type {I_Point} from '$lib/point_helpers.js';
 
 // TODO @many refactor collisions and polygon helpers types
@@ -40,7 +40,7 @@ export class Polygon<T_Point extends boolean = false> extends Body {
 	override readonly is_circle = false as const;
 	override readonly is_point: T_Point | false = false as const; // super weird but seems to work?
 
-	angle: Unit_Angle;
+	rotation: Unit_Rotation;
 
 	scale_x: number;
 
@@ -50,7 +50,7 @@ export class Polygon<T_Point extends boolean = false> extends Body {
 
 	_y: number;
 
-	_angle: Unit_Angle;
+	_rotation: Unit_Rotation;
 
 	_scale_x: number;
 
@@ -80,7 +80,7 @@ export class Polygon<T_Point extends boolean = false> extends Body {
 	 * @param x - The starting X coordinate
 	 * @param y - The starting Y coordinate
 	 * @param points- An array of coordinate pairs making up the polygon - [[x1, y1], [x2, y2], ...]
-	 * @param angle - The starting rotation in radians
+	 * @param rotation - The starting rotation in radians
 	 * @param scale_x - The starting scale along the X axis
 	 * @param scale_y - The starting scale long the Y axis
 	 * @param padding - The amount to pad the bounding volume when testing for potential collisions
@@ -89,14 +89,14 @@ export class Polygon<T_Point extends boolean = false> extends Body {
 		x = 0,
 		y = 0,
 		points: Array<I_Point> = [],
-		angle = 0,
-		scale_x = 1,
-		scale_y = 1,
+		rotation: Unit_Rotation = 0,
+		scale_x: Unit_Scale = 1,
+		scale_y: Unit_Scale = 1,
 		padding = 0,
 	) {
 		super(x, y, padding);
 
-		this.angle = angle;
+		this.rotation = rotation;
 
 		this.scale_x = scale_x;
 
@@ -106,7 +106,7 @@ export class Polygon<T_Point extends boolean = false> extends Body {
 
 		this._y = y;
 
-		this._angle = angle;
+		this._rotation = rotation;
 
 		this._scale_x = scale_x;
 
@@ -140,12 +140,12 @@ export class Polygon<T_Point extends boolean = false> extends Body {
 	}
 
 	/**
-	 * Calculates and caches the polygon's scene coordinates based on its points, angle, and scale
+	 * Calculates and caches the polygon's scene coordinates based on its points, rotation, and scale
 	 */
 	_calculate_coords(): void {
 		const x = this.x;
 		const y = this.y;
-		const angle = this.angle;
+		const rotation = this.rotation;
 		const scale_x = this.scale_x;
 		const scale_y = this.scale_y;
 		const points = this._points!;
@@ -161,9 +161,9 @@ export class Polygon<T_Point extends boolean = false> extends Body {
 			let coord_x = points[ix] * scale_x;
 			let coord_y = points[iy] * scale_y;
 
-			if (angle !== 0) {
-				const cos = Math.cos(angle);
-				const sin = Math.sin(angle);
+			if (rotation !== 0) {
+				const cos = Math.cos(rotation);
+				const sin = Math.sin(rotation);
 				const tmp_x = coord_x;
 				const tmp_y = coord_y;
 
@@ -197,7 +197,7 @@ export class Polygon<T_Point extends boolean = false> extends Body {
 
 		this._x = x;
 		this._y = y;
-		this._angle = angle;
+		this._rotation = rotation;
 		this._scale_x = scale_x;
 		this._scale_y = scale_y;
 		this._min_x = min_x;

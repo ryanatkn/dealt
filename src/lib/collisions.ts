@@ -64,7 +64,7 @@ export class Collisions {
 	 * @param x - The starting X coordinate
 	 * @param y - The starting Y coordinate
 	 * @param points - An array of coordinate pairs making up the polygon - [[x1, y1], [x2, y2], ...]
-	 * @param angle - The starting rotation in radians
+	 * @param rotation - The starting rotation in radians
 	 * @param scale_x - The starting scale along the X axis
 	 * @param scale_y - The starting scale long the Y axis
 	 * @param padding - The amount to pad the bounding volume when testing for potential collisions
@@ -73,12 +73,12 @@ export class Collisions {
 		x = 0,
 		y = 0,
 		points: Array<I_Point> = [{x: 0, y: 0}],
-		angle = 0,
+		rotation = 0,
 		scale_x = 1,
 		scale_y = 1,
 		padding = 0,
 	): Polygon {
-		const body = new Polygon(x, y, points, angle, scale_x, scale_y, padding);
+		const body = new Polygon(x, y, points, rotation, scale_x, scale_y, padding);
 
 		this._bvh.insert(body);
 

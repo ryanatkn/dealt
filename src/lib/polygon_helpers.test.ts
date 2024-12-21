@@ -55,8 +55,8 @@ const concave2: Array<I_Point> = [
 var convex: Array<I_Point> = [],
 	N = 10;
 for (var i = 0; i < N; i++) {
-	const angle = ((2 * Math.PI) / N) * i;
-	convex.push({x: Math.cos(angle), y: Math.sin(angle)});
+	const rotation = ((2 * Math.PI) / N) * i;
+	convex.push({x: Math.cos(rotation), y: Math.sin(rotation)});
 }
 
 test('polygon_decomp', () => {

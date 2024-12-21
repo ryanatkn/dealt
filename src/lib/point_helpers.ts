@@ -1,4 +1,4 @@
-import type {Unit_Angle, Unit_Scale} from '$lib/unit.svelte.js';
+import type {Unit_Rotation, Unit_Scale} from '$lib/unit.svelte.js';
 
 // TODO @many refactor collisions and polygon helpers types
 export interface I_Point {
@@ -18,7 +18,7 @@ export const serialize_points = (x: number, y: number, points: Array<I_Point>): 
 // this duplicates the calculations in `_calculate_coords` in `polygon.ts`
 export const transform_points = (
 	points: Array<I_Point>,
-	angle: Unit_Angle,
+	rotation: Unit_Rotation,
 	scale: Unit_Scale,
 ): Array<I_Point> => {
 	const count = points.length;
@@ -28,9 +28,9 @@ export const transform_points = (
 		let coord_x = points[i].x * scale; // TODO @many scale_x|y
 		let coord_y = points[i].y * scale; // TODO @many scale_x|y
 
-		if (angle !== 0) {
-			const cos = Math.cos(angle);
-			const sin = Math.sin(angle);
+		if (rotation !== 0) {
+			const cos = Math.cos(rotation);
+			const sin = Math.sin(rotation);
 			const tmp_x = coord_x;
 			const tmp_y = coord_y;
 
@@ -51,15 +51,15 @@ export const transform_points = (
 export const untransform_point = (
 	x: number,
 	y: number,
-	angle: Unit_Angle,
+	rotation: Unit_Rotation,
 	scale: Unit_Scale,
 ): I_Point => {
 	let coord_x = x;
 	let coord_y = y;
 
-	if (angle !== 0) {
-		const cos = Math.cos(angle);
-		const sin = Math.sin(angle);
+	if (rotation !== 0) {
+		const cos = Math.cos(rotation);
+		const sin = Math.sin(rotation);
 		const tmp_x = coord_x;
 		const tmp_y = coord_y;
 

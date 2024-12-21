@@ -1,7 +1,7 @@
 <script lang="ts">
 	import {swallow} from '@ryanatkn/belt/dom.js';
 
-	import {HANDLE_SIZE, parse_angle, type Unit} from '$lib/unit.svelte.js';
+	import {HANDLE_SIZE, parse_rotation, type Unit} from '$lib/unit.svelte.js';
 	import Scrubbing_Indicator from '$lib/Scrubbing_Indicator.svelte';
 
 	interface Props {
@@ -18,7 +18,7 @@
 	const SENSITIVITY = 0.013;
 
 	let pressing = $state(false);
-	let angle_before_pressing: number | null = $state(null);
+	let rotation_before_pressing: number | null = $state(null);
 	let x_start: number | null = $state(null);
 	let y_start: number | null = $state(null);
 	let x_last: number | null = $state(null);
@@ -29,7 +29,7 @@
 	const press = (x: number, y: number) => {
 		if (pressing) return;
 		pressing = true;
-		angle_before_pressing = unit.angle;
+		rotation_before_pressing = unit.rotation;
 		x_start = x;
 		y_start = y;
 		x_last = x;
@@ -38,7 +38,7 @@
 
 	const reset = () => {
 		pressing = false;
-		angle_before_pressing = null;
+		rotation_before_pressing = null;
 		x_start = null;
 		y_start = null;
 		x_last = null;
@@ -54,8 +54,8 @@
 		y_now = y;
 		if (x_last !== null && y_last !== null) {
 			// TODO parse, in the setter or is that too inefficient? multiple parsers that can assume `number` or not?
-			unit.angle = parse_angle(
-				angle_before_pressing! + SENSITIVITY * (x_now - x_start! - (y_now - y_start!)),
+			unit.rotation = parse_rotation(
+				rotation_before_pressing! + SENSITIVITY * (x_now - x_start! - (y_now - y_start!)),
 			); // TODO normalize to the distance from the initial
 		}
 	};
@@ -75,14 +75,14 @@
 	};
 	const onwindowkeydown = (e: KeyboardEvent) => {
 		if (e.key === 'Escape') {
-			unit.angle = angle_before_pressing!;
+			unit.rotation = rotation_before_pressing!;
 			reset();
 			swallow(e);
 		}
 	};
 
-	const dx = $derived(unit.x + size * Math.cos(-1 * (unit.angle - Math.PI / 2)));
-	const dy = $derived(unit.y - size * Math.sin(-1 * (unit.angle - Math.PI / 2)));
+	const dx = $derived(unit.x + size * Math.cos(-1 * (unit.rotation - Math.PI / 2)));
+	const dy = $derived(unit.y - size * Math.sin(-1 * (unit.rotation - Math.PI / 2)));
 	const points = $derived(
 		`${dx},${dy - size / 2} ${dx + size / 3},${dy} ${dx},${dy + size / 2} ${dx - size / 3},${dy}`,
 	);
@@ -98,10 +98,10 @@
 <!-- TODO add `title` when changed to DOM elements -->
 <polygon
 	role="none"
-	class="unit_angle_handles"
+	class="unit_polygon_rotation_handles"
 	class:pressing
 	{points}
-	transform="rotate({unit.rotation} {dx} {dy})"
+	transform="rotate({unit.rotation_degrees} {dx} {dy})"
 	fill="var(--color_selected)"
 	{onpointerdown}
 />
@@ -110,14 +110,14 @@
 {/if}
 
 <style>
-	.unit_angle_handles {
+	.unit_polygon_rotation_handles {
 		cursor: ew-resize;
 		opacity: 0.4;
 	}
-	.unit_angle_handles:hover {
+	.unit_polygon_rotation_handles:hover {
 		opacity: 0.6;
 	}
-	.unit_angle_handles.pressing {
+	.unit_polygon_rotation_handles.pressing {
 		opacity: 0.8;
 	}
 </style>

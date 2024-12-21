@@ -112,12 +112,12 @@ export const draw_circle = (c2d: CanvasRenderingContext2D, unit: Unit): void => 
 export const draw_polygon = (c2d: CanvasRenderingContext2D, unit: Unit): void => {
 	const {body} = unit;
 	if (!body.is_polygon) throw Error('Expected a polygon');
-	const {x, y, angle, points} = unit;
+	const {x, y, rotation, points} = unit;
 	if (
 		body._dirty_coords ||
 		x !== body._x ||
 		y !== body._y ||
-		angle !== body._angle ||
+		rotation !== body._rotation ||
 		body.scale_x !== body._scale_x ||
 		body.scale_y !== body._scale_y
 	) {

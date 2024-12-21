@@ -69,14 +69,14 @@
 	const handle_input = (player: Unit) => {
 		if (!player.dead && controller.moving) {
 			player.velocity -= 0.1 * controller.moving_y;
-			player.angle += 0.04 * controller.moving_x;
+			player.rotation += 0.04 * controller.moving_x;
 		}
 	};
 
 	const process_game_logic = (player: Unit) => {
 		if (!player.dead) {
-			const x = Math.cos(player.angle);
-			const y = Math.sin(player.angle);
+			const x = Math.cos(player.rotation);
+			const y = Math.sin(player.rotation);
 
 			if (player.velocity > 0) {
 				player.velocity -= 0.05;

@@ -18,6 +18,7 @@ export class Renderer_Unit_Pixi {
 
 		// console.log(`[unit_renderer_pixi] created`, this);
 
+		// TODO try to rework this pattern without effects, dunno how though, maybe still sync in deriveds but with per-unit components
 		// Bind unit changes to the Pixi container
 		this.unsubscribers.push(
 			unit.on_change_x((x) => {
@@ -26,8 +27,8 @@ export class Renderer_Unit_Pixi {
 			unit.on_change_y((y) => {
 				this.container.y = y;
 			}),
-			unit.on_change_angle((angle) => {
-				this.container.rotation = angle;
+			unit.on_change_rotation((rotation) => {
+				this.container.rotation = rotation;
 			}),
 			unit.on_change_scale((scale) => {
 				this.container.scale.set(scale, scale);

@@ -12,7 +12,7 @@ export const scene_json: Scene_Json = {
 			type: 'circle',
 			x: 409,
 			y: 302,
-			angle: 0.2,
+			rotation: 0.2,
 			strength: 20,
 			behaviors: [{name: 'Player_Controller_Behavior'}],
 		},

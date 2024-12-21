@@ -19,7 +19,7 @@ export const create_scene_simple = (): Scene_Json => ({
 			type: 'polygon',
 			x: 137,
 			y: 144,
-			angle: -0.429,
+			rotation: -0.429,
 			scale: 1.53,
 			points: [
 				{x: -34, y: -5},
@@ -56,7 +56,7 @@ export const create_scene_adventure = (): Scene_Json => ({
 			type: 'polygon',
 			x: 40,
 			y: 40,
-			angle: 0.2,
+			rotation: 0.2,
 			scale: 1.9,
 			points: [
 				{x: -10, y: 40},
@@ -69,7 +69,7 @@ export const create_scene_adventure = (): Scene_Json => ({
 			type: 'polygon',
 			x: 260,
 			y: 260,
-			angle: 1.8,
+			rotation: 1.8,
 			scale: 1.5,
 			points: [
 				{x: -10, y: 50},
@@ -99,7 +99,7 @@ export const create_scene_adventure = (): Scene_Json => ({
 			type: 'polygon',
 			x: 95,
 			y: 250,
-			angle: 1.1,
+			rotation: 1.1,
 			scale: 1.7,
 			points: [
 				{x: -10, y: 50},
@@ -135,7 +135,7 @@ export const create_scene_another_adventure = (): Scene_Json => ({
 			type: 'polygon',
 			x: 155,
 			y: 98,
-			angle: -0.1,
+			rotation: -0.1,
 			points: [
 				{x: -10, y: 40},
 				{x: -100, y: 20},
@@ -147,7 +147,7 @@ export const create_scene_another_adventure = (): Scene_Json => ({
 			type: 'polygon',
 			x: 123,
 			y: 201,
-			angle: -0.2,
+			rotation: -0.2,
 			points: [
 				{x: -10, y: 50},
 				{x: -50, y: 20},

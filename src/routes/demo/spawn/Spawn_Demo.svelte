@@ -239,7 +239,7 @@
 					x,
 					y,
 					points,
-					angle: (random(0, 360) * Math.PI) / 180,
+					rotation: (random(0, 360) * Math.PI) / 180,
 					speed: SPEED_DEFAULT * random(0.1, 1),
 				}),
 			);

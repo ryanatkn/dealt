@@ -13,12 +13,12 @@
 
 	const {unit, padding = 2}: Props = $props();
 
-	const {type, points, angle} = $derived(unit);
+	const {type, points, rotation} = $derived(unit);
 
 	const VIEWBOX_SIZE = 100;
 	const CENTER = VIEWBOX_SIZE / 2;
 
-	const transform = $derived(`rotate(${(angle * 360) / (Math.PI * 2)} ${CENTER} ${CENTER})`);
+	const transform = $derived(`rotate(${(rotation * 360) / (Math.PI * 2)} ${CENTER} ${CENTER})`);
 
 	const normalized_points = $derived.by(() => {
 		if (type !== 'polygon' || !points.length) return '';

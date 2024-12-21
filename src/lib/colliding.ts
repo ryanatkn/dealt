@@ -65,7 +65,7 @@ export const colliding = (
 			a._dirty_coords ||
 			a.x !== a._x ||
 			a.y !== a._y ||
-			a.angle !== a._angle ||
+			a.rotation !== a._rotation ||
 			a.scale_x !== a._scale_x ||
 			a.scale_y !== a._scale_y
 		) {
@@ -78,7 +78,7 @@ export const colliding = (
 			b._dirty_coords ||
 			b.x !== b._x ||
 			b.y !== b._y ||
-			b.angle !== b._angle ||
+			b.rotation !== b._rotation ||
 			b.scale_x !== b._scale_x ||
 			b.scale_y !== b._scale_y
 		) {
