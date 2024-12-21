@@ -134,6 +134,9 @@ a.chip {
 .justify_content_start {
 	justify-content: start;
 }
+.justify_self_end {
+	justify-self: end;
+}
 .line_height_1 {
 	line-height: 1;
 }

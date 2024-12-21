@@ -6,6 +6,7 @@
 	import Scrubbable_Input from '$lib/Scrubbable_Input.svelte';
 	import Unit_Behavior_Controls from '$lib/Unit_Behavior_Handles.svelte';
 	import Unit_Icon from '$lib/Unit_Icon.svelte';
+	import Unit_Point_List from '$lib/Unit_Point_List.svelte';
 	import {editor_context} from '$lib/editor.svelte.js';
 
 	interface Props {
@@ -139,7 +140,7 @@
 						step={Math.PI / 360}>angle</Scrubbable_Input
 					>
 				</div>
-				<div class="input_row">
+				<div class="input_row mb_md">
 					<Scrubbable_Input
 						title="polygon scale"
 						input_classes="plain"
@@ -148,61 +149,16 @@
 						step={0.01}>scale</Scrubbable_Input
 					>
 				</div>
-				<ul class="unstyled mt_md">
-					{#each unit.points as point, i (point)}
-						<li class="row" transition:slide>
-							<div class="flex_1 row justify_content_end" style:--title_width="3.4rem">
-								<Scrubbable_Input
-									title="polygon.points[{i}].x"
-									classes="mb_0"
-									input_classes="plain"
-									row
-									value={point.x}
-									oninput={(v) => {
-										point.x = v;
-										// TODO @many horrible hacks to deal with syncing points data - problem is point forms now change when becoming concave
-										unit.update_points();
-										project.renderer.dirty++;
-									}}
-									step={POSITION_STEP}>x</Scrubbable_Input
-								>
-								<Scrubbable_Input
-									title="polygon.points[{i}].y"
-									classes="mb_0"
-									input_classes="plain"
-									row
-									value={point.y}
-									oninput={(v) => {
-										point.y = v;
-										// TODO @many horrible hacks to deal with syncing points data - problem is point forms now change when becoming concave
-										unit.update_points();
-										project.renderer.dirty++;
-									}}
-									step={POSITION_STEP}>y</Scrubbable_Input
-								>
-							</div>
-							<button
-								type="button"
-								class="icon_button plain ml_md"
-								title="remove point"
-								onpointerup={() => {
-									unit.remove_point(point);
-									// TODO @many horrible hacks to deal with syncing points data - problem is point forms now change when becoming concave
-									project.renderer.dirty++;
-								}}>✕</button
-							>
-						</li>
-					{/each}
-				</ul>
+				<Unit_Point_List {unit} {project} />
 				<button
 					type="button"
 					title="add a point to this polygon"
-					class="plain"
+					class="plain justify_self_end"
 					onclick={() => {
 						unit.add_point(new Unit_Point(120, 200));
 						// TODO @many horrible hacks to deal with syncing points data - problem is point forms now change when becoming concave
 						project.renderer.dirty++;
-					}}>◎ add point</button
+					}}>add point ◎</button
 				>
 			{/if}
 		</div>

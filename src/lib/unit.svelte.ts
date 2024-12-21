@@ -2,6 +2,7 @@ import type {Flavored} from '@ryanatkn/belt/types.js';
 import {EMPTY_OBJECT} from '@ryanatkn/belt/object.js';
 import {identity} from '@ryanatkn/belt/function.js';
 import {SvelteMap} from 'svelte/reactivity';
+import {EMPTY_ARRAY} from '@ryanatkn/belt/array.js';
 
 import {polygon_is_simple, polygon_make_ccw_points, polygon_decomp} from '$lib/polygon_helpers.js';
 import type {Serializable} from '$lib/serializable.js';
@@ -17,6 +18,7 @@ import {
 import {type Behavior, type Behavior_Json} from '$lib/behavior.svelte.js';
 import {behavior_class_by_name, type Behavior_Name} from '$lib/behaviors.js';
 import {to_unit_fill} from '$lib/renderer_helpers.js';
+import type {Polygon} from '$lib/polygon.js';
 
 // TODO maybe move these primitives and remove the `Unit_` prefix?
 
@@ -237,12 +239,20 @@ export class Unit implements Serializable<Unit_Json> {
 		return this.#points;
 	}
 	set points(v: Array<Unit_Point>) {
-		if (v.length > 0) polygon_make_ccw_points(v); // TODO might be wasted work here for non-simple polygons
-		this.#points = v;
-		const {body} = this;
-		if (body.is_polygon) {
-			body.set_points(this.#points);
+		if (this.type === 'circle') {
+			if (v.length > 0) {
+				throw Error('Cannot set circle with points');
+			}
+			this.#points = EMPTY_ARRAY;
+			return;
 		}
+		if (v.length < 3) {
+			// TODO maybe instead of erroring, add the missing points by just cloning?
+			throw Error('Cannot set polygon with fewer than three points');
+		}
+		polygon_make_ccw_points(v);
+		this.#points = v;
+		(this.body as Polygon).set_points(this.#points);
 		for (const cb of this.#on_change_points) cb(v);
 	}
 	// TODO this is a hack, workaround to sync points data to the collision body
@@ -353,7 +363,10 @@ export class Unit implements Serializable<Unit_Json> {
 
 		this.radius = value.radius ?? defaults.radius;
 
-		this.points = value.points?.map((v) => new Unit_Point(v.x, v.y)) ?? [];
+		this.points =
+			type === 'circle'
+				? EMPTY_ARRAY
+				: (value.points ?? defaults.points).map((v) => new Unit_Point(v.x, v.y));
 	}
 
 	clone(): Unit {
@@ -402,6 +415,9 @@ export class Unit implements Serializable<Unit_Json> {
 	}
 
 	remove_point(point: Unit_Point): void {
+		if (this.#points.length <= 3) {
+			throw Error('Cannot remove point from polygon with three or fewer points');
+		}
 		this.#points.splice(this.#points.indexOf(point), 1);
 		this.update_points(); // TODO @many horrible hacks to deal with syncing points data - problem is point forms now change when becoming concave
 	}
