@@ -87,7 +87,6 @@ export const get_next_project_name = (projects: Array<{name: Project_Name}>): Pr
 
 export interface Project_Options {
 	app: App;
-	editor: Editor; // TODO @many hack added so that units can remove themselves from `editor.unit_selection`
 	project_json?: Project_Json;
 }
 

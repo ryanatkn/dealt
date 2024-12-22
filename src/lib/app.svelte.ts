@@ -14,6 +14,7 @@ import {
 	type Project_Id,
 	type Project_Json,
 } from '$lib/project.svelte.js';
+import type {Editor} from './editor.svelte.js';
 
 // TODO maybe a `@batched` or `@action` decorator instead of manual `batch`?
 
@@ -77,7 +78,9 @@ export class App implements Serializable<App_Json> {
 
 	// TODO `selected_` prefix for these?
 	selected_project_id: Project_Id = $state()!;
-	readonly project!: Project;
+	readonly project!: Project; // TODO BLOCK maybe create all project instances, but don't load them? `Project_Metadata`?
+
+	editor: Editor | null = $state(null); // TODO BLOCK create/destroy on demand
 
 	show_main_menu: boolean = $state(false);
 
@@ -90,7 +93,6 @@ export class App implements Serializable<App_Json> {
 			clock = new Clock(),
 			simulation = new Simulation(new Collisions()),
 			controller = new Controller(),
-			project = new Project({app}),
 			app_json = App.load(),
 		}: App_Options = options;
 

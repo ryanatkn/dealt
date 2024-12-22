@@ -292,7 +292,7 @@ export class Unit implements Serializable<Unit_Json> {
 
 	destroy(): void {
 		// console.log('[unit] destroy', this);
-		this.scene.project.editor.unit_selection.delete(this); // TODO @many hack added so that units can remove themselves from `editor.unit_selection`
+		this.scene.project.app.editor?.unit_selection.delete(this); // TODO hack
 		this.body.remove();
 	}
 
