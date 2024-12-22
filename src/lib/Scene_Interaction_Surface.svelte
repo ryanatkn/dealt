@@ -30,6 +30,7 @@
 	import {Unit_Selection} from '$lib/unit_selection.svelte.js';
 	import type {Scene} from '$lib/scene.svelte.js';
 	import {Selection_Manager, type Selection_Mode} from '$lib/selection_manager.svelte.js';
+	import {enable_global_hotkeys} from '$lib/dom.js';
 
 	interface Props {
 		scene: Scene;
@@ -292,7 +293,13 @@
 	};
 
 	const onkeydowncapture = (e: KeyboardEvent) => {
-		if (e.key === 'Escape' && scene_interaction_surface_state.dragging_unit) {
+		if (!enable_global_hotkeys(e.target)) return;
+
+		const {key} = e;
+		if (key === 'Escape') {
+			if (!scene_interaction_surface_state.dragging_unit) {
+				return;
+			}
 			// Reset positions of all selected units
 			const dx =
 				scene_interaction_surface_state.pointer_x - scene_interaction_surface_state.drag_start_x!;
@@ -302,6 +309,16 @@
 				unit.x -= dx;
 				unit.y -= dy;
 			}
+
+			reset_state();
+			swallow(e);
+		} else if (key === 'Delete') {
+			for (const unit of unit_selection) {
+				// TODO should `remove_unit` be responsible for deleting from the selection?
+				scene.remove_unit(unit);
+			}
+			unit_selection.clear(); // TODO @many refactor surface/selection state
+			selection_manager.clear(); // TODO @many refactor surface/selection state
 
 			reset_state();
 			swallow(e);

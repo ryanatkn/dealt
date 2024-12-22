@@ -33,6 +33,7 @@
 			<ul>
 				<li><strong>Shift</strong> to add to selection</li>
 				<li><strong>Ctrl</strong> to remove from selection</li>
+				<li><strong>Delete</strong> to delete the selected units</li>
 				<li><strong>Shift+Ctrl</strong> to duplicate the selected units</li>
 				<li><strong>Alt</strong> to recenter polygons</li>
 				<li><strong>Alt</strong> to duplicate points</li>
