@@ -51,7 +51,9 @@
 
 	// TODO delete key should delete selected units, this component may be okay for that logic
 
-	// TODO should probably make `Escape` cancel any selection
+	// TODO bug where quickly moving on an initial drag, the values are off, possibly missing the first frame? (select many and in dev to reproduce)
+
+	// TODO key to clear selection?
 
 	// TODO refactor - to a `Camera`?
 	const to_scene_x = (screen_x: number): number => screen_x;

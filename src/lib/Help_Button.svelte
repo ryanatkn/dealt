@@ -37,6 +37,7 @@
 				<li><strong>Alt</strong> to recenter polygons</li>
 				<li><strong>Alt</strong> to duplicate points</li>
 				<li><strong>Alt+Shift</strong> to duplicate points counterclockwise</li>
+				<li><strong>Alt+Ctrl</strong> to delete points</li>
 			</ul>
 		</div>
 	</Dialog>
