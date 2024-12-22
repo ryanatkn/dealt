@@ -2,7 +2,7 @@
 	import {swallow} from '@ryanatkn/belt/dom.js';
 
 	import {HANDLE_SIZE, type Unit, Unit_Point} from '$lib/unit.svelte.js';
-	import type {I_Point} from '$lib/point_helpers.js';
+	import {is_moving_towards_previous_point, type I_Point} from '$lib/point_helpers.js';
 	import Scrubbing_Indicator from '$lib/Scrubbing_Indicator.svelte';
 
 	interface Props {
@@ -28,6 +28,11 @@
 	let x_now: number | null = $state(null);
 	let y_now: number | null = $state(null);
 	let active_point = $state(point);
+	let initial_press_x: number | null = $state(null);
+	let initial_press_y: number | null = $state(null);
+	let has_duplicated = $state(false);
+
+	const DUPLICATE_THRESHOLD = 1; // pixels the pointer needs to move before duplicating
 
 	const x = $derived(unit.x + transformed_point.x);
 	const y = $derived(unit.y + transformed_point.y);
@@ -57,8 +62,10 @@
 		pressing = true;
 
 		if (unit.scene.controller.pressing_alt) {
-			// Create a duplicate point when Alt is pressed
-			active_point = unit.duplicate_point(point, unit.scene.controller.pressing_shift);
+			initial_press_x = x;
+			initial_press_y = y;
+			has_duplicated = false;
+			active_point = point; // We'll duplicate later when threshold is exceeded
 		} else {
 			active_point = point;
 		}
@@ -81,6 +88,9 @@
 		y_last = null;
 		x_now = null;
 		y_now = null;
+		initial_press_x = null;
+		initial_press_y = null;
+		has_duplicated = false;
 		active_point = point;
 	};
 
@@ -89,6 +99,24 @@
 		y_last = y_now;
 		x_now = x;
 		y_now = y;
+
+		if (unit.scene.controller.pressing_alt && !has_duplicated && initial_press_x !== null) {
+			const dx = x - initial_press_x;
+			const dy = y - initial_press_y!;
+			if (Math.hypot(dx, dy) >= DUPLICATE_THRESHOLD) {
+				has_duplicated = true;
+				const insert_before = is_moving_towards_previous_point(
+					unit,
+					point,
+					x,
+					y,
+					x_start!,
+					y_start!,
+				);
+				active_point = unit.duplicate_point(point, insert_before);
+			}
+		}
+
 		if (x_last !== null && y_last !== null) {
 			unit.move_transformed_point(active_point, x_now - x_last, y_now - y_last);
 		}
