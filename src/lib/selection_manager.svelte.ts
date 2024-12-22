@@ -31,10 +31,8 @@ export const create_selection_state = (): Selection_State => ({
 export class Selection_Manager<T> {
 	selection_threshold = 0; // TODO maybe a better UX is a value of 2 to 4?
 
-	// shared selection state that can be accessed by parent components
 	state: Selection_State = $state(create_selection_state());
 
-	// internal state used by the selection logic
 	#selected: Set<T> = $state(new Set());
 	#initial_selection: Set<T> = $state(new Set());
 
@@ -99,13 +97,18 @@ export class Selection_Manager<T> {
 		this.state.selection_height = y - this.state.selection_start_y;
 
 		// Get the normalized selection bounds
-		const sel_x = this.state.selection_width >= 0 ? this.state.selection_start_x : x;
-		const sel_y = this.state.selection_height >= 0 ? this.state.selection_start_y : y;
-		const sel_w = Math.abs(this.state.selection_width);
-		const sel_h = Math.abs(this.state.selection_height);
+		const selection_x = this.state.selection_width >= 0 ? this.state.selection_start_x : x;
+		const selection_y = this.state.selection_height >= 0 ? this.state.selection_start_y : y;
+		const selection_w = Math.abs(this.state.selection_width);
+		const selection_h = Math.abs(this.state.selection_height);
 
 		// Calculate which items are in the selection rect
-		const items_in_selection = this.helpers.find_all_items(sel_x, sel_y, sel_w, sel_h);
+		const items_in_selection = this.helpers.find_all_items(
+			selection_x,
+			selection_y,
+			selection_w,
+			selection_h,
+		);
 
 		// Update the selection based on mode
 		switch (mode) {

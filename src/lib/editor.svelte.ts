@@ -190,7 +190,7 @@ export class Editor implements Serializable<Editor_Json> {
 	}
 
 	set_json(value: Editor_Json): void {
-		console.log(`[editor] set_json`, value);
+		console.log(`[editor] set_json`, value.projects[0].scenes);
 		this.selected_project_id = value.selected_project_id;
 		this.projects = value.projects;
 		// TODO is this correct? how about pattern with project.scene?

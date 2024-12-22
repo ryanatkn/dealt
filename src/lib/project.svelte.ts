@@ -156,18 +156,13 @@ export class Project implements Serializable<Project_Json> {
 		const scenes = value.scenes.length ? value.scenes : [create_scene_empty()];
 		// TODO instead of this, diff?
 		this.#destroy_scenes();
-		this.scenes = scenes.map((w) => new Scene({project: this, scene_json: w}));
+		this.scenes = scenes.map((s) => new Scene({project: this, scene_json: s}));
 		this.select_scene(
 			scenes.some((w) => w.id === value.selected_scene_id) ? value.selected_scene_id : scenes[0].id,
 		); // TODO is a bit hacky
 		// TODO how to do this? only on demand, add state
 		// this.scene.load();
 	}
-
-	// save(project_json: Project_Json = this.json): void {
-	// 	// TODO fix this alongside the Scene stuff
-	// 	// this.serialized = Project.save(project_json, this.storage);
-	// }
 
 	loaded = $state(false); // TODO see usage, messy
 
@@ -209,20 +204,15 @@ export class Project implements Serializable<Project_Json> {
 		scenes.length = 0;
 	}
 
-	select_scene = (scene_id: Scene_Id): void => {
+	select_scene(scene_id: Scene_Id): void {
 		this.selected_scene_id = scene_id;
-	};
+	}
 
-	toggle_renderer = (renderer_type: Renderer_Type): void => {
+	toggle_renderer(renderer_type: Renderer_Type): void {
 		this.renderers[renderer_type] = !this.renderers[renderer_type];
-	};
+	}
 
-	get_scene = (scene_id: Scene_Id): Scene | null => {
-		// TODO change to a map by id?
-		return this.scenes.find((w) => w.id === scene_id) ?? null;
-	};
-
-	delete_scene = (scene_id: Scene_Id): void => {
+	delete_scene(scene_id: Scene_Id): void {
 		const index = this.scenes.findIndex((p) => p.id === scene_id);
 		console.log(`index`, this.scenes, index);
 		if (index === -1) {
@@ -244,9 +234,9 @@ export class Project implements Serializable<Project_Json> {
 			const closest_index = Math.min(index, this.scenes.length - 1);
 			this.select_scene(this.scenes[closest_index].id);
 		}
-	};
+	}
 
-	create_scene = (partial: Partial<Scene_Json>): void => {
+	create_scene(partial: Partial<Scene_Json>): void {
 		const scene_json = parse_scene_json($state.snapshot(partial));
 		scene_json.name = get_next_scene_name(this.scenes, scene_json);
 		const scene = new Scene({project: this, scene_json});
@@ -254,16 +244,16 @@ export class Project implements Serializable<Project_Json> {
 		this.scenes.push(scene);
 		this.select_scene(scene.id); // TODO @many hacky
 		scene.load(); // TODO @many is this best? change APIs?
-	};
+	}
 
-	duplicate_scene = (source: Scene): void => {
+	duplicate_scene(source: Scene): void {
 		const scene = source.clone({name: get_next_scene_name(this.scenes, source.json)});
 		scene.save(); // TODO @many is this best? change APIs?
 		this.scenes.push(scene);
 		console.log(`[project] duplicate_scene`, scene);
 		this.select_scene(scene.id); // TODO @many hacky
 		scene.load(); // TODO @many is this best? change APIs?
-	};
+	}
 }
 
 // TODO refactor - return an error message?

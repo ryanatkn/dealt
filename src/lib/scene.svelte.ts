@@ -3,7 +3,7 @@ import {EMPTY_OBJECT} from '@ryanatkn/belt/object.js';
 import {count_graphemes} from '@ryanatkn/belt/string.js';
 
 import {random_id, type Id} from '$lib/id.js';
-import {Unit, type Unit_Json, type Unit_Name} from '$lib/unit.svelte.js';
+import {Unit, type Unit_Json} from '$lib/unit.svelte.js';
 import {Collisions} from '$lib/collisions.js';
 import {Simulation} from '$lib/simulation.svelte.js';
 import {Controller} from '$lib/controller.svelte.js';
@@ -238,12 +238,12 @@ export class Scene implements Serializable<Scene_Json> {
 		}
 	}
 
-	reset = (data: Scene_Json | null = this.json_initial): void => {
+	reset(data: Scene_Json | null = this.json_initial): void {
 		this.destroy();
 		if (data !== null) {
 			this.set_json(data);
 		}
-	};
+	}
 
 	exit(): void {
 		alert('you reached the portal! but it just loops you back to the start.. for now'); // eslint-disable-line no-alert
@@ -251,10 +251,10 @@ export class Scene implements Serializable<Scene_Json> {
 		this.reset();
 	}
 
-	add_unit = (unit: Unit): Unit => {
+	add_unit(unit: Unit): Unit {
 		this.units.push(unit); // TODO unshift makes this crazy slow, is that expected?
 		return unit;
-	};
+	}
 
 	remove_unit(unit: Unit): void {
 		const index = this.units.indexOf(unit);
@@ -280,12 +280,7 @@ export class Scene implements Serializable<Scene_Json> {
 	 */
 	update(dt: number): void {
 		// TODO time dilation controls
-		// TODO `resize_dirty`?
-		// if (this.needs_resize) {
-		// 	this.resize();
-		// 	this.needs_resize = false;
-		// }
-		// this.time += dt; // TODO maybe don't track this on the stage? clock?
+		// this.time += dt; // TODO maybe don't track this on the stage? clock only?
 
 		const {editor, controller} = this;
 
@@ -329,41 +324,17 @@ export class Scene implements Serializable<Scene_Json> {
 		};
 	}
 
-	// TODO id lookup?
-	mutate_unit = (unit_or_name: Unit_Name | Unit, partial: Partial<Unit_Json>): void => {
-		const unit =
-			typeof unit_or_name === 'string' ? this.find_unit_by_name(unit_or_name) : unit_or_name;
-		// TODO is this what we want? or `unit.set_json`?
-		if (unit) unit.set_json(partial);
-	};
-
-	find_unit_by_name = (unit_name: Unit_Name): Unit | undefined => {
-		if (!unit_name) {
-			console.error('TODO no unit name given');
-			return;
-		}
-		return this.units.find((u) => u.name === unit_name); // TODO cache by name?
-	};
-
-	filter_units_by_name = (unit_name: Unit_Name, filter?: Unit_Filter): Array<Unit> | undefined => {
-		const {units} = this;
-		return filter_or_undefined(
-			units,
-			(unit, index, items) => unit.name === unit_name && (!filter || filter(unit, index, items)),
-		);
-	};
-
-	filter_units_by_behavior = (
+	filter_units_by_behavior(
 		behavior_name: Behavior_Name,
 		filter?: Unit_Filter,
-	): Array<Unit> | undefined => {
+	): Array<Unit> | undefined {
 		const {units} = this;
 		return filter_or_undefined(
 			units,
 			(unit, index, items) =>
 				unit.behaviors.has(behavior_name) && (!filter || filter(unit, index, items)),
 		);
-	};
+	}
 
 	pointer_body: Point | undefined;
 	selection_polygon: Polygon | undefined;
@@ -413,7 +384,6 @@ export interface Scene_Metadata_Options {
 	scene_metadata_data?: Scene_Metadata_Json; // TODO accept a partial?
 }
 
-// TODO rename? `Simulation`? `Scene_Simulation`?
 export class Scene_Metadata implements Serializable<Scene_Metadata_Json> {
 	id: Scene_Id = $state()!;
 	name: Scene_Name = $state()!;
@@ -428,8 +398,6 @@ export class Scene_Metadata implements Serializable<Scene_Metadata_Json> {
 		this.set_json(scene_metadata_data); // TODO load like with app data
 	}
 
-	// data!: Scene_Metadata_Json; // TODO should this be reactive? everything else derived from it?
-
 	// TODO @many omit defaults - option? separate method?
 	toJSON(): Scene_Metadata_Json {
 		return {
@@ -441,7 +409,6 @@ export class Scene_Metadata implements Serializable<Scene_Metadata_Json> {
 
 	set_json(value: Scene_Metadata_Json): void {
 		console.log(`[scene_metadata] set_json`, value);
-		// this.data = value;
 		this.id = value.id;
 		this.name = value.name;
 		this.glyph = value.glyph;
@@ -453,20 +420,6 @@ export const to_scene_metadata_json = (scene: Scene_Json): Scene_Metadata_Json =
 	name: scene.name,
 	glyph: scene.glyph,
 });
-
-/*
-
-Alternatives to the `_Data` suffix:
-
-- `_Json`
-- `_Raw`
-- `_Input`
-- `_Info`
-- `_Meta`
-- `_Metadata`
-- `_Config`
-
-*/
 
 // TODO refactor - return an error message?
 export const check_scene_glyph = (value: any): string | null => {

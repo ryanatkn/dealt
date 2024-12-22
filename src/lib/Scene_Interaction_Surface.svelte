@@ -50,6 +50,8 @@
 
 	const {controller} = $derived(scene);
 
+	// TODO this whole component needs a lot of refactoring, start with the interface in the module context
+
 	// TODO delete key should delete selected units, this component may be okay for that logic
 
 	// TODO bug where quickly moving on an initial drag, the values are off, possibly missing the first frame? (select many and in dev to reproduce)
