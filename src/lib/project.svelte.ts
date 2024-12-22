@@ -98,7 +98,6 @@ export class Project implements Serializable<Project_Json> {
 	glyph: string = $state()!;
 
 	readonly app: App;
-	readonly editor: Editor; // TODO @many hack added so that units can remove themselves from `editor.unit_selection`
 	// These are all copied from the `app` for convenience.
 	readonly clock: Clock;
 	readonly renderer: Renderer;
@@ -124,9 +123,8 @@ export class Project implements Serializable<Project_Json> {
 
 	constructor(options: Project_Options) {
 		console.log(`[project] new with options`, options);
-		const {app, editor, project_json} = options;
+		const {app, project_json} = options;
 		this.app = app;
-		this.editor = editor;
 		this.renderer = app.renderer;
 		this.clock = app.clock;
 		this.collisions = app.collisions;

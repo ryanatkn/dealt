@@ -140,10 +140,16 @@ export class Scene implements Serializable<Scene_Json> {
 
 	units: Array<Unit> = $state([]);
 
+	// TODO what if this was a set that efficiently updated?
+	players: Array<Unit> | undefined = $derived(
+		this.filter_units_by_behavior('Player_Controller_Behavior'),
+	);
+
 	constructor(options: Scene_Options) {
 		console.log(`[scene] new with options`, options);
 		const {project, scene_json} = options;
 
+		// TODO block add `app` here?
 		this.project = project;
 		this.editor = project.editor;
 		this.clock = project.clock;
@@ -282,13 +288,13 @@ export class Scene implements Serializable<Scene_Json> {
 		// TODO time dilation controls
 		// this.time += dt; // TODO maybe don't track this on the stage? clock only?
 
-		const {editor, controller} = this;
+		const {players, editor, controller} = this;
 
 		controller.update(dt);
 
 		// TODO hacky
-		if (editor.players && editor.player_input_enabled) {
-			for (const player of editor.players) {
+		if (players && editor.player_input_enabled) {
+			for (const player of players) {
 				if (!player.dead) {
 					player.direction_x = controller.moving_x;
 					player.direction_y = controller.moving_y;
