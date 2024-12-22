@@ -18,7 +18,7 @@ export class Renderer_Unit_Pixi {
 
 		// console.log(`[unit_renderer_pixi] created`, this);
 
-		// TODO try to rework this pattern without effects, dunno how though, maybe still sync in deriveds but with per-unit components
+		// TODO @many try to rework this pattern without effects for efficiency, dunno how though, maybe still sync in deriveds but with per-unit components
 		// Bind unit changes to the Pixi container
 		this.unsubscribers.push(
 			unit.on_change_x((x) => {

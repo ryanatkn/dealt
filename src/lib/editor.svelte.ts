@@ -121,6 +121,8 @@ export class Editor implements Serializable<Editor_Json> {
 	// TODO this does not stay in sync with `scene.layers`
 	collapsed_layers: SvelteSet<Unit> = new SvelteSet();
 
+	unwatch_clock: (() => void) | undefined;
+
 	#playing: boolean = $state()!;
 	get playing(): boolean {
 		return this.#playing;
@@ -139,11 +141,16 @@ export class Editor implements Serializable<Editor_Json> {
 			}
 
 			// TODO @many hacky but seems to be the right UX
-			this.project.scene.clock.watch(this.update);
+			if (!this.unwatch_clock) {
+				this.unwatch_clock = this.project.scene.clock.watch(this.update);
+			}
 			this.project.scene.clock.start();
 		} else {
 			// TODO @many hacky but seems to be the right UX
-			this.project.scene.clock.unwatch(this.update);
+			if (this.unwatch_clock) {
+				this.unwatch_clock();
+				this.unwatch_clock = undefined;
+			}
 			this.project.scene.clock.stop();
 		}
 	}

@@ -319,13 +319,14 @@ export class Scene implements Serializable<Scene_Json> {
 	}
 
 	// TODO @many this is a hack copied over from the clock to let demos properly sequence updates
-	callbacks: Set<Scene_Update_Callback> = new Set();
+	callbacks: Array<Scene_Update_Callback> = [];
 	onupdate(callback: Scene_Update_Callback): () => void {
-		this.callbacks.add(callback);
-		return () => this.unwatch(callback);
-	}
-	unwatch(callback: Scene_Update_Callback): void {
-		this.callbacks.delete(callback);
+		this.callbacks.push(callback);
+		return () => {
+			const index = this.callbacks.indexOf(callback);
+			if (index === -1) throw Error('callback not found');
+			this.callbacks.splice(index, 1);
+		};
 	}
 
 	// TODO id lookup?

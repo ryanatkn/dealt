@@ -508,60 +508,71 @@ export class Unit implements Serializable<Unit_Json> {
 		this.body.y = new_y;
 	}
 
-	// These change hooks allow usage like in the Pixi render.
-	// Maybe rethink? Needs to be efficient though, reacting with effects seems off.
+	// TODO @many try to rework this pattern without effects for efficiency, dunno how though, maybe still sync in deriveds but with per-unit components
 
-	#on_change_x: Set<(x: number) => void> = new Set();
+	#on_change_x: Array<(x: number) => void> = [];
 	on_change_x(cb: (x: number) => void): Change_Unsubscriber {
-		this.#on_change_x.add(cb);
+		this.#on_change_x.push(cb);
 		cb(this.x);
 		return () => {
-			this.#on_change_x.delete(cb);
+			const index = this.#on_change_x.indexOf(cb);
+			if (index === -1) throw Error('callback not found');
+			this.#on_change_x.splice(index, 1);
 		};
 	}
 
-	#on_change_y: Set<(y: number) => void> = new Set();
+	#on_change_y: Array<(y: number) => void> = [];
 	on_change_y(cb: (y: number) => void): Change_Unsubscriber {
-		this.#on_change_y.add(cb);
+		this.#on_change_y.push(cb);
 		cb(this.#y);
 		return () => {
-			this.#on_change_y.delete(cb);
+			const index = this.#on_change_y.indexOf(cb);
+			if (index === -1) throw Error('callback not found');
+			this.#on_change_y.splice(index, 1);
 		};
 	}
 
-	#on_change_rotation: Set<(rotation: Unit_Rotation) => void> = new Set();
+	#on_change_rotation: Array<(rotation: Unit_Rotation) => void> = [];
 	on_change_rotation(cb: (rotation: Unit_Rotation) => void): Change_Unsubscriber {
-		this.#on_change_rotation.add(cb);
+		this.#on_change_rotation.push(cb);
 		cb(this.rotation);
 		return () => {
-			this.#on_change_rotation.delete(cb);
+			const index = this.#on_change_rotation.indexOf(cb);
+			if (index === -1) throw Error('callback not found');
+			this.#on_change_rotation.splice(index, 1);
 		};
 	}
 
-	#on_change_scale: Set<(scale: Unit_Scale) => void> = new Set();
+	#on_change_scale: Array<(scale: Unit_Scale) => void> = [];
 	on_change_scale(cb: (scale: Unit_Scale) => void): Change_Unsubscriber {
-		this.#on_change_scale.add(cb);
+		this.#on_change_scale.push(cb);
 		cb(this.#scale);
 		return () => {
-			this.#on_change_scale.delete(cb);
+			const index = this.#on_change_scale.indexOf(cb);
+			if (index === -1) throw Error('callback not found');
+			this.#on_change_scale.splice(index, 1);
 		};
 	}
 
-	#on_change_radius: Set<(radius: Unit_Radius) => void> = new Set();
+	#on_change_radius: Array<(radius: Unit_Radius) => void> = [];
 	on_change_radius(cb: (radius: Unit_Radius) => void): Change_Unsubscriber {
-		this.#on_change_radius.add(cb);
+		this.#on_change_radius.push(cb);
 		cb(this.#radius);
 		return () => {
-			this.#on_change_radius.delete(cb);
+			const index = this.#on_change_radius.indexOf(cb);
+			if (index === -1) throw Error('callback not found');
+			this.#on_change_radius.splice(index, 1);
 		};
 	}
 
-	#on_change_points: Set<(points: Array<I_Point>) => void> = new Set();
+	#on_change_points: Array<(points: Array<I_Point>) => void> = [];
 	on_change_points(cb: (points: Array<I_Point>) => void): Change_Unsubscriber {
-		this.#on_change_points.add(cb);
+		this.#on_change_points.push(cb);
 		cb(this.#points);
 		return () => {
-			this.#on_change_points.delete(cb);
+			const index = this.#on_change_points.indexOf(cb);
+			if (index === -1) throw Error('callback not found');
+			this.#on_change_points.splice(index, 1);
 		};
 	}
 

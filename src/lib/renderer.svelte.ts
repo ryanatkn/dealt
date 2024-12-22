@@ -30,7 +30,7 @@ export interface Renderer_Colors {
 
 export const colors_default: Renderer_Colors = {
 	background: '#000000',
-	unit: '#94643d',
+	unit: '#977254',
 	dead: '#ffffff',
 	player: '#3ebb3e', // color_b_4
 	harmful: '#a82424', // color_c_6

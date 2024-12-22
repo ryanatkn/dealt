@@ -17,7 +17,7 @@ export class Clock {
 	dt: number | null = null; // TODO @many reset? on start or on explicit reset? pause vs stop?
 
 	// TODO refactor, include dt
-	callbacks: Set<Clock_Callback> = new Set();
+	callbacks: Array<Clock_Callback> = [];
 
 	start = (): void => {
 		if (this.running) return;
@@ -75,11 +75,11 @@ export class Clock {
 	}
 
 	watch(callback: Clock_Callback): () => void {
-		this.callbacks.add(callback);
-		return () => this.unwatch(callback);
-	}
-
-	unwatch(callback: Clock_Callback): void {
-		this.callbacks.delete(callback);
+		this.callbacks.push(callback);
+		return () => {
+			const index = this.callbacks.indexOf(callback);
+			if (index === -1) throw Error('callback not found');
+			this.callbacks.splice(index, 1);
+		};
 	}
 }
