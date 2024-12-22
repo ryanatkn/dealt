@@ -157,43 +157,43 @@
 					}}>add point ◎</button
 				>
 			{/if}
+			{#if unit.type === 'polygon'}
+				<div class="row gap_sm">
+					<!-- TODO button actions (to decompose, do other things?) -->
+					{#if !unit.is_simple_polygon}
+						<div transition:slide={{axis: 'x'}}>
+							<div transition:slide class="py_sm">
+								<button
+									type="button"
+									class="inline color_g selected white_space_nowrap"
+									title="this polygon intersects itself - collision detection is disabled"
+									>self-intersecting</button
+								>
+							</div>
+						</div>
+					{/if}
+					{#if unit.concave}
+						<div transition:slide={{axis: 'x'}}>
+							<div transition:slide class="py_sm">
+								<button
+									type="button"
+									class="inline color_d selected deselectable white_space_nowrap"
+									title="this polygon is concave, and can be decomposed into {unit.decomped
+										.length} convex polygons"
+									onclick={() => {
+										// eslint-disable-next-line no-alert
+										alert(
+											`TODO automatically decompose the concave polygon into ${unit.decomped.length} convex ones, need to support multiple bodies per unit`,
+										);
+									}}>concave</button
+								>
+							</div>
+						</div>
+					{/if}
+				</div>
+			{/if}
+			<Unit_Behavior_Controls {unit} />
 		</div>
-		{#if unit.type === 'polygon'}
-			<div class="row gap_sm">
-				<!-- TODO button actions (to decompose, do other things?) -->
-				{#if !unit.is_simple_polygon}
-					<div transition:slide={{axis: 'x'}}>
-						<div transition:slide class="py_sm">
-							<button
-								type="button"
-								class="inline color_g selected white_space_nowrap"
-								title="this polygon intersects itself - collision detection is disabled"
-								>self-intersecting</button
-							>
-						</div>
-					</div>
-				{/if}
-				{#if unit.concave}
-					<div transition:slide={{axis: 'x'}}>
-						<div transition:slide class="py_sm">
-							<button
-								type="button"
-								class="inline color_d selected deselectable white_space_nowrap"
-								title="this polygon is concave, and can be decomposed into {unit.decomped
-									.length} convex polygons"
-								onclick={() => {
-									// eslint-disable-next-line no-alert
-									alert(
-										`TODO automatically decompose the concave polygon into ${unit.decomped.length} convex ones, need to support multiple bodies per unit`,
-									);
-								}}>concave</button
-							>
-						</div>
-					</div>
-				{/if}
-			</div>
-		{/if}
-		<Unit_Behavior_Controls {unit} />
 	{/if}
 </li>
 
