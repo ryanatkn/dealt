@@ -13,8 +13,6 @@
 
 	// TODO @many refactor this control so it shares code with other polygon/circle controls and `Scrubbable_Input`
 
-	// TODO @many refactor how this works so it works for all renderers, using a collision Point for the pointer
-
 	const SENSITIVITY = 0.5;
 
 	let pressing = $state(false);
@@ -60,7 +58,7 @@
 			// TODO parse, in the setter or is that too inefficient? multiple parsers that can assume `number` or not?
 			unit.radius = parse_radius(
 				radius_before_pressing! + SENSITIVITY * (x_now - x_start! - (y_now - y_start!)),
-			); // TODO normalize to the distance from the initial
+			);
 		}
 	};
 

@@ -16,8 +16,6 @@
 
 	// TODO @many refactor this control so it shares code with other polygon/circle controls and `Scrubbable_Input`
 
-	// TODO @many refactor how this works so it works for all renderers, using a collision Point for the pointer
-
 	// TODO bug where dragging stops for non-simple polygons
 
 	let pressing = $state(false);

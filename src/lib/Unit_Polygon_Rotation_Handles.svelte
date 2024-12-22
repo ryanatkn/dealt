@@ -13,12 +13,13 @@
 
 	// TODO @many refactor this control so it shares code with other polygon/circle controls and `Scrubbable_Input`
 
-	// TODO @many refactor how this works so it works for all renderers, using a collision Point for the pointer
-
 	const SENSITIVITY = 0.013;
 
 	let pressing = $state(false);
 	let rotation_before_pressing: number | null = $state(null);
+	let x_before_pressing: number | null = $state(null);
+	let y_before_pressing: number | null = $state(null);
+	// TODO maybe prefix these with `pointer`
 	let x_start: number | null = $state(null);
 	let y_start: number | null = $state(null);
 	let x_last: number | null = $state(null);
@@ -26,10 +27,20 @@
 	let x_now: number | null = $state(null);
 	let y_now: number | null = $state(null);
 
+	const cursor = $derived(unit.scene.controller.pressing_alt ? 'move' : 'ew-resize');
+
+	const dx = $derived(unit.x + size * Math.cos(-1 * (unit.rotation - Math.PI / 2)));
+	const dy = $derived(unit.y - size * Math.sin(-1 * (unit.rotation - Math.PI / 2)));
+	const points = $derived(
+		`${dx},${dy - size / 2} ${dx + size / 3},${dy} ${dx},${dy + size / 2} ${dx - size / 3},${dy}`,
+	);
+
 	const press = (x: number, y: number) => {
 		if (pressing) return;
 		pressing = true;
 		rotation_before_pressing = unit.rotation;
+		x_before_pressing = unit.x;
+		y_before_pressing = unit.y;
 		x_start = x;
 		y_start = y;
 		x_last = x;
@@ -52,11 +63,18 @@
 		y_last = y_now;
 		x_now = x;
 		y_now = y;
+
 		if (x_last !== null && y_last !== null) {
 			// TODO parse, in the setter or is that too inefficient? multiple parsers that can assume `number` or not?
-			unit.rotation = parse_rotation(
-				rotation_before_pressing! + SENSITIVITY * (x_now - x_start! - (y_now - y_start!)),
-			); // TODO normalize to the distance from the initial
+			if (unit.scene.controller.pressing_alt) {
+				// Move the unit's center when Alt is pressed
+				unit.move_center_to(unit.x + (x_now - x_last), unit.y + (y_now - y_last));
+			} else {
+				// Rotate the unit when Alt is not pressed
+				unit.rotation = parse_rotation(
+					rotation_before_pressing! + SENSITIVITY * (x_now - x_start! - (y_now - y_start!)),
+				);
+			}
 		}
 	};
 
@@ -73,26 +91,24 @@
 	const onwindowpointermove = (e: MouseEvent) => {
 		move(e.clientX, e.clientY);
 	};
-	const onwindowkeydown = (e: KeyboardEvent) => {
+	const onwindowkeydowncapture = (e: KeyboardEvent) => {
 		if (e.key === 'Escape') {
-			unit.rotation = rotation_before_pressing!;
+			if (unit.scene.controller.pressing_alt) {
+				unit.move_center_to(x_before_pressing!, y_before_pressing!);
+			} else {
+				unit.rotation = rotation_before_pressing!;
+			}
 			reset();
 			swallow(e);
 		}
 	};
-
-	const dx = $derived(unit.x + size * Math.cos(-1 * (unit.rotation - Math.PI / 2)));
-	const dy = $derived(unit.y - size * Math.sin(-1 * (unit.rotation - Math.PI / 2)));
-	const points = $derived(
-		`${dx},${dy - size / 2} ${dx + size / 3},${dy} ${dx},${dy + size / 2} ${dx - size / 3},${dy}`,
-	);
 </script>
 
 <svelte:window
 	onpointerup={pressing ? onwindowpointerup : undefined}
 	onpointermove={pressing ? onwindowpointermove : undefined}
 	onpointerleave={pressing ? onwindowpointerleave : undefined}
-	onkeydowncapture={pressing ? onwindowkeydown : undefined}
+	onkeydowncapture={pressing ? onwindowkeydowncapture : undefined}
 />
 
 <!-- TODO add `title` when changed to DOM elements -->
@@ -103,6 +119,7 @@
 	{points}
 	transform="rotate({unit.rotation_degrees} {dx} {dy})"
 	fill="var(--color_selected)"
+	style:cursor
 	{onpointerdown}
 />
 {#if pressing}

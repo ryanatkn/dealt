@@ -1,6 +1,7 @@
 import {STRENGTH_MAX, type Unit} from '$lib/unit.svelte.js';
 import type {Collision_Result} from '$lib/collision_result.js';
 
+// TODO support lots of different kinds of collision behaviors
 export const handle_collision = (a: Unit, b: Unit, result: Collision_Result): void => {
 	// const o_x = result.overlap! * result.overlap_x;
 	// const o_y = result.overlap! * result.overlap_y;

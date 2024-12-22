@@ -184,7 +184,7 @@
 								onclick={() => {
 									// eslint-disable-next-line no-alert
 									alert(
-										`TODO this button should present choices for decomposing the concave polygon into ${unit.decomped.length} convex ones`,
+										`TODO automatically decompose the concave polygon into ${unit.decomped.length} convex ones, need to support multiple bodies per unit`,
 									);
 								}}>concave</button
 							>

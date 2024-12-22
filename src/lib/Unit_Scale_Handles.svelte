@@ -13,14 +13,13 @@
 
 	// TODO @many refactor this control so it shares code with other polygon/circle controls and `Scrubbable_Input`
 
-	// TODO @many refactor how this works so it works for all renderers, using a collision Point for the pointer
-
 	const SENSITIVITY = 0.01;
 
 	let pressing = $state(false);
 	let scale_before_pressing: number | null = $state(null);
 	let x_before_pressing: number | null = $state(null);
 	let y_before_pressing: number | null = $state(null);
+	// TODO maybe prefix these with `pointer`
 	let x_start: number | null = $state(null);
 	let y_start: number | null = $state(null);
 	let x_last: number | null = $state(null);
@@ -91,7 +90,7 @@
 		move(e.clientX, e.clientY);
 	};
 
-	const onwindowkeydown = (e: KeyboardEvent) => {
+	const onwindowkeydowncapture = (e: KeyboardEvent) => {
 		if (e.key === 'Escape') {
 			if (unit.scene.controller.pressing_alt) {
 				unit.move_center_to(x_before_pressing!, y_before_pressing!);
@@ -108,7 +107,7 @@
 	onpointerup={pressing ? onwindowpointerup : undefined}
 	onpointermove={pressing ? onwindowpointermove : undefined}
 	onpointerleave={pressing ? onwindowpointerleave : undefined}
-	onkeydowncapture={pressing ? onwindowkeydown : undefined}
+	onkeydowncapture={pressing ? onwindowkeydowncapture : undefined}
 />
 
 <!-- TODO add `title` when changed to DOM elements -->
