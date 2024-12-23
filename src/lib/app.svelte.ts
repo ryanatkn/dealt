@@ -39,11 +39,15 @@ export const default_app_json: Thunked<App_Json> = {
 const parse_app_json = (v: any): App_Json => {
 	console.log(`[parse_app_json]`, v);
 	const projects =
-		v?.projects === undefined ? default_app_json.projects() : v.projects.map(parse_project_json); // TODO better typesafety for callers
+		v?.projects === undefined
+			? default_app_json.projects()
+			: (v.projects as Array<Project_Json>).map(parse_project_json); // TODO would be more robust with schemas
 	return {
 		projects,
 		selected_project_id:
-			v?.selected_project_id === undefined ? projects[0].id : v.selected_project_id,
+			v?.selected_project_id === undefined || !projects.some((p) => p.id === v.selected_project_id)
+				? projects[0].id
+				: v.selected_project_id,
 		show_main_menu:
 			typeof v?.show_main_menu === 'boolean' ? v.show_main_menu : default_app_json.show_main_menu(),
 	};
