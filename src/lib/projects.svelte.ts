@@ -87,7 +87,7 @@ export class Projects {
 	}
 
 	// TODO move project methods to the app? maybe make a `Project_Manager` or `Projects` class?
-	create_project = (partial?: Project_Metadata_Json, select = true): void => {
+	create_project(partial?: Project_Metadata_Json, select = true): void {
 		const id = partial?.id;
 		if (id !== undefined && this.all.some((p) => p.id === id)) {
 			throw Error(`Project id ${id} already exists`);
@@ -95,9 +95,9 @@ export class Projects {
 		const project_metadata_json = parse_project_metadata_json(partial);
 		this.all.push(new Project_Metadata({project_metadata_json}));
 		if (select) this.select_project(this.current.id);
-	};
+	}
 
-	select_project = (project_id: Project_Id): void => {
+	select_project(project_id: Project_Id): void {
 		// TODO @many hacky check for `this.current`, goal is to always have a `project` instance without being wasteful
 		// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 		if (this.current?.id === project_id) {
@@ -116,9 +116,9 @@ export class Projects {
 		}
 		const project_json = Project.load(project_id); // TODO BLOCK working pattern?
 		this.current = new Project({app: this.app, project_json});
-	};
+	}
 
-	delete_project = (project_id: Project_Id): void => {
+	delete_project(project_id: Project_Id): void {
 		// TODO ?
 		// if (this.current.id === project_id) {
 		// }
@@ -139,5 +139,5 @@ export class Projects {
 			const closest_index = Math.min(index, this.all.length - 1);
 			this.current.id = this.all[closest_index].id;
 		}
-	};
+	}
 }
