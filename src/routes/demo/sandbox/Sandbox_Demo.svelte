@@ -94,7 +94,7 @@
 				</div>
 				<div class="unit_controls">
 					<div class="unit_controls_inner">
-						<Unit_List_And_Layers {project} />
+						<Unit_List_And_Layers {project} {editor} />
 					</div>
 				</div>
 			</div>

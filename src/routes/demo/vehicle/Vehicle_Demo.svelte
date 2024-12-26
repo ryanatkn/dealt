@@ -133,7 +133,7 @@
 		</div>
 		{#if editor.editing}
 			<div class="controls_wrapper">
-				<Unit_List_And_Layers {project} />
+				<Unit_List_And_Layers {project} {editor} />
 			</div>
 		{/if}
 	</div>

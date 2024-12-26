@@ -6,7 +6,6 @@
 	import Scene_Datafiles from '$lib/Scene_Datafiles.svelte';
 	import Scene_Loader from '$lib/Scene_Loader.svelte';
 	import Scene_Form from '$lib/Scene_Form.svelte';
-	import {app_context} from '$lib/app.svelte.js';
 
 	interface Props {
 		editor: Editor;
@@ -14,7 +13,7 @@
 
 	const {editor}: Props = $props();
 
-	const app = app_context.get(); // TODO @many use props instead?
+	const {app} = $derived(editor);
 
 	onNavigate(() => {
 		if (editor.show_scene_menu) editor.show_scene_menu = false;
