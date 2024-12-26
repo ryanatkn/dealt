@@ -27,16 +27,13 @@ export const default_projects_json = {
 
 export const parse_projects_json = (v: any): Projects_Json => {
 	console.log(`[parse_app_json]`, v);
-	const all =
-		v?.all === undefined
-			? default_projects_json.all
-			: (v.all as Array<Project_Metadata_Json>).map(parse_project_json); // TODO would be more robust with schemas
+	const all = !v?.all
+		? default_projects_json.all
+		: (v.all as Array<Project_Metadata_Json>).map(parse_project_json); // TODO would be more robust with schemas
 	return {
 		all,
 		current_id:
-			v?.current_id === undefined || !all.some((p) => p.id === v.current_id)
-				? all[0].id
-				: v.current_id,
+			!v?.current_id || !all.some((p) => p.id === v.current_id) ? all[0].id : v.current_id,
 	};
 };
 

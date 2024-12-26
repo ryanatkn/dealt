@@ -60,10 +60,10 @@ export const default_project_json: Thunked<Project_Json> = {
 };
 
 const parse_project_renderers = (v: any): Record<Renderer_Type, boolean> => ({
-	pixi: v?.pixi === undefined ? true : v.pixi,
-	svelte: v?.svelte === undefined ? false : v.svelte,
-	canvas: v?.canvas === undefined ? false : v.canvas,
-	html: v?.html === undefined ? false : v.html,
+	pixi: v?.pixi ?? true,
+	svelte: v?.svelte ?? false,
+	canvas: v?.canvas ?? false,
+	html: v?.html ?? false,
 });
 
 export const parse_project_metadata_json = (v: any): Project_Metadata_Json => {
