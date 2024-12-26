@@ -55,7 +55,7 @@ export const default_project_json: Thunked<Project_Json> = {
 	scenes: () => [],
 	selected_scene_id: () => {
 		// TODO remove this maybe and use a partial type?
-		throw new Error('Cannot get default for `selected_scene_id`');
+		throw Error('Cannot get default for `selected_scene_id`');
 	},
 };
 
@@ -161,7 +161,7 @@ export class Project implements Serializable<Project_Json> {
 		};
 	}
 
-	// TODO maybe a `set_json` and `set_json_partial`? or always take a partial?
+	// TODO @many maybe a `set_json` and `set_json_partial`? or always take a partial?
 	set_json(value: Project_Json): void {
 		console.log(`[project] set_json`, value);
 		this.id = value.id;
@@ -272,7 +272,7 @@ export class Project implements Serializable<Project_Json> {
 }
 
 export interface Project_Metadata_Options {
-	project_metadata_data?: Project_Metadata_Json; // TODO accept a partial?
+	project_metadata_json?: Project_Metadata_Json; // TODO accept a partial?
 }
 
 export class Project_Metadata implements Serializable<Project_Metadata_Json> {
@@ -283,10 +283,9 @@ export class Project_Metadata implements Serializable<Project_Metadata_Json> {
 	json: Project_Metadata_Json = $derived($state.snapshot(this));
 
 	constructor(options: Project_Metadata_Options = EMPTY_OBJECT) {
-		const {project_metadata_data = parse_project_metadata_json(null)} = options;
+		const {project_metadata_json = parse_project_metadata_json(null)} = options;
 
-		// TODO parse? `parse_project_metadata_data`
-		this.set_json(project_metadata_data); // TODO load like with app data
+		this.set_json(project_metadata_json); // TODO load like with app data
 	}
 
 	// TODO @many omit defaults - option? separate method?

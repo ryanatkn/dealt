@@ -54,13 +54,12 @@ export class App implements Serializable<App_Json> {
 	// currently manually syncing the same changes to both `app_json` `projects` --
 	// mixing serialization concerns with runtime representations
 
+	readonly projects!: Projects; // TODO BLOCK is used in derived, does it work like this?
 	readonly clock: Clock;
 	readonly renderer: Renderer;
 	readonly simulation: Simulation;
 	readonly collisions: Collisions;
 	readonly controller: Controller;
-
-	projects = new Projects();
 
 	project = $derived(this.projects.current);
 
@@ -80,6 +79,7 @@ export class App implements Serializable<App_Json> {
 			app_json = App.load(),
 		}: App_Options = options;
 
+		this.projects = new Projects({app: this, projects_json: app_json.projects});
 		this.renderer = renderer;
 		this.clock = clock;
 		this.collisions = simulation.collisions;

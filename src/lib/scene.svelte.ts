@@ -155,9 +155,9 @@ export class Scene implements Serializable<Scene_Json> {
 		this.simulation = project.simulation;
 		this.controller = project.controller;
 
-		const parsed = parse_scene_json(scene_json);
-		this.json_initial = parsed; // TODO @many hacky, need to shake out the serialization/saving/initial data/resetting flows in all of the objects
-		this.set_json(parsed);
+		const parsed_json = parse_scene_json(scene_json);
+		this.json_initial = parsed_json; // TODO @many hacky, need to shake out the serialization/saving/initial data/resetting flows in all of the objects
+		this.set_json(parsed_json);
 	}
 
 	// TODO @many omit defaults - option? separate method?
