@@ -1,5 +1,6 @@
 import type {Flavored} from '@ryanatkn/belt/types.js';
 import {count_graphemes} from '@ryanatkn/belt/string.js';
+import {EMPTY_OBJECT} from '@ryanatkn/belt/object.js';
 
 import type {Serializable} from '$lib/serializable.js';
 import {
@@ -21,16 +22,22 @@ import type {Controller} from '$lib/controller.svelte.js';
 import {create_scene_empty} from '$lib/scenes.js';
 import type {App} from '$lib/app.svelte.js';
 import {load_from_storage, set_in_storage} from '$lib/storage.js';
-import type {Editor} from '$lib/editor.svelte.js';
 
 export type Project_Id = Id | Flavored<number, 'Project_Id'>;
 
 // type Name = string; // TODO like `Id`?
 export type Project_Name = Flavored<string, 'Project_Name'>;
 
+export type Project_Glyph = Flavored<string, 'Project_Glyph'>;
+
 export const PROJECT_NAME_DEFAULT = 'untitled project';
 
-// TODO maybe storage `_Metadata` like with `Scene`s? depends on how much it grows
+export interface Project_Metadata_Json {
+	id: Project_Id;
+	name: Project_Name;
+	glyph: Project_Glyph;
+}
+
 export interface Project_Json {
 	id: Project_Id;
 	name: Project_Name;
@@ -58,6 +65,17 @@ const parse_project_renderers = (v: any): Record<Renderer_Type, boolean> => ({
 	canvas: v?.canvas === undefined ? false : v.canvas,
 	html: v?.html === undefined ? false : v.html,
 });
+
+export const parse_project_metadata_json = (v: any): Project_Metadata_Json => {
+	return {
+		id: typeof v?.id === 'number' && !Number.isNaN(v.id) ? v.id : default_project_json.id(),
+		name: typeof v?.name === 'string' ? v.name : default_project_json.name(),
+		glyph:
+			typeof v?.glyph === 'string' && count_graphemes(v.glyph) === 1
+				? v.glyph
+				: default_project_json.glyph(),
+	};
+};
 
 export const parse_project_json = (v: any): Project_Json => {
 	// TODO parse_scene_metadata
@@ -250,6 +268,41 @@ export class Project implements Serializable<Project_Json> {
 		console.log(`[project] duplicate_scene`, scene);
 		this.select_scene(scene.id); // TODO @many hacky
 		scene.load(); // TODO @many is this best? change APIs?
+	}
+}
+
+export interface Project_Metadata_Options {
+	project_metadata_data?: Project_Metadata_Json; // TODO accept a partial?
+}
+
+export class Project_Metadata implements Serializable<Project_Metadata_Json> {
+	id: Project_Id = $state()!;
+	name: Project_Name = $state()!;
+	glyph: string = $state()!;
+
+	json: Project_Metadata_Json = $derived($state.snapshot(this));
+
+	constructor(options: Project_Metadata_Options = EMPTY_OBJECT) {
+		const {project_metadata_data = parse_project_metadata_json(null)} = options;
+
+		// TODO parse? `parse_project_metadata_data`
+		this.set_json(project_metadata_data); // TODO load like with app data
+	}
+
+	// TODO @many omit defaults - option? separate method?
+	toJSON(): Project_Metadata_Json {
+		return {
+			id: this.id,
+			name: this.name,
+			glyph: this.glyph,
+		};
+	}
+
+	set_json(value: Project_Metadata_Json): void {
+		console.log(`[project_metadata] set_json`, value);
+		this.id = value.id;
+		this.name = value.name;
+		this.glyph = value.glyph;
 	}
 }
 

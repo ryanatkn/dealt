@@ -38,7 +38,7 @@
 	// TODO @many add game
 	// const game = new Game(app);
 	const editor = editor_context.set(new Editor({app}));
-	const {project} = editor;
+	const {project} = app;
 	// TODO @many refactor how?
 	project.set_json(parse_project_json({scenes: [scene_json]})); // TODO silence or refactor?
 	const {scene} = project;
@@ -58,8 +58,8 @@
 	});
 
 	const onupdate = (_dt: number) => {
-		if (editor.players) {
-			for (const player of editor.players) {
+		if (scene.players) {
+			for (const player of scene.players) {
 				handle_input(player);
 				process_game_logic(player);
 			}

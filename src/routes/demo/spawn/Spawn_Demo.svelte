@@ -47,7 +47,7 @@
 	// TODO @many add game
 	// const game = new Game(app);
 	const editor = editor_context.set(new Editor({app}));
-	const {project} = editor;
+	const {project} = app;
 	const {scene} = project;
 
 	const speed_step = 0.002;

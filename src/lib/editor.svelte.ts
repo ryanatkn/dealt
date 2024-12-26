@@ -1,11 +1,6 @@
 import {create_context} from '@ryanatkn/fuz/context_helpers.js';
 
-import {
-	parse_project_json,
-	Project,
-	type Project_Json,
-	type Project_Id,
-} from '$lib/project.svelte.js';
+import type {Project} from '$lib/project.svelte.js';
 import {load_from_storage, set_in_storage} from '$lib/storage.js';
 import type {Unit} from '$lib/unit.svelte.js';
 import type {Renderer} from '$lib/renderer.svelte.js';
@@ -214,45 +209,6 @@ export class Editor implements Serializable<Editor_Json> {
 			this.stop_playing_level();
 		} else {
 			this.play_level();
-		}
-	};
-
-	// TODO move project methods to the app? maybe make a `Project_Manager` or `Projects` class?
-	create_project = (partial?: Project_Json, select = true): void => {
-		if (partial?.id && this.app.projects.some((p) => p.id === partial.id)) {
-			throw Error('project id already exists');
-		}
-		const project_json = parse_project_json(partial);
-		this.app.projects.push(project_json);
-		if (select) this.select_project(this.app.project.id);
-	};
-
-	select_project = (project_id: Project_Id): void => {
-		this.app.selected_project_id = project_id;
-		const project_json = this.app.projects.find((p) => p.id === project_id);
-		if (project_json) this.app.project.set_json(project_json);
-	};
-
-	delete_project = (project_id: Project_Id): void => {
-		// TODO ?
-		// if (this.app.project.id === project_id) {
-		// }
-
-		const index = this.app.projects.findIndex((p) => p.id === project_id);
-		if (index === -1) {
-			console.error(
-				'[editor.delete_project] cannot find project to delete in editor.projects',
-				project_id,
-			);
-		} else {
-			this.app.projects.splice(index, 1);
-		}
-		if (this.app.projects.length === 0) {
-			this.create_project();
-		}
-		if (this.app.selected_project_id === project_id) {
-			const closest_index = Math.min(index, this.app.projects.length - 1);
-			this.app.selected_project_id = this.app.projects[closest_index].id;
 		}
 	};
 }

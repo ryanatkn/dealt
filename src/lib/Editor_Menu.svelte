@@ -26,10 +26,12 @@
 
 	const {app}: Props = $props();
 
+	const {projects} = $derived(app);
+	const project = $derived(projects.current);
+
 	let deleting_storage = $state(false);
 
 	const editor = editor_context.maybe_get();
-	const project = $derived(editor?.project);
 
 	onNavigate(() => {
 		if (app.show_main_menu) app.close_main_menu();
@@ -45,8 +47,8 @@
 					<div class="pane p_lg width_sm">
 						<h2 class="mt_0 mb_lg row pr_md"><span class="icon_size_lg">🏞</span> projects</h2>
 						<div class="flex flex_column flex_wrap w_100">
-							{#each editor.projects as project (project)}
-								{@const selected = editor.selected_project_id === project.id}
+							{#each projects.all as project (project)}
+								{@const selected = projects.current.id === project.id}
 								<div class="w_100 py_xs" transition:slide>
 									<button
 										type="button"
@@ -59,7 +61,7 @@
 										onclick={selected
 											? undefined
 											: () => {
-													editor.select_project(project.id);
+													projects.select_project(project.id);
 												}}
 									>
 										<div class="size_xl3 mr_lg">{project.glyph}</div>
@@ -72,9 +74,9 @@
 								title="create a new project"
 								class="w_100 mt_xs justify_content_start"
 								onclick={() => {
-									editor.create_project(
+									projects.create_project(
 										parse_project_json({
-											name: get_next_project_name(editor.projects),
+											name: get_next_project_name(projects.all),
 											scenes: [to_scene_metadata_json(create_scene_adventure())],
 										}),
 									);
@@ -132,15 +134,15 @@
 					</div>
 					<div class="pane p_xl mb_xl3">
 						<section>
-							<Scene_Loader project={editor.project} />
+							<Scene_Loader {project} />
 						</section>
 						<section>
 							<h3>Edit scene</h3>
-							<Scene_Form scene={editor.project.scene} />
+							<Scene_Form scene={project.scene} />
 						</section>
 					</div>
 					<div class="pane p_lg mb_xl3">
-						<Scene_Datafiles scene={editor.project.scene} />
+						<Scene_Datafiles scene={project.scene} />
 					</div>
 					<div class="pane p_xl mb_xl3 shadow_c_xl">
 						<h2 class="mt_xl color_c_5 font_weight_600">Danger zone</h2>

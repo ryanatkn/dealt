@@ -18,7 +18,6 @@ import {Point} from '$lib/point.js';
 import {Polygon} from '$lib/polygon.js';
 import {colliding} from '$lib/colliding.js';
 import type {Project} from '$lib/project.svelte.js';
-import type {Editor} from '$lib/editor.svelte.js';
 
 export type Scene_Id = Id | Flavored<number, 'Scene_Id'>;
 
@@ -131,7 +130,6 @@ export class Scene implements Serializable<Scene_Json> {
 
 	readonly project: Project;
 	// These are all copied from the `project` for convenience.
-	readonly editor: Editor;
 	readonly clock: Clock;
 	readonly renderer: Renderer;
 	readonly collisions: Collisions;
@@ -149,9 +147,8 @@ export class Scene implements Serializable<Scene_Json> {
 		console.log(`[scene] new with options`, options);
 		const {project, scene_json} = options;
 
-		// TODO block add `app` here?
+		// TODO BLOCK maybe add `app` here?
 		this.project = project;
-		this.editor = project.editor;
 		this.clock = project.clock;
 		this.renderer = project.renderer;
 		this.collisions = project.collisions;
@@ -288,12 +285,12 @@ export class Scene implements Serializable<Scene_Json> {
 		// TODO time dilation controls
 		// this.time += dt; // TODO maybe don't track this on the stage? clock only?
 
-		const {players, editor, controller} = this;
+		const {players, project, controller} = this;
 
 		controller.update(dt);
 
 		// TODO hacky
-		if (players && editor.player_input_enabled) {
+		if (players && (!project.app.editor || project.app.editor.player_input_enabled)) {
 			for (const player of players) {
 				if (!player.dead) {
 					player.direction_x = controller.moving_x;

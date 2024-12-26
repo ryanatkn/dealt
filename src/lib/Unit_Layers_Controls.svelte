@@ -1,5 +1,6 @@
 <script lang="ts">
 	import {Editor} from '$lib/editor.svelte.js';
+	import {app_context} from '$lib/app.svelte.js';
 
 	interface Props {
 		editor: Editor;
@@ -7,7 +8,9 @@
 
 	const {editor}: Props = $props();
 
-	const {scene} = editor.project;
+	const app = app_context.get(); // TODO @many use props instead?
+
+	const {scene} = app.project;
 </script>
 
 <button

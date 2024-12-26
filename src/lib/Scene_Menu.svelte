@@ -6,12 +6,15 @@
 	import Scene_Datafiles from '$lib/Scene_Datafiles.svelte';
 	import Scene_Loader from '$lib/Scene_Loader.svelte';
 	import Scene_Form from '$lib/Scene_Form.svelte';
+	import {app_context} from '$lib/app.svelte.js';
 
 	interface Props {
 		editor: Editor;
 	}
 
 	const {editor}: Props = $props();
+
+	const app = app_context.get(); // TODO @many use props instead?
 
 	onNavigate(() => {
 		if (editor.show_scene_menu) editor.show_scene_menu = false;
@@ -23,15 +26,15 @@
 		<div class="scene_menu width_md">
 			<div class="pane p_xl mb_xl3">
 				<section>
-					<Scene_Loader project={editor.project} />
+					<Scene_Loader project={app.project} />
 				</section>
 				<section>
 					<h3>Edit scene</h3>
-					<Scene_Form scene={editor.project.scene} />
+					<Scene_Form scene={app.project.scene} />
 				</section>
 			</div>
 			<div class="pane p_lg mb_xl3 width_md">
-				<Scene_Datafiles scene={editor.project.scene} />
+				<Scene_Datafiles scene={app.project.scene} />
 			</div>
 		</div>
 	</Dialog>
