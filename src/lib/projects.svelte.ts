@@ -40,7 +40,7 @@ export const parse_projects_json = (v: any): Projects_Json => {
 export class Projects {
 	readonly app: App;
 
-	all: Array<Project_Metadata> = [];
+	all!: Array<Project_Metadata>;
 
 	current: Project = $state()!;
 
