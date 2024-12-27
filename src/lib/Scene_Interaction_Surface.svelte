@@ -187,6 +187,7 @@
 			get_selection_mode(e),
 		);
 
+		// TODO @many refactor surface/selection state
 		// Sync the unit_selection to match the selection manager
 		unit_selection.clear();
 		for (const unit of selection_manager.get_selected_items()) {
@@ -206,6 +207,7 @@
 				get_selection_mode(e),
 			);
 
+			// TODO @many refactor surface/selection state
 			// Sync the unit_selection to match the selection manager
 			unit_selection.clear();
 			for (const unit of selection_manager.get_selected_items()) {
@@ -247,6 +249,7 @@
 				get_selection_mode(e),
 			);
 
+			// TODO @many refactor surface/selection state
 			// Sync the unit_selection to match the selection manager
 			unit_selection.clear();
 			for (const unit of selection_manager.get_selected_items()) {
