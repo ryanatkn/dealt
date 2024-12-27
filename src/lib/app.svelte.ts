@@ -54,7 +54,7 @@ export class App implements Serializable<App_Json> {
 	// currently manually syncing the same changes to both `app_json` `projects` --
 	// mixing serialization concerns with runtime representations
 
-	readonly projects!: Projects; // TODO BLOCK is used in derived, does it work like this?
+	readonly projects!: Projects;
 	readonly clock: Clock;
 	readonly renderer: Renderer;
 	readonly simulation: Simulation;
