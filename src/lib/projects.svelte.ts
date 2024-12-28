@@ -86,6 +86,11 @@ export class Projects {
 		// if (project_metadata) this.current = new Project({json: project_metadata});
 	}
 
+	destroy(): void {
+		this.current.destroy();
+		this.all.length = 0;
+	}
+
 	// TODO move project methods to the app? maybe make a `Project_Manager` or `Projects` class?
 	create_project(partial?: Project_Metadata_Json, select = true): void {
 		const id = partial?.id;

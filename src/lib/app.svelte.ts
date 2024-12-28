@@ -55,8 +55,8 @@ export class App implements Serializable<App_Json> {
 	// mixing serialization concerns with runtime representations
 
 	readonly projects!: Projects;
-	readonly clock: Clock;
 	readonly renderer: Renderer;
+	readonly clock: Clock;
 	readonly simulation: Simulation;
 	readonly collisions: Collisions;
 	readonly controller: Controller;
@@ -103,6 +103,10 @@ export class App implements Serializable<App_Json> {
 		console.log(`[app] set_json`, value);
 		this.projects.set_json(value.projects);
 		this.show_main_menu = value.show_main_menu;
+	}
+
+	destroy(): void {
+		this.projects.destroy();
 	}
 
 	// TODO storage should be an external conern, maybe use hooks or deriveds?
