@@ -4,7 +4,7 @@
 
 [**dealt.dev**](https://www.dealt.dev/)
 
-> ⚠️ Dealt is pre-alpha and still experimenting with different patterns. (it's messy)
+> ⚠️ Dealt is pre-alpha and still experimenting with different patterns. (it's messy and buggy)
 > If you're interested in the code or design I'm seeking collaborators!
 > The first release took about a month of full-time work spread over 5 months,
 > and I plan to work on it long-term as a hobby and make games.
