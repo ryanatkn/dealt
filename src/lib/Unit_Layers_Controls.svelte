@@ -7,7 +7,9 @@
 
 	const {editor}: Props = $props();
 
-	const {scene} = editor.project;
+	const {app} = $derived(editor); // TODO @many use props instead?
+
+	const {scene} = $derived(app.project);
 </script>
 
 <button

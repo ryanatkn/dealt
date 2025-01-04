@@ -2,15 +2,12 @@
 	import {slide} from 'svelte/transition';
 
 	import type {Scene} from '$lib/scene.svelte.js';
-	import {editor_context} from '$lib/editor.svelte.js';
 
 	interface Props {
 		scene: Scene;
 	}
 
 	const {scene}: Props = $props();
-
-	const editor = editor_context.get(); // TODO constrain scope for actions, maybe just a callback
 
 	let deleting_scene = $state(false);
 
@@ -29,7 +26,7 @@
 			type="button"
 			class="w_100 color_c selected deselectable"
 			onpointerup={() => {
-				editor.project.delete_scene(scene.id);
+				scene.project.delete_scene(scene.id);
 				deleting_scene = false;
 			}}
 		>

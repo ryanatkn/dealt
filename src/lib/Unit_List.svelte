@@ -3,18 +3,20 @@
 	import Unit_List_Item from '$lib/Unit_List_Item.svelte';
 	import Unit_Contextmenu from '$lib/Unit_Contextmenu.svelte';
 	import Reorderable_List from '$lib/Reorderable_List.svelte';
+	import type {Editor} from '$lib/editor.svelte.js';
 
 	interface Props {
 		project: Project;
+		editor: Editor;
 		scroll_on_select?: boolean;
 	}
 
-	const {project, scroll_on_select = true}: Props = $props();
+	const {project, editor, scroll_on_select = true}: Props = $props();
 
 	// TODO @many refactor? the id is hacky and brittle
 	if (scroll_on_select) {
 		$effect(() => {
-			const {latest} = project.editor.unit_selection;
+			const {latest} = editor.unit_selection;
 			if (!latest) return;
 			document.getElementById('unit_list_item_' + latest.id)?.scrollIntoView({block: 'nearest'});
 		});

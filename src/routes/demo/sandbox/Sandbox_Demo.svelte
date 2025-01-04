@@ -29,7 +29,7 @@
 	// TODO @many add game
 	// const game = new Game(app);
 	const editor = editor_context.set(new Editor({app}));
-	const {project} = editor;
+	const {project} = app;
 	// TODO @many refactor how?
 	project.set_json(parse_project_json({scenes: [scene_json]})); // TODO silence or refactor?
 	console.log(`scene_json`, scene_json);
@@ -94,7 +94,7 @@
 				</div>
 				<div class="unit_controls">
 					<div class="unit_controls_inner">
-						<Unit_List_And_Layers {project} />
+						<Unit_List_And_Layers {project} {editor} />
 					</div>
 				</div>
 			</div>

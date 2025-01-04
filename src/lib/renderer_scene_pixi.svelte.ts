@@ -1,5 +1,6 @@
 import {Application, type ApplicationOptions} from 'pixi.js';
 import {SvelteMap} from 'svelte/reactivity';
+import {EMPTY_OBJECT} from '@ryanatkn/belt/object.js';
 
 import type {Unit} from '$lib/unit.svelte.js';
 import {Renderer_Unit_Pixi} from '$lib/renderer_unit_pixi.svelte.js';
@@ -18,7 +19,7 @@ export class Renderer_Scene_Pixi {
 		this.pixi_app = new Application();
 	}
 
-	async init(opts: Partial<ApplicationOptions> = {}): Promise<HTMLCanvasElement> {
+	async init(opts: Partial<ApplicationOptions> = EMPTY_OBJECT): Promise<HTMLCanvasElement> {
 		const default_opts: Partial<ApplicationOptions> = {
 			antialias: true,
 			width: this.renderer.width,

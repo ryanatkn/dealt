@@ -7,10 +7,12 @@
 	// const game = new Game(app);
 	const editor = editor_context.get();
 
+	const {project} = $derived(editor.app);
+
 	// TODO fix this to use the loaded project and scene data
 	// maybe `scene` should be `null`able
-	if (editor.project.scene.units.length === 0) {
-		editor.project.set_json({...editor.project.toJSON(), scenes: [create_scene_adventure()]});
+	if (project.scene.units.length === 0) {
+		project.set_json({...project.toJSON(), scenes: [create_scene_adventure()]});
 	}
 </script>
 
