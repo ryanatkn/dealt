@@ -14,7 +14,9 @@
 
 	const {project, children}: Props = $props();
 
-	const {scene} = $derived(project);
+	const {
+		scenes: {current: scene},
+	} = $derived(project);
 
 	let width: number | undefined = $state();
 	let height: number | undefined = $state();

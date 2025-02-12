@@ -50,7 +50,7 @@
 	<fieldset class="gap_md">
 		<!-- TODO this button is only to save changes to units -->
 		<button type="button" onclick={() => scene.save()} class="color_a"> save scene </button>
-		<button type="button" onclick={() => scene.project.duplicate_scene(scene)}>
+		<button type="button" onclick={() => scene.project.scenes.duplicate_scene(scene)}>
 			duplicate scene
 		</button>
 	</fieldset>

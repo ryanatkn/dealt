@@ -138,11 +138,11 @@
 						</section>
 						<section>
 							<h3>Edit scene</h3>
-							<Scene_Form scene={project.scene} />
+							<Scene_Form scene={project.scenes.current} />
 						</section>
 					</div>
 					<div class="pane p_lg mb_xl3">
-						<Scene_Datafiles scene={project.scene} />
+						<Scene_Datafiles scene={project.scenes.current} />
 					</div>
 					<div class="pane p_xl mb_xl3 shadow_c_xl">
 						<h2 class="mt_xl color_c_5 font_weight_600">Danger zone</h2>

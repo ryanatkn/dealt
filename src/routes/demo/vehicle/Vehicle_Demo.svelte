@@ -41,7 +41,9 @@
 	const {project} = app;
 	// TODO @many refactor how?
 	project.set_json(parse_project_json({scenes: [scene_json]})); // TODO silence or refactor?
-	const {scene} = project;
+	const {
+		scenes: {current: scene},
+	} = project;
 	scene.set_json(scene_json); // TODO @many how to init? and save with reset button?
 	scene.json_initial = scene.json; // TODO @many hacky, need to shake out the serialization/saving/initial data/resetting flows in all of the objects
 

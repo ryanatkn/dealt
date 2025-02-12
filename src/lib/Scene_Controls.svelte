@@ -15,7 +15,10 @@
 
 	const {project, children}: Props = $props();
 
-	const {renderer, scene} = $derived(project);
+	const {
+		renderer,
+		scenes: {current: scene},
+	} = $derived(project);
 	const {clock} = $derived(scene);
 
 	const editor = editor_context.get();

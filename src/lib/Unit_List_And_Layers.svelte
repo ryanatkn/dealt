@@ -13,7 +13,9 @@
 
 	const {project, editor}: Props = $props();
 
-	const {scene} = $derived(project);
+	const {
+		scenes: {current: scene},
+	} = $derived(project);
 
 	let left_sidebar_1_scroll_top: number = $state(0);
 	let left_sidebar_2_scroll_top: number = $state(0);

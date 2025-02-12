@@ -26,7 +26,9 @@
 
 	const {app} = $derived(editor);
 	const {project} = $derived(app);
-	const {scene} = $derived(project);
+	const {
+		scenes: {current: scene},
+	} = $derived(project);
 
 	// TODO camera controls in the header
 

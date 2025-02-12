@@ -48,7 +48,9 @@
 	// const game = new Game(app);
 	const editor = editor_context.set(new Editor({app}));
 	const {project} = app;
-	const {scene} = project;
+	const {
+		scenes: {current: scene},
+	} = project;
 
 	const speed_step = 0.002;
 	const speed_min = 0;

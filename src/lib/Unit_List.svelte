@@ -25,11 +25,11 @@
 
 <div class="unit_list">
 	<Reorderable_List
-		items={project.scene.units}
-		on_reorder={(from_index, to_index) => project.scene.move_unit(from_index, to_index)}
+		items={project.scenes.current.units}
+		on_reorder={(from_index, to_index) => project.scenes.current.move_unit(from_index, to_index)}
 	>
 		{#snippet children(unit)}
-			<Unit_Contextmenu scene={project.scene} {unit}>
+			<Unit_Contextmenu scene={project.scenes.current} {unit}>
 				<Unit_List_Item {unit} />
 			</Unit_Contextmenu>
 		{/snippet}

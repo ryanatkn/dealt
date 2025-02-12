@@ -209,11 +209,7 @@ export class Project_Metadata implements Serializable<Project_Metadata_Json> {
 
 	// TODO @many omit defaults - option? separate method?
 	toJSON(): Project_Metadata_Json {
-		return {
-			id: this.id,
-			name: this.name,
-			glyph: this.glyph,
-		};
+		return {id: this.id, name: this.name, glyph: this.glyph};
 	}
 
 	set_json(value: Project_Metadata_Json): void {

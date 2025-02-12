@@ -29,11 +29,11 @@
 				</section>
 				<section>
 					<h3>Edit scene</h3>
-					<Scene_Form scene={app.project.scene} />
+					<Scene_Form scene={app.project.scenes.current} />
 				</section>
 			</div>
 			<div class="pane p_lg mb_xl3 width_md">
-				<Scene_Datafiles scene={app.project.scene} />
+				<Scene_Datafiles scene={app.project.scenes.current} />
 			</div>
 		</div>
 	</Dialog>

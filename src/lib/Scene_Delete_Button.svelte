@@ -26,7 +26,7 @@
 			type="button"
 			class="w_100 color_c selected deselectable"
 			onpointerup={() => {
-				scene.project.delete_scene(scene.id);
+				scene.project.scenes.delete_scene(scene.id);
 				deleting_scene = false;
 			}}
 		>

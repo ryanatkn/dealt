@@ -33,7 +33,7 @@
 			swallow(e);
 			return;
 		} else if (key === 'r' && !ctrlKey) {
-			app.project.scene.reset();
+			app.project.scenes.current.reset();
 			swallow(e);
 			return;
 		} else if (key === '`' && !ctrlKey && !altKey) {
