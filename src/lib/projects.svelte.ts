@@ -7,6 +7,7 @@ import {
 	type Project_Metadata_Json,
 } from '$lib/project.svelte.js';
 import type {App} from '$lib/app.svelte.js';
+import type {Serializable} from '$lib/serializable.js';
 
 export interface Projects_Json {
 	all: Array<Project_Metadata_Json>;
@@ -37,7 +38,7 @@ export const parse_projects_json = (v: any): Projects_Json => {
 	};
 };
 
-export class Projects {
+export class Projects implements Serializable<Projects_Json> {
 	readonly app: App;
 
 	all!: Array<Project_Metadata>;
@@ -60,10 +61,7 @@ export class Projects {
 	}
 
 	toJSON(): Projects_Json {
-		return {
-			all: $state.snapshot(this.all),
-			current_id: this.current.id,
-		};
+		return {all: $state.snapshot(this.all), current_id: this.current.id};
 	}
 
 	set_json(value: Projects_Json): void {

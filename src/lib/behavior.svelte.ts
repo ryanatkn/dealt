@@ -10,4 +10,6 @@ export abstract class Behavior<T extends Behavior_Json = any> implements Seriali
 	abstract name: Behavior_Name;
 
 	abstract toJSON(): T;
+
+	abstract set_json(json: T): void;
 }
