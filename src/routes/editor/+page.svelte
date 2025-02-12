@@ -7,7 +7,9 @@
 	// const game = new Game(app);
 	const editor = editor_context.get();
 
-	const {project} = $derived(editor.app);
+	const {
+		projects: {current: project},
+	} = $derived(editor.app);
 
 	// TODO fix this to use the loaded project and scene data
 	// maybe `scene` should be `null`able

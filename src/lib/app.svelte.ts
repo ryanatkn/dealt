@@ -54,14 +54,14 @@ export class App implements Serializable<App_Json> {
 	// currently manually syncing the same changes to both `app_json` `projects` --
 	// mixing serialization concerns with runtime representations
 
-	readonly projects!: Projects;
+	readonly projects: Projects;
 	readonly renderer: Renderer;
 	readonly clock: Clock;
 	readonly simulation: Simulation;
 	readonly collisions: Collisions;
 	readonly controller: Controller;
 
-	project = $derived(this.projects.current);
+	// project = $derived(this.projects.current);
 
 	editor: Editor | null = $state(null); // TODO BLOCK create/destroy on demand
 
@@ -93,10 +93,7 @@ export class App implements Serializable<App_Json> {
 	// returns a stable reference to data that's immutable by convention
 	// TODO @many omit defaults - option? separate method?
 	toJSON(): App_Json {
-		return {
-			projects: $state.snapshot(this.projects),
-			show_main_menu: this.show_main_menu,
-		};
+		return {projects: $state.snapshot(this.projects), show_main_menu: this.show_main_menu};
 	}
 
 	set_json(value: App_Json): void {

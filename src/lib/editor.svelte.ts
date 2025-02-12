@@ -108,10 +108,10 @@ export class Editor implements Serializable<Editor_Json> {
 		this.#playing = value;
 		if (this.#playing) {
 			// TODO move/refactor?
-			if (!this.app.project.scenes.current.players?.length) {
-				if (this.app.project.scenes.current.units.length) {
+			if (!this.app.projects.current.scenes.current.players?.length) {
+				if (this.app.projects.current.scenes.current.units.length) {
 					// TODO start by refactoring to a `player`/`controller` flag/config instead of `name`
-					const unit = this.app.project.scenes.current.units[0];
+					const unit = this.app.projects.current.scenes.current.units[0];
 					unit.name = 'player';
 					unit.add_behavior(new Player_Controller_Behavior());
 				}
@@ -119,16 +119,16 @@ export class Editor implements Serializable<Editor_Json> {
 
 			// TODO @many hacky but seems to be the right UX
 			if (!this.unwatch_clock) {
-				this.unwatch_clock = this.app.project.scenes.current.clock.watch(this.update);
+				this.unwatch_clock = this.app.projects.current.scenes.current.clock.watch(this.update);
 			}
-			this.app.project.scenes.current.clock.start();
+			this.app.projects.current.scenes.current.clock.start();
 		} else {
 			// TODO @many hacky but seems to be the right UX
 			if (this.unwatch_clock) {
 				this.unwatch_clock();
 				this.unwatch_clock = undefined;
 			}
-			this.app.project.scenes.current.clock.stop();
+			this.app.projects.current.scenes.current.clock.stop();
 		}
 	}
 
@@ -179,7 +179,7 @@ export class Editor implements Serializable<Editor_Json> {
 	// TODO refactor (with demos too)
 	// TODO need to separate fixed and framerate-based updaters
 	update = (dt: number): void => {
-		this.app.project.scenes.current.update(dt);
+		this.app.projects.current.scenes.current.update(dt);
 	};
 
 	play_level = (): void => {

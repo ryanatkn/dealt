@@ -89,6 +89,10 @@ export const get_next_scene_name = (
 
 export interface Scene_Options {
 	app: App; // TODO was `Project` but for now just passing app everywhere
+	/**
+	 * Defaults to `app.projects.current`.
+	 */
+	project?: Project;
 	scene_json?: Partial<Scene_Json>;
 }
 
@@ -147,15 +151,15 @@ export class Scene implements Serializable<Scene_Json> {
 
 	constructor(options: Scene_Options) {
 		console.log(`[scene] new with options`, options);
-		const {app, scene_json} = options;
+		const {app, project = app.projects.current, scene_json} = options;
 
 		this.app = app;
-		this.project = app.project;
-		this.clock = app.clock;
-		this.renderer = app.renderer;
-		this.collisions = app.collisions;
-		this.simulation = app.simulation;
-		this.controller = app.controller;
+		this.project = project;
+		this.clock = project.clock;
+		this.renderer = project.renderer;
+		this.collisions = project.collisions;
+		this.simulation = project.simulation;
+		this.controller = project.controller;
 
 		const parsed_json = parse_scene_json(scene_json);
 		this.json_initial = parsed_json; // TODO @many hacky, need to shake out the serialization/saving/initial data/resetting flows in all of the objects
@@ -405,11 +409,7 @@ export class Scene_Metadata implements Serializable<Scene_Metadata_Json> {
 
 	// TODO @many omit defaults - option? separate method?
 	toJSON(): Scene_Metadata_Json {
-		return {
-			id: this.id,
-			name: this.name,
-			glyph: this.glyph,
-		};
+		return {id: this.id, name: this.name, glyph: this.glyph};
 	}
 
 	set_json(value: Scene_Metadata_Json): void {

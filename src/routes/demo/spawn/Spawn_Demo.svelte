@@ -47,7 +47,9 @@
 	// TODO @many add game
 	// const game = new Game(app);
 	const editor = editor_context.set(new Editor({app}));
-	const {project} = app;
+	const {
+		projects: {current: project},
+	} = app;
 	const {
 		scenes: {current: scene},
 	} = project;

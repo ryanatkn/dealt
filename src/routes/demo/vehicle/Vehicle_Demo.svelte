@@ -38,7 +38,9 @@
 	// TODO @many add game
 	// const game = new Game(app);
 	const editor = editor_context.set(new Editor({app}));
-	const {project} = app;
+	const {
+		projects: {current: project},
+	} = app;
 	// TODO @many refactor how?
 	project.set_json(parse_project_json({scenes: [scene_json]})); // TODO silence or refactor?
 	const {

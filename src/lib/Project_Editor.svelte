@@ -25,7 +25,9 @@
 	const {editor}: Props = $props();
 
 	const {app} = $derived(editor);
-	const {project} = $derived(app);
+	const {
+		projects: {current: project},
+	} = $derived(app);
 	const {
 		scenes: {current: scene},
 	} = $derived(project);

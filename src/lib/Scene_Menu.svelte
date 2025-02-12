@@ -25,15 +25,15 @@
 		<div class="scene_menu width_md">
 			<div class="pane p_xl mb_xl3">
 				<section>
-					<Scene_Loader project={app.project} />
+					<Scene_Loader project={app.projects.current} />
 				</section>
 				<section>
 					<h3>Edit scene</h3>
-					<Scene_Form scene={app.project.scenes.current} />
+					<Scene_Form scene={app.projects.current.scenes.current} />
 				</section>
 			</div>
 			<div class="pane p_lg mb_xl3 width_md">
-				<Scene_Datafiles scene={app.project.scenes.current} />
+				<Scene_Datafiles scene={app.projects.current.scenes.current} />
 			</div>
 		</div>
 	</Dialog>
