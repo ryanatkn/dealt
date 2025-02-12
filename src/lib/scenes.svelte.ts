@@ -63,10 +63,7 @@ export class Scenes {
 	}
 
 	toJSON(): Scenes_Json {
-		return {
-			all: $state.snapshot(this.all),
-			current_id: this.current.id,
-		};
+		return {all: $state.snapshot(this.all), current_id: this.current.id};
 	}
 
 	set_json(value: Scenes_Json): void {
@@ -85,8 +82,6 @@ export class Scenes {
 		} else {
 			this.select_scene(current_id);
 		}
-		// TODO BLOCK
-		// if (scene_metadata) this.current = new Scene({json: scene_metadata});
 	}
 
 	destroy(): void {
@@ -109,7 +104,7 @@ export class Scenes {
 		if (this.current) {
 			this.current.destroy();
 		}
-		const scene_json = Scene.load(scene_id); // TODO BLOCK working pattern?
+		const scene_json = Scene.load(scene_id);
 		this.current = new Scene({app: this.app, scene_json});
 	}
 
