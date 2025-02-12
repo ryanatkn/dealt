@@ -11,7 +11,7 @@
 
 	const {
 		scenes: {current: scene},
-	} = $derived(app.project);
+	} = $derived(app.projects.current);
 </script>
 
 <button
