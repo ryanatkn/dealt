@@ -1,14 +1,16 @@
 <script lang="ts" generics="T_Item extends {id: string | number}">
 	import type {Snippet} from 'svelte';
 
+	import {reorder_list} from '$lib/helpers.js';
+
 	const {
 		items,
-		on_reorder,
+		on_reorder = reorder_list,
 		children,
 	}: {
 		items: Array<T_Item>;
-		on_reorder: (from_index: number, to_index: number) => void;
-		children: Snippet<[item: T_Item]>;
+		on_reorder?: (items: Array<T_Item>, from_index: number, to_index: number) => void;
+		children: Snippet<[item: T_Item, dragging: boolean, dragging_any: boolean]>;
 	} = $props();
 
 	let drag_source_index: number | null = $state(null);
@@ -56,7 +58,7 @@
 			drop_target_index !== null &&
 			drag_source_index !== drop_target_index
 		) {
-			on_reorder(drag_source_index, drop_target_index);
+			on_reorder(items, drag_source_index, drop_target_index);
 		}
 
 		// Reset state
@@ -88,14 +90,9 @@
 		ondragstart={handle_dragstart}
 	>
 		{#each items as item, i (item)}
-			<div
-				class="list_item"
-				class:dragging={i === drag_source_index}
-				data-item={item.id}
-				draggable="true"
-			>
-				{@render children(item)}
-			</div>
+			<li class:dragging={i === drag_source_index} data-item={item.id} draggable="true">
+				{@render children(item, i === drag_source_index, drag_source_index !== null)}
+			</li>
 		{/each}
 	</ul>
 	{#if indicator_y !== null}
@@ -110,16 +107,16 @@
 		position: relative;
 	}
 
-	.list_item {
+	li {
 		cursor: grab;
 		user-select: none;
 	}
 
-	.list_item:active {
+	li:active {
 		cursor: grabbing;
 	}
 
-	.list_item.dragging {
+	li.dragging {
 		opacity: 0.5;
 	}
 
@@ -127,8 +124,8 @@
 		position: absolute;
 		left: 0;
 		right: 0;
-		height: 4px;
-		background: var(--color_selected_3);
+		height: 3px;
+		background: var(--color_a_5);
 		pointer-events: none;
 	}
 </style>
