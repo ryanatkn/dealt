@@ -1,17 +1,14 @@
-<!-- TODO make this generic on `T_Item`, I couldn't get usage to typecheck -->
-<script lang="ts">
+<script lang="ts" generics="T_Item extends {id: string | number}">
 	import type {Snippet} from 'svelte';
-
-	import type {Unit} from '$lib/unit.svelte.js';
 
 	const {
 		items,
 		on_reorder,
 		children,
 	}: {
-		items: Array<Unit>;
+		items: Array<T_Item>;
 		on_reorder: (from_index: number, to_index: number) => void;
-		children: Snippet<[item: Unit]>;
+		children: Snippet<[item: T_Item]>;
 	} = $props();
 
 	let drag_source_index: number | null = $state(null);
@@ -85,7 +82,7 @@
 
 <div class="reorderable_list">
 	<ul
-		class="unstyled"
+		class="unstyled mb_0"
 		ondragover={handle_dragover}
 		ondragend={handle_dragend}
 		ondragstart={handle_dragstart}
