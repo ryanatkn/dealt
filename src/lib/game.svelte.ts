@@ -25,7 +25,7 @@ export class Game implements Serializable<Game_Json> {
 		};
 	}
 
-	// set_json(json: Game_Json): void {
-	// 	// TODO
-	// }
+	set_json(_json: Game_Json): void {
+		// TODO
+	}
 }

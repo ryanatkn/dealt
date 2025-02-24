@@ -4,7 +4,7 @@ import {SvelteSet} from 'svelte/reactivity';
 /*
 This is semantically too specific for the `Controller`, need to rethink all of this.
 Maybe a `Game_Controller` that derives a bunch of stuff from the `Controller`.
-`Inputs` or `Player_Inputs`?
+`Inputs` or `Player_Inputs`? What's a single word that doesn't conflict with the DOM?
 
 Things to support:
 

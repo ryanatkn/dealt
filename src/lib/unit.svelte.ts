@@ -292,7 +292,7 @@ export class Unit implements Serializable<Unit_Json> {
 
 	destroy(): void {
 		// console.log('[unit] destroy', this);
-		this.scene.project.editor.unit_selection.delete(this); // TODO @many hack added so that units can remove themselves from `editor.unit_selection`
+		this.scene.project.app.editor?.unit_selection.delete(this); // TODO hack
 		this.body.remove();
 	}
 
@@ -449,7 +449,7 @@ export class Unit implements Serializable<Unit_Json> {
 	 */
 	duplicate_point(point: Unit_Point, insert_before = false): Unit_Point {
 		const index = this.#points.indexOf(point);
-		if (index === -1) throw new Error('Point not found in polygon');
+		if (index === -1) throw Error('Point not found in polygon');
 
 		const new_point = new Unit_Point(point.x, point.y);
 

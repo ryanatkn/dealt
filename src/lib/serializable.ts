@@ -1,7 +1,7 @@
 export interface Serializable<T_Data> {
 	toJSON: () => T_Data;
 
-	// set_json: (value: Partial<T_Data>) => void;
+	set_json: (value: T_Data) => void;
 
 	// Optional static methods that implementations can provide
 	// static create_default?(): T_Data;

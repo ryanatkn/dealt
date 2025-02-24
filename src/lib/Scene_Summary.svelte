@@ -13,7 +13,7 @@
 
 <div class="scene_summary">
 	<button class="plain" type="button" onclick={() => (editor.show_scene_menu = true)}
-		>{project.scene.name}</button
+		>{project.scenes.current.name}</button
 	>
 </div>
 

@@ -101,7 +101,7 @@ export class Body implements I_Point {
 		const bvh = this._bvh;
 
 		if (bvh === null) {
-			throw new Error('Body does not belong to a collision system');
+			throw Error('Body does not belong to a collision system');
 		}
 
 		return bvh.potentials(this as any);

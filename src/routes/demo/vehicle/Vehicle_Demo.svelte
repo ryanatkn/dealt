@@ -38,10 +38,14 @@
 	// TODO @many add game
 	// const game = new Game(app);
 	const editor = editor_context.set(new Editor({app}));
-	const {project} = editor;
+	const {
+		projects: {current: project},
+	} = app;
 	// TODO @many refactor how?
 	project.set_json(parse_project_json({scenes: [scene_json]})); // TODO silence or refactor?
-	const {scene} = project;
+	const {
+		scenes: {current: scene},
+	} = project;
 	scene.set_json(scene_json); // TODO @many how to init? and save with reset button?
 	scene.json_initial = scene.json; // TODO @many hacky, need to shake out the serialization/saving/initial data/resetting flows in all of the objects
 
@@ -58,8 +62,8 @@
 	});
 
 	const onupdate = (_dt: number) => {
-		if (editor.players) {
-			for (const player of editor.players) {
+		if (scene.players) {
+			for (const player of scene.players) {
 				handle_input(player);
 				process_game_logic(player);
 			}
@@ -133,7 +137,7 @@
 		</div>
 		{#if editor.editing}
 			<div class="controls_wrapper">
-				<Unit_List_And_Layers {project} />
+				<Unit_List_And_Layers {project} {editor} />
 			</div>
 		{/if}
 	</div>

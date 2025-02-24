@@ -52,7 +52,7 @@ export class Bvh {
 			const bvh = body._bvh;
 
 			if (bvh && bvh !== this) {
-				throw new Error('Body belongs to another collision system');
+				throw Error('Body belongs to another collision system');
 			}
 
 			body._bvh = this;
@@ -174,7 +174,7 @@ export class Bvh {
 			const bvh = body._bvh;
 
 			if (bvh && bvh !== this) {
-				throw new Error('Body belongs to another collision system');
+				throw Error('Body belongs to another collision system');
 			}
 
 			body._bvh = null;
