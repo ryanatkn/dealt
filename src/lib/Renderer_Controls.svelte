@@ -17,7 +17,7 @@
 		<label class="mb_0" class:row>
 			<div class="title">renderer</div>
 			<select bind:value={renderer.type}>
-				{#each renderer_types as renderer_type}
+				{#each renderer_types as renderer_type (renderer_type)}
 					<option value={renderer_type}>{renderer_type}</option>
 				{/each}
 			</select>
