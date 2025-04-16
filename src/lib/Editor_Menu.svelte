@@ -39,11 +39,13 @@
 {#if app.show_main_menu}
 	<Dialog onclose={app.close_main_menu} layout="page">
 		<div class="main_menu">
-			<div class="sidebar gap_xl3">
+			<div class="sidebar">
 				<!-- TODO refactor, maybe setting snippets in context and rendering them here? -->
 				{#if editor}
 					<div class="pane p_lg width_sm">
-						<h2 class="mt_0 mb_lg row pr_md"><span class="icon_size_lg">🏞</span> projects</h2>
+						<h2 class="mt_0 mb_lg row pr_md">
+							<span class="icon_size_md mr_lg">🏞</span> projects
+						</h2>
 						<div class="flex flex_column flex_wrap w_100">
 							{#each editor.projects as project (project)}
 								{@const selected = editor.selected_project_id === project.id}
@@ -195,6 +197,7 @@
 <style>
 	.main_menu {
 		display: flex;
+		justify-content: center;
 		gap: var(--space_xl3);
 	}
 
@@ -206,6 +209,6 @@
 		display: flex;
 		flex-direction: column;
 		align-items: flex-end;
-		/*  */
+		gap: var(--space_xl3);
 	}
 </style>

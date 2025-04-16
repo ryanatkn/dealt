@@ -20,8 +20,8 @@
 
 {#if editor.show_scene_menu}
 	<Dialog onclose={() => (editor.show_scene_menu = !editor.show_scene_menu)} layout="page">
-		<div class="scene_menu width_md">
-			<div class="pane p_xl mb_xl3">
+		<div class="column width_md gap_xl3 mx_auto">
+			<div class="pane p_lg">
 				<section>
 					<Scene_Loader project={editor.project} />
 				</section>
@@ -30,17 +30,9 @@
 					<Scene_Form scene={editor.project.scene} />
 				</section>
 			</div>
-			<div class="pane p_lg mb_xl3 width_md">
+			<div class="pane p_lg">
 				<Scene_Datafiles scene={editor.project.scene} />
 			</div>
 		</div>
 	</Dialog>
 {/if}
-
-<style>
-	.scene_menu {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space_xl3);
-	}
-</style>
