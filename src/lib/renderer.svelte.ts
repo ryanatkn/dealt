@@ -1,5 +1,5 @@
 import type {Component} from 'svelte';
-import type {Themer} from '@ryanatkn/fuz/theme.svelte.js';
+import type {Themer} from '@ryanatkn/fuz/themer.svelte.js';
 
 import type {Scene} from '$lib/scene.svelte.js';
 

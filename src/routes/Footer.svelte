@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Breadcrumb from '@ryanatkn/fuz/Breadcrumb.svelte';
 	import {parse_package_meta} from '@ryanatkn/gro/package_meta.js';
-	import Library_Footer from '@ryanatkn/fuz/Library_Footer.svelte';
+	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
 	import type {Snippet} from 'svelte';
 	import {page} from '$app/stores';
 
@@ -26,5 +26,5 @@
 			<Breadcrumb>🔮</Breadcrumb>
 		</div>
 	{/if}
-	<Library_Footer {pkg} />
+	<Docs_Footer {pkg} />
 </section>
