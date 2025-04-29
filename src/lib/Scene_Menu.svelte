@@ -22,8 +22,8 @@
 
 {#if editor.show_scene_menu}
 	<Dialog onclose={() => (editor.show_scene_menu = !editor.show_scene_menu)} layout="page">
-		<div class="scene_menu width_md">
-			<div class="pane p_xl mb_xl3">
+		<div class="column width_md gap_xl3 mx_auto">
+			<div class="pane p_lg">
 				<section>
 					<Scene_Loader project={app.projects.current} />
 				</section>
@@ -38,11 +38,3 @@
 		</div>
 	</Dialog>
 {/if}
-
-<style>
-	.scene_menu {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space_xl3);
-	}
-</style>

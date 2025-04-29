@@ -6,7 +6,7 @@
 
 	import Themed from '@ryanatkn/fuz/Themed.svelte';
 	import type {Snippet} from 'svelte';
-	import {sync_color_scheme, Themer} from '@ryanatkn/fuz/theme.svelte.js';
+	import {sync_color_scheme, Themer} from '@ryanatkn/fuz/themer.svelte.js';
 
 	interface Props {
 		children: Snippet;
@@ -23,6 +23,6 @@
 	<title>Dealt</title>
 </svelte:head>
 
-<Themed {themer} color_scheme_fallback={themer.color_scheme}>
+<Themed {themer}>
 	{@render children()}
 </Themed>

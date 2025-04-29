@@ -37,6 +37,8 @@
 	// TODO the renderers currently size to their wrappers, maybe change?
 </script>
 
+<!-- eslint-disable svelte/no-useless-mustaches -->
+
 <div class="project_editor">
 	<nav class="top_nav">
 		<div class="scene_controls">

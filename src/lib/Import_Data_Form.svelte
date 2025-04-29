@@ -61,7 +61,7 @@
 		</button>
 		<Copy_To_Clipboard
 			text={serialized}
-			onclick={async () => {
+			oncopy={async () => {
 				local_serialized = serialized;
 				await tick();
 				local_serialized_el?.select();

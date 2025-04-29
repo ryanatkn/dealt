@@ -23,14 +23,14 @@
   },
   "type": "module",
   "engines": {
-    "node": ">=20.17"
+    "node": ">=22.11"
   },
   "devDependencies": {
-    "@ryanatkn/belt": "^0.29.0",
-    "@ryanatkn/eslint-config": "^0.6.0",
-    "@ryanatkn/fuz": "^0.131.5",
-    "@ryanatkn/gro": "^0.148.0",
-    "@ryanatkn/moss": "^0.21.1",
+    "@ryanatkn/belt": "^0.30.2",
+    "@ryanatkn/eslint-config": "^0.8.0",
+    "@ryanatkn/fuz": "^0.139.0",
+    "@ryanatkn/gro": "^0.151.0",
+    "@ryanatkn/moss": "^0.25.0",
     "@sveltejs/adapter-static": "^3.0.8",
     "@sveltejs/kit": "^2.17.1",
     "@sveltejs/vite-plugin-svelte": "^4.0.1",
