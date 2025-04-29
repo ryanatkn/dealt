@@ -26,7 +26,7 @@
 			title="create scene: {scene_creator.name}"
 			onclick={() => {
 				const scene_json = scene_creator.create();
-				project.create_scene(scene_json);
+				project.scenes.create_scene(scene_json);
 			}}
 		>
 			<span class="size_xl3 mr_sm">{scene_creator.glyph}</span>
@@ -34,12 +34,12 @@
 		</button>
 	{/each}
 </section>
-{#if project.scenes.length}
+{#if project.scenes.all.length}
 	<h3>Load scene</h3>
 	<section class="row gap_md flex_wrap">
 		<!-- TODO store in app/site/project data -->
-		{#each project.scenes as scene (scene.id)}
-			{@const selected = project.selected_scene_id === scene.id}
+		{#each project.scenes.all as scene (scene.id)}
+			{@const selected = project.scenes.current.id === scene.id}
 			<div transition:slide={{axis: 'x'}}>
 				<button
 					type="button"
@@ -48,8 +48,8 @@
 					onclick={selected
 						? undefined
 						: () => {
-								scene.load(); // TODO implicit in select?
-								project.select_scene(scene.id);
+								project.scenes.current.load(); // TODO implicit in select?
+								project.scenes.select_scene(scene.id);
 							}}
 				>
 					{scene.glyph}

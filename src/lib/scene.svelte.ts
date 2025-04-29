@@ -17,8 +17,8 @@ import type {Behavior_Name} from '$lib/behaviors.js';
 import {Point} from '$lib/point.js';
 import {Polygon} from '$lib/polygon.js';
 import {colliding} from '$lib/colliding.js';
+import type {App} from '$lib/app.svelte.js';
 import type {Project} from '$lib/project.svelte.js';
-import type {Editor} from '$lib/editor.svelte.js';
 
 export type Scene_Id = Id | Flavored<number, 'Scene_Id'>;
 
@@ -88,7 +88,11 @@ export const get_next_scene_name = (
 };
 
 export interface Scene_Options {
-	project: Project;
+	app: App; // TODO was `Project` but for now just passing app everywhere
+	/**
+	 * Defaults to `app.projects.current`.
+	 */
+	project?: Project;
 	scene_json?: Partial<Scene_Json>;
 }
 
@@ -129,9 +133,9 @@ export class Scene implements Serializable<Scene_Json> {
 
 	json_initial: Scene_Json; // TODO @many hacky, need to shake out the serialization/saving/initial data/resetting flows in all of the objects
 
+	readonly app: App;
 	readonly project: Project;
 	// These are all copied from the `project` for convenience.
-	readonly editor: Editor;
 	readonly clock: Clock;
 	readonly renderer: Renderer;
 	readonly collisions: Collisions;
@@ -140,21 +144,26 @@ export class Scene implements Serializable<Scene_Json> {
 
 	units: Array<Unit> = $state([]);
 
+	// TODO what if this was a set that efficiently updated?
+	players: Array<Unit> | undefined = $derived(
+		this.filter_units_by_behavior('Player_Controller_Behavior'),
+	);
+
 	constructor(options: Scene_Options) {
 		console.log(`[scene] new with options`, options);
-		const {project, scene_json} = options;
+		const {app, project = app.projects.current, scene_json} = options;
 
+		this.app = app;
 		this.project = project;
-		this.editor = project.editor;
 		this.clock = project.clock;
 		this.renderer = project.renderer;
 		this.collisions = project.collisions;
 		this.simulation = project.simulation;
 		this.controller = project.controller;
 
-		const parsed = parse_scene_json(scene_json);
-		this.json_initial = parsed; // TODO @many hacky, need to shake out the serialization/saving/initial data/resetting flows in all of the objects
-		this.set_json(parsed);
+		const parsed_json = parse_scene_json(scene_json);
+		this.json_initial = parsed_json; // TODO @many hacky, need to shake out the serialization/saving/initial data/resetting flows in all of the objects
+		this.set_json(parsed_json);
 	}
 
 	// TODO @many omit defaults - option? separate method?
@@ -220,7 +229,7 @@ export class Scene implements Serializable<Scene_Json> {
 	clone(partial?: Partial<Scene_Json>): Scene {
 		const scene_json = $state.snapshot(this); // not accessing `.json` so we get a copy, but is there a better pattern?
 		if (partial) Object.assign(scene_json, partial); // TODO better merging?
-		const scene = new Scene({project: this.project, scene_json});
+		const scene = new Scene({app: this.app, scene_json});
 		return scene;
 	}
 
@@ -282,13 +291,13 @@ export class Scene implements Serializable<Scene_Json> {
 		// TODO time dilation controls
 		// this.time += dt; // TODO maybe don't track this on the stage? clock only?
 
-		const {editor, controller} = this;
+		const {players, app, controller} = this;
 
 		controller.update(dt);
 
 		// TODO hacky
-		if (editor.players && editor.player_input_enabled) {
-			for (const player of editor.players) {
+		if (players && (!app.editor || app.editor.player_input_enabled)) {
+			for (const player of players) {
 				if (!player.dead) {
 					player.direction_x = controller.moving_x;
 					player.direction_y = controller.moving_y;
@@ -381,7 +390,7 @@ export type Scene_Update_Callback = (dt: number) => void;
 export type Unit_Filter = (unit: Unit, index: number, array: Array<Unit>) => boolean;
 
 export interface Scene_Metadata_Options {
-	scene_metadata_data?: Scene_Metadata_Json; // TODO accept a partial?
+	scene_metadata_json?: Scene_Metadata_Json; // TODO accept a partial?
 }
 
 export class Scene_Metadata implements Serializable<Scene_Metadata_Json> {
@@ -392,19 +401,15 @@ export class Scene_Metadata implements Serializable<Scene_Metadata_Json> {
 	json: Scene_Metadata_Json = $derived($state.snapshot(this));
 
 	constructor(options: Scene_Metadata_Options = EMPTY_OBJECT) {
-		const {scene_metadata_data = parse_scene_metadata_json(null)} = options;
+		const {scene_metadata_json = parse_scene_metadata_json(null)} = options;
 
-		// TODO parse? `parse_scene_metadata_data`
-		this.set_json(scene_metadata_data); // TODO load like with app data
+		// TODO parse? `parse_scene_metadata_json`
+		this.set_json(scene_metadata_json); // TODO load like with app data
 	}
 
 	// TODO @many omit defaults - option? separate method?
 	toJSON(): Scene_Metadata_Json {
-		return {
-			id: this.id,
-			name: this.name,
-			glyph: this.glyph,
-		};
+		return {id: this.id, name: this.name, glyph: this.glyph};
 	}
 
 	set_json(value: Scene_Metadata_Json): void {

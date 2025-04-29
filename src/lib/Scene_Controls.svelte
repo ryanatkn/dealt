@@ -15,7 +15,10 @@
 
 	const {project, children}: Props = $props();
 
-	const {renderer, scene} = $derived(project);
+	const {
+		renderer,
+		scenes: {current: scene},
+	} = $derived(project);
 	const {clock} = $derived(scene);
 
 	const editor = editor_context.get();
@@ -37,9 +40,9 @@
 		<div class="pr_sm">clock</div>
 		<Pending_Animation running={clock.running} />
 	</button>
-	<button type="button" title="reset the scene [r]" class="plain" onclick={() => scene.reset()}
-		>reset</button
-	>
+	<button type="button" title="reset the scene [r]" class="plain" onclick={() => scene.reset()}>
+		reset
+	</button>
 	<button
 		type="button"
 		class="plain deselectable"

@@ -2,18 +2,20 @@
 	import type {Project} from '$lib/project.svelte.js';
 	import Unit_Layer from '$lib/Unit_Layer.svelte';
 	import Unit_Contextmenu from '$lib/Unit_Contextmenu.svelte';
+	import type {Editor} from '$lib/editor.svelte.js';
 
 	interface Props {
 		project: Project;
+		editor: Editor;
 		scroll_on_select?: boolean;
 	}
 
-	const {project, scroll_on_select = true}: Props = $props();
+	const {project, editor, scroll_on_select = true}: Props = $props();
 
 	// TODO @many refactor? the id is hacky and brittle
 	if (scroll_on_select) {
 		$effect(() => {
-			const {latest} = project.editor.unit_selection;
+			const {latest} = editor.unit_selection;
 			if (!latest) return;
 			document.getElementById('unit_layer_' + latest.id)?.scrollIntoView({block: 'nearest'});
 		});
@@ -21,8 +23,8 @@
 </script>
 
 <ul class="unit_layers unstyled">
-	{#each project.scene.units as unit (unit.id)}
-		<Unit_Contextmenu scene={project.scene} {unit}>
+	{#each project.scenes.current.units as unit (unit.id)}
+		<Unit_Contextmenu scene={project.scenes.current} {unit}>
 			<Unit_Layer {unit} />
 		</Unit_Contextmenu>
 	{/each}

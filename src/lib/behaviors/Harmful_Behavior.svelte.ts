@@ -5,16 +5,18 @@ import type {Behavior_Name} from '$lib/behaviors.js';
 
 // TODO @many maybe the properties specify the kind of harms?
 
-export interface Harmful_Behavior_Json {
+export interface Harmful_Behavior_Json extends Behavior_Json {
 	name: Behavior_Name;
 }
 
 export class Harmful_Behavior extends Behavior<Harmful_Behavior_Json> {
 	name = 'Harmful_Behavior' as const;
 
-	override toJSON(): Harmful_Behavior_Json & Behavior_Json {
-		return {
-			name: this.name,
-		};
+	override toJSON(): Harmful_Behavior_Json {
+		return {name: this.name};
+	}
+
+	override set_json(_json: Harmful_Behavior_Json): void {
+		// TODO
 	}
 }

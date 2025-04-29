@@ -8,6 +8,8 @@ import {Simulation} from '$lib/simulation.svelte.js';
 import {Controller} from '$lib/controller.svelte.js';
 import type {Thunked} from '$lib/helpers.js';
 import type {Serializable} from '$lib/serializable.js';
+import type {Editor} from '$lib/editor.svelte.js';
+import {default_projects_json, Projects, type Projects_Json} from '$lib/projects.svelte.js';
 
 // TODO maybe a `@batched` or `@action` decorator instead of manual `batch`?
 
@@ -16,16 +18,20 @@ import type {Serializable} from '$lib/serializable.js';
 export const app_context = create_context<App>();
 
 export interface App_Json {
+	projects: Projects_Json;
 	show_main_menu: boolean;
 }
 
+// TODO @many what pattern for defaults? sometimes the data is interrelated, making per-property defaults less useful
 export const default_app_json: Thunked<App_Json> = {
+	projects: () => default_projects_json,
 	show_main_menu: () => false,
 };
 
-const parse_app_json = (v: any): App_Json => {
+export const parse_app_json = (v: any): App_Json => {
 	console.log(`[parse_app_json]`, v);
 	return {
+		projects: v?.projects ?? default_app_json.projects(),
 		show_main_menu:
 			typeof v?.show_main_menu === 'boolean' ? v.show_main_menu : default_app_json.show_main_menu(),
 	};
@@ -48,11 +54,16 @@ export class App implements Serializable<App_Json> {
 	// currently manually syncing the same changes to both `app_json` `projects` --
 	// mixing serialization concerns with runtime representations
 
-	readonly clock: Clock;
+	readonly projects: Projects;
 	readonly renderer: Renderer;
+	readonly clock: Clock;
 	readonly simulation: Simulation;
 	readonly collisions: Collisions;
 	readonly controller: Controller;
+
+	// project = $derived(this.projects.current);
+
+	editor: Editor | null = $state(null); // TODO BLOCK create/destroy on demand
 
 	show_main_menu: boolean = $state(false);
 
@@ -68,6 +79,7 @@ export class App implements Serializable<App_Json> {
 			app_json = App.load(),
 		}: App_Options = options;
 
+		this.projects = new Projects({app: this, projects_json: app_json.projects});
 		this.renderer = renderer;
 		this.clock = clock;
 		this.collisions = simulation.collisions;
@@ -81,14 +93,17 @@ export class App implements Serializable<App_Json> {
 	// returns a stable reference to data that's immutable by convention
 	// TODO @many omit defaults - option? separate method?
 	toJSON(): App_Json {
-		return {
-			show_main_menu: this.show_main_menu,
-		};
+		return {projects: $state.snapshot(this.projects), show_main_menu: this.show_main_menu};
 	}
 
 	set_json(value: App_Json): void {
 		console.log(`[app] set_json`, value);
+		this.projects.set_json(value.projects);
 		this.show_main_menu = value.show_main_menu;
+	}
+
+	destroy(): void {
+		this.projects.destroy();
 	}
 
 	// TODO storage should be an external conern, maybe use hooks or deriveds?

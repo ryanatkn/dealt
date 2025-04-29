@@ -13,6 +13,8 @@
 
 	const {editor}: Props = $props();
 
+	const {app} = $derived(editor);
+
 	onNavigate(() => {
 		if (editor.show_scene_menu) editor.show_scene_menu = false;
 	});
@@ -23,15 +25,15 @@
 		<div class="column width_md gap_xl3 mx_auto">
 			<div class="pane p_lg">
 				<section>
-					<Scene_Loader project={editor.project} />
+					<Scene_Loader project={app.projects.current} />
 				</section>
 				<section>
 					<h3>Edit scene</h3>
-					<Scene_Form scene={editor.project.scene} />
+					<Scene_Form scene={app.projects.current.scenes.current} />
 				</section>
 			</div>
-			<div class="pane p_lg">
-				<Scene_Datafiles scene={editor.project.scene} />
+			<div class="pane p_lg mb_xl3 width_md">
+				<Scene_Datafiles scene={app.projects.current.scenes.current} />
 			</div>
 		</div>
 	</Dialog>

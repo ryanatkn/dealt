@@ -4,6 +4,7 @@
 	import type {Controller} from '$lib/controller.svelte.js';
 	import {editor_context} from '$lib/editor.svelte.js';
 	import {enable_global_hotkeys} from '$lib/dom.js';
+	import {app_context} from '$lib/app.svelte.js';
 
 	// TODO shift+click on the unit lists/layers should add them
 	// TODO control+click should deselect (probably?)
@@ -13,6 +14,8 @@
 	}
 
 	const {controller}: Props = $props();
+
+	const app = app_context.get(); // TODO @many use props instead?
 
 	const editor = editor_context.get();
 
@@ -30,7 +33,7 @@
 			swallow(e);
 			return;
 		} else if (key === 'r' && !ctrlKey) {
-			editor.project.scene.reset();
+			app.projects.current.scenes.current.reset();
 			swallow(e);
 			return;
 		} else if (key === '`' && !ctrlKey && !altKey) {

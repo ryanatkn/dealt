@@ -4,14 +4,18 @@
 	import Unit_Layers from '$lib/Unit_Layers.svelte';
 	import Unit_Layers_Controls from '$lib/Unit_Layers_Controls.svelte';
 	import type {Project} from '$lib/project.svelte.js';
+	import type {Editor} from '$lib/editor.svelte.js';
 
 	interface Props {
 		project: Project;
+		editor: Editor;
 	}
 
-	const {project}: Props = $props();
+	const {project, editor}: Props = $props();
 
-	const {scene, editor} = $derived(project);
+	const {
+		scenes: {current: scene},
+	} = $derived(project);
 
 	let left_sidebar_1_scroll_top: number = $state(0);
 	let left_sidebar_2_scroll_top: number = $state(0);
@@ -25,7 +29,7 @@
 	}}
 >
 	<div class="column_panel">
-		<Unit_List {project} />
+		<Unit_List {project} {editor} />
 	</div>
 	<div class="p_lg">
 		<Unit_Palette {scene} />
@@ -43,7 +47,7 @@
 		}}
 	>
 		<!-- TODO z-index prevents the chevron from floating above it - add classes? or fix directly on the chevron? -->
-		<Unit_Layers {project} />
+		<Unit_Layers {project} {editor} />
 	</div>
 </div>
 

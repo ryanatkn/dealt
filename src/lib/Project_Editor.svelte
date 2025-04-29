@@ -24,8 +24,13 @@
 
 	const {editor}: Props = $props();
 
-	const {app, project} = $derived(editor);
-	const {scene} = $derived(project);
+	const {app} = $derived(editor);
+	const {
+		projects: {current: project},
+	} = $derived(app);
+	const {
+		scenes: {current: scene},
+	} = $derived(project);
 
 	// TODO camera controls in the header
 
@@ -112,7 +117,7 @@
 		</Project_Renderer>
 		{#if editor.editing}
 			<div class="right_sidebar">
-				<Unit_List_And_Layers {project} />
+				<Unit_List_And_Layers {project} {editor} />
 			</div>
 		{/if}
 	</div>
