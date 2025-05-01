@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {base} from '$app/paths';
-	import {page} from '$app/stores';
+	import {page} from '$app/state';
 	import type {Snippet} from 'svelte';
 
 	interface Props {
@@ -10,7 +10,7 @@
 
 	const {icon = icon_default, children}: Props = $props();
 
-	const at_root = $derived($page.url.pathname === '/');
+	const at_root = $derived(page.url.pathname === '/');
 </script>
 
 <header class="box">

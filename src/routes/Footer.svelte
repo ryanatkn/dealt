@@ -3,7 +3,7 @@
 	import {parse_package_meta} from '@ryanatkn/gro/package_meta.js';
 	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
 	import type {Snippet} from 'svelte';
-	import {page} from '$app/stores';
+	import {page} from '$app/state';
 
 	import {package_json, src_json} from '$routes/package.js';
 
@@ -15,7 +15,7 @@
 
 	export const {children}: Props = $props();
 
-	const at_root = $derived($page.url.pathname === '/');
+	const at_root = $derived(page.url.pathname === '/');
 </script>
 
 <section>
