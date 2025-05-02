@@ -50,7 +50,7 @@
 <style>
 	/* TODO hacky, probably want to make a customizable panel system */
 	.column {
-		width: var(--width_sm);
+		width: var(--distance_sm);
 		height: 100%;
 		display: flex;
 		flex-direction: column;

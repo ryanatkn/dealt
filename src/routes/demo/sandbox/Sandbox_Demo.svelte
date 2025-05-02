@@ -134,7 +134,7 @@
 	.unit_controls {
 		flex: 1;
 		position: relative;
-		width: calc(var(--width_sm) + 215px); /* TODO @many hardcoding and hacking just to ship */
+		width: calc(var(--distance_sm) + 215px); /* TODO @many hardcoding and hacking just to ship */
 	}
 	.unit_controls_inner {
 		position: absolute;

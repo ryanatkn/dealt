@@ -202,7 +202,7 @@
 	}
 
 	.content {
-		width: var(--width_md);
+		width: var(--distance_md);
 	}
 
 	.sidebar {
