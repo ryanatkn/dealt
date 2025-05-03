@@ -54,7 +54,7 @@ input.plain {
 
 /* TODO upstream a variable for moss */
 input[type='checkbox'] {
-	--size: var(--size_xl);
+	--font_size: var(--font_size_xl);
 }
 
 :root.dark {

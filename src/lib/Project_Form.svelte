@@ -12,11 +12,11 @@
 	let glyph_error_message: string | null = $state(null);
 </script>
 
-<header class="row mb_lg size_xl3">
+<header class="row mb_lg font_size_xl3">
 	<span class="icon_size_lg pr_xl">{project.glyph}</span>
 	{project.name}
 </header>
-<form class="flex flex_column gap_md width_sm">
+<form class="display_flex flex_column gap_md width_sm">
 	<!-- TODO store in app/site/project data -->
 	<label>
 		<div class="title">name</div>

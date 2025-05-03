@@ -11,7 +11,7 @@
 	const {unit}: Props = $props();
 </script>
 
-<div class="w_100 mt_lg flex column_gap_xl2 row_gap_sm justify_content_end flex_wrap">
+<div class="w_100 mt_lg display_flex column_gap_xl2 row_gap_sm justify_content_end flex_wrap">
 	<label class="row mb_0" title="use WASD to move the player">
 		<input
 			type="checkbox"

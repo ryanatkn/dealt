@@ -208,7 +208,7 @@
 	}
 
 	.unit_layer_type {
-		font-size: var(--size_lg);
+		font-size: var(--font_size_lg);
 	}
 	.unit_layer_type .chevron {
 		margin-right: var(--space_md);

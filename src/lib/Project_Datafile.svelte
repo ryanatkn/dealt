@@ -34,7 +34,7 @@
 	{/snippet}
 	<div class="panel relative">
 		<pre class="p_xs mb_0">{serializer.serialized}</pre>
-		<div class="absolute" style:right="var(--size_lg)" style:top="var(--size_lg)">
+		<div class="absolute" style:right="var(--font_size_lg)" style:top="var(--font_size_lg)">
 			<Copy_To_Clipboard text={serializer.serialized} />
 		</div>
 	</div>

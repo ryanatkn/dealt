@@ -73,12 +73,12 @@
 			var(--shadow_bottom_md)
 			color-mix(in hsl, var(--shadow_color) var(--shadow_alpha_3), transparent)
 	);
-	border-radius: var(--radius_xs);
+	border-radius: var(--border_radius_xs);
 }
 
 /* A panel is a box embedded into the page, useful for visually isolating content. */
 .panel {
-	border-radius: var(--radius_xs);
+	border-radius: var(--border_radius_xs);
 	background-color: var(--panel_bg, var(--fg_1));
 }
 
@@ -181,7 +181,7 @@
 	padding-left: var(--space_xs);
 	padding-right: var(--space_xs);
 	background-color: var(--fg_1);
-	border-radius: var(--radius_xs);
+	border-radius: var(--border_radius_xs);
 }
 a.chip {
 	font-weight: 700;
@@ -196,14 +196,17 @@ a.chip {
 .display_contents {
 	display: contents;
 }
-.inline {
-	display: inline;
+/** Same as `display: inline flow-root`. */
+.display_inline_block {
+	display: inline-block;
 }
-.inline_flex {
-	display: inline-flex;
-}
-.flex {
+/** Same as `display: block flex`. */
+.display_flex {
 	display: flex;
+}
+/** Same as `display: inline flex`. */
+.display_inline_flex {
+	display: inline-flex;
 }
 .flex_1 {
 	flex: 1;
@@ -241,31 +244,31 @@ a.chip {
 .flip_x {
 	transform: scaleX(-1);
 }
-.font_mono {
-	font-family: var(--font_mono);
+.font_family_mono {
+	font-family: var(--font_family_mono);
 }
 .line_height_1 {
 	line-height: 1;
 }
-.size_xl {
-	font-size: var(--size_xl);
-	--size: var(--size_xl);
+.font_size_xl {
+	font-size: var(--font_size_xl);
+	--font_size: var(--font_size_xl);
 }
-.size_xl3 {
-	font-size: var(--size_xl3);
-	--size: var(--size_xl3);
+.font_size_xl3 {
+	font-size: var(--font_size_xl3);
+	--font_size: var(--font_size_xl3);
 }
-.size_xl7 {
-	font-size: var(--size_xl7);
-	--size: var(--size_xl7);
+.font_size_xl7 {
+	font-size: var(--font_size_xl7);
+	--font_size: var(--font_size_xl7);
 }
 .icon_size_md {
 	font-size: var(--icon_size_md);
-	--size: var(--icon_size_md);
+	--font_size: var(--icon_size_md);
 }
 .icon_size_lg {
 	font-size: var(--icon_size_lg);
-	--size: var(--icon_size_lg);
+	--font_size: var(--icon_size_lg);
 }
 .text_align_left {
 	text-align: left;
@@ -290,8 +293,8 @@ a.chip {
 .color_c_5 {
 	color: var(--color_c_5);
 }
-.radius_sm {
-	border-radius: var(--radius_sm);
+.border_radius_sm {
+	border-radius: var(--border_radius_sm);
 }
 .shadow_md {
 	box-shadow: var(--shadow_md)

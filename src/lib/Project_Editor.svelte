@@ -81,7 +81,7 @@
 			</div>
 		</div>
 		<Scene_Summary {project} />
-		<header class="flex">
+		<header class="display_flex">
 			<div class="row ml_auto">
 				<a class="nav_link" href="{base}/demo">demos</a>
 				<a class="nav_link" href="{base}/about">about</a>

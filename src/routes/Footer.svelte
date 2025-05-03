@@ -22,7 +22,7 @@
 	{#if children}
 		{@render children()}
 	{:else if !at_root}
-		<div class="mb_xl5" style:--size="var(--size_xl)">
+		<div class="mb_xl5" style:--font_size="var(--font_size_xl)">
 			<Breadcrumb>🔮</Breadcrumb>
 		</div>
 	{/if}

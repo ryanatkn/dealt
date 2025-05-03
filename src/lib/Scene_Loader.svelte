@@ -29,7 +29,7 @@
 				project.create_scene(scene_json);
 			}}
 		>
-			<span class="size_xl3 mr_sm">{scene_creator.glyph}</span>
+			<span class="font_size_xl3 mr_sm">{scene_creator.glyph}</span>
 			{scene_creator.name}
 		</button>
 	{/each}

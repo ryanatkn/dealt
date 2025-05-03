@@ -34,7 +34,7 @@
 	{#if BROWSER}
 		{#each renderer_types as renderer_type (renderer_type)}
 			{#if project.renderers[renderer_type]}
-				<div class="flex w_100 relative">
+				<div class="display_flex w_100 relative">
 					<Scene_Renderer
 						Component={renderer_components[renderer_type]}
 						{scene}

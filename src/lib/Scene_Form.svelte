@@ -13,7 +13,7 @@
 	let glyph_error_message: string | null = $state(null);
 </script>
 
-<form class="flex flex_column gap_md width_sm">
+<form class="display_flex flex_column gap_md width_sm">
 	<!-- TODO store in app/site/project data -->
 	<fieldset>
 		<label>

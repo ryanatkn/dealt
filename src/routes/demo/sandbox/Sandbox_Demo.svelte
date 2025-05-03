@@ -78,7 +78,7 @@
 							}}>✕</button
 						>
 					</div>
-					<div class="py_xs flex">
+					<div class="py_xs display_flex">
 						<Scene_Controls {project} />
 						<Fps_Indicator />
 					</div>
@@ -121,7 +121,7 @@
 		background-color: var(--bg_lighter);
 		box-shadow: var(--shadow_bottom_lg)
 			color-mix(in hsl, var(--shadow_color_f) var(--shadow_alpha_2), transparent);
-		border-radius: var(--radius_sm);
+		border-radius: var(--border_radius_sm);
 		border: 1px solid var(--border_color_1);
 	}
 

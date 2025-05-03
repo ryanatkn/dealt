@@ -46,7 +46,7 @@
 						<h2 class="mt_0 mb_lg row pr_md">
 							<span class="icon_size_md mr_lg">🏞</span> projects
 						</h2>
-						<div class="flex flex_column flex_wrap w_100">
+						<div class="display_flex flex_column flex_wrap w_100">
 							{#each editor.projects as project (project)}
 								{@const selected = editor.selected_project_id === project.id}
 								<div class="w_100 py_xs" transition:slide>
@@ -64,7 +64,7 @@
 													editor.select_project(project.id);
 												}}
 									>
-										<div class="size_xl3 mr_lg">{project.glyph}</div>
+										<div class="font_size_xl3 mr_lg">{project.glyph}</div>
 										<div class="ellipsis">{project.name}</div>
 									</button>
 								</div>
@@ -84,7 +84,7 @@
 								}}
 							>
 								<div class="row white_space_nowrap">
-									<span class="size_xl3 mr_lg line_height_1">+</span>
+									<span class="font_size_xl3 mr_lg line_height_1">+</span>
 									create new project
 								</div>
 							</button>
@@ -94,10 +94,10 @@
 				<div class="box">
 					<!-- TODO configure for this app instead of hardcoding -->
 					<div class="box pane p_xs2">
-						<div class="box p_xl3 gap_xl3 radius_sm shadow_md">
-							<Breadcrumb><span class="size_xl">🔮</span></Breadcrumb>
+						<div class="box p_xl3 gap_xl3 border_radius_sm shadow_md">
+							<Breadcrumb><span class="font_size_xl">🔮</span></Breadcrumb>
 							<nav>
-								<ul class="flex flex_column gap_sm unstyled">
+								<ul class="display_flex flex_column gap_sm unstyled">
 									<li>
 										<a class="chip w_100 box px_md py_xs" href="{base}/demo">demos</a>
 									</li>
@@ -177,7 +177,7 @@
 													location.reload();
 												}}
 											>
-												<div class="size_xl3">✕</div>
+												<div class="font_size_xl3">✕</div>
 												<div class="ml_lg text_align_left">
 													permanently delete<br />all locally saved data
 												</div>

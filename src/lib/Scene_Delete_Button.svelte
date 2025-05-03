@@ -33,7 +33,7 @@
 				deleting_scene = false;
 			}}
 		>
-			<div class="size_xl3">✕</div>
+			<div class="font_size_xl3">✕</div>
 			<div class="ml_lg text_align_left">
 				permanently delete scene<br />{scene.glyph}
 				{scene.name}

@@ -27,5 +27,5 @@
 </header>
 
 {#snippet icon_default()}
-	<span class="size_xl7">🔮</span>
+	<span class="font_size_xl7">🔮</span>
 {/snippet}

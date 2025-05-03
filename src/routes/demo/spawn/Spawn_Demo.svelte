@@ -255,7 +255,7 @@
 	<div class="p_md">
 		<header class="pb_md"><Breadcrumb>🔮</Breadcrumb></header>
 		<form class="width_md">
-			<div class="my_md flex">
+			<div class="my_md display_flex">
 				<Scene_Controls {project} />
 				<div class="align_self_end">
 					<Fps_Indicator />

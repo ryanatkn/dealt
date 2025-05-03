@@ -38,7 +38,7 @@
 				e.currentTarget.closest('.dialog')?.scrollTo({top: 0, behavior: 'smooth'});
 			}}
 		>
-			<div class="size_xl3">✕</div>
+			<div class="font_size_xl3">✕</div>
 			<div class="ml_lg text_align_left">
 				permanently delete project<br />{project.glyph}
 				{project.name}
