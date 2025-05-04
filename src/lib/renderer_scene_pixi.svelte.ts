@@ -7,14 +7,16 @@ import type {Renderer} from '$lib/renderer.svelte.js';
 import type {Scene} from '$lib/scene.svelte.js';
 
 export class Renderer_Scene_Pixi {
+	readonly renderer: Renderer;
+	readonly scene: Scene;
+
 	pixi_app: Application;
 
 	unit_renderers: SvelteMap<Unit, Renderer_Unit_Pixi> = new SvelteMap();
 
-	constructor(
-		public readonly renderer: Renderer,
-		public readonly scene: Scene,
-	) {
+	constructor(renderer: Renderer, scene: Scene) {
+		this.renderer = renderer;
+		this.scene = scene;
 		this.pixi_app = new Application();
 	}
 

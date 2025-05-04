@@ -29,15 +29,21 @@ export const create_selection_state = (): Selection_State => ({
 
 // TODO @many refactor surface/selection state
 export class Selection_Manager<T> {
+	readonly helpers: Selection_Helpers<T>;
+
 	selection_threshold = 0; // TODO maybe a better UX is a value of 2 to 4?
 
 	state: Selection_State = $state(create_selection_state());
 
+	// TODO should these not be $state? maybe also `SvelteSet`? see the reassignment in `update_drag` - maybe we clear instead?
 	#selected: Set<T> = $state(new Set());
 	#initial_selection: Set<T> = $state(new Set());
 
-	constructor(private readonly helpers: Selection_Helpers<T>) {}
+	constructor(helpers: Selection_Helpers<T>) {
+		this.helpers = helpers;
+	}
 
+	// TODO these are not reactive, see the comment on `#selected`
 	has(item: T): boolean {
 		return this.#selected.has(item);
 	}

@@ -4,15 +4,17 @@ import type {Change_Unsubscriber, Unit} from '$lib/unit.svelte.js';
 import type {Renderer_Scene_Pixi} from '$lib/renderer_scene_pixi.svelte.js';
 
 export class Renderer_Unit_Pixi {
+	readonly scene_renderer: Renderer_Scene_Pixi;
+	readonly unit: Unit;
+
 	container: Container;
 	graphics: Graphics;
 
 	unsubscribers: Array<Change_Unsubscriber> = [];
 
-	constructor(
-		public readonly scene_renderer: Renderer_Scene_Pixi,
-		public readonly unit: Unit,
-	) {
+	constructor(scene_renderer: Renderer_Scene_Pixi, unit: Unit) {
+		this.scene_renderer = scene_renderer;
+		this.unit = unit;
 		this.container = new Container();
 		this.graphics = new Graphics();
 

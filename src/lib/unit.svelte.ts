@@ -279,14 +279,17 @@ export class Unit implements Serializable<Unit_Json> {
 	// TODO `bodies`, automatically decomposing concave polygons and managing multiple parts, maybe `Unit_Body` with `parts`
 	body: Some_Body = $state()!;
 
+	readonly scene: Scene;
+
 	json: Unit_Json = $derived($state.snapshot(this));
 	// TODO add either `json_compact` that omits defaults, or `json_full` that includes all properties
 
 	constructor(
 		// TODO maybe just pass the project?
-		public readonly scene: Scene,
+		scene: Scene,
 		data: Partial<Unit_Json> = EMPTY_OBJECT,
 	) {
+		this.scene = scene;
 		this.set_json(data);
 	}
 
