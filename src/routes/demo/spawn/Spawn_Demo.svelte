@@ -325,7 +325,7 @@
 			{scene.units.filter((u) => u.type === 'polygon').length} polygons
 		</p>
 
-		<div class="relative">
+		<div class="position_relative">
 			<Scene_Renderer Component={renderer.Component} {scene} {renderer} />
 			{#if editor.editing}
 				<Scene_Interaction_Surface

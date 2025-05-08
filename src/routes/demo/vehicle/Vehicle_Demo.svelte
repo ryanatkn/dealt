@@ -117,7 +117,7 @@
 			<div class="mb_md">
 				<Renderer_Controls {renderer} />
 			</div>
-			<div class="relative mt_md">
+			<div class="position_relative mt_md">
 				<Scene_Renderer Component={renderer.Component} {scene} {renderer} />
 				{#if editor.editing}
 					<Scene_Interaction_Surface

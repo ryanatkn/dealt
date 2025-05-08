@@ -49,7 +49,7 @@
 <Dealt>
 	<div class="sandbox_demo">
 		<div
-			class="renderer relative"
+			class="renderer position_relative"
 			bind:clientWidth={renderer.width}
 			bind:clientHeight={renderer.height}
 		>

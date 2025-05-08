@@ -187,10 +187,10 @@ a.chip {
 	font-weight: 700;
 }
 
-.relative {
+.position_relative {
 	position: relative;
 }
-.absolute {
+.position_absolute {
 	position: absolute;
 }
 .display_contents {

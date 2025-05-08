@@ -55,6 +55,6 @@
 		stroke: var(--color_d_3);
 		stroke-width: var(--border_width_4);
 		/* TODO box shadow? */
-		opacity: var(--fade_2);
+		opacity: 60%;
 	}
 </style>

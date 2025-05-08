@@ -32,9 +32,13 @@
 	{#snippet summary()}
 		View raw project data
 	{/snippet}
-	<div class="panel relative">
+	<div class="panel position_relative">
 		<pre class="p_xs mb_0">{serializer.serialized}</pre>
-		<div class="absolute" style:right="var(--font_size_lg)" style:top="var(--font_size_lg)">
+		<div
+			class="position_absolute"
+			style:right="var(--font_size_lg)"
+			style:top="var(--font_size_lg)"
+		>
 			<Copy_To_Clipboard text={serializer.serialized} />
 		</div>
 	</div>
