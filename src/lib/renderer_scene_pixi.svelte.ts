@@ -1,4 +1,5 @@
 import {Application, type ApplicationOptions} from 'pixi.js';
+import 'pixi.js/unsafe-eval';
 import {SvelteMap} from 'svelte/reactivity';
 
 import type {Unit} from '$lib/unit.svelte.js';
