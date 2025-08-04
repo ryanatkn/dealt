@@ -2,13 +2,13 @@
 	import {base} from '$app/paths';
 	import Community_Links_Panel from '@ryanatkn/fuz/Community_Links_Panel.svelte';
 	import Package_Detail from '@ryanatkn/fuz/Package_Detail.svelte';
-	import {parse_package_meta} from '@ryanatkn/gro/package_meta.js';
+	import {parse_pkg} from '@ryanatkn/belt/pkg.js';
 
 	import Footer from '$routes/Footer.svelte';
 	import Header from '$routes/Header.svelte';
 	import {package_json, src_json} from '$routes/package.js';
 
-	const pkg = parse_package_meta(package_json, src_json);
+	const pkg = parse_pkg(package_json, src_json);
 </script>
 
 <main class="width_md px_lg pb_xl9">
