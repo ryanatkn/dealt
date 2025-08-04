@@ -1,13 +1,13 @@
 <script lang="ts">
 	import Breadcrumb from '@ryanatkn/fuz/Breadcrumb.svelte';
-	import {parse_package_meta} from '@ryanatkn/gro/package_meta.js';
+	import {parse_pkg} from '@ryanatkn/belt/pkg.js';
 	import Docs_Footer from '@ryanatkn/fuz/Docs_Footer.svelte';
 	import type {Snippet} from 'svelte';
 	import {page} from '$app/state';
 
 	import {package_json, src_json} from '$routes/package.js';
 
-	const pkg = parse_package_meta(package_json, src_json);
+	const pkg = parse_pkg(package_json, src_json);
 
 	interface Props {
 		children?: Snippet;
