@@ -44,6 +44,7 @@ export const package_json = {
 		'pixi.js': '^8.9.2',
 		prettier: '^3.5.3',
 		'prettier-plugin-svelte': '^3.3.3',
+		ripple: '^0.2.175',
 		svelte: '^5.28.2',
 		'svelte-check': '^4.1.6',
 		tinybench: '^4.0.1',
@@ -51,6 +52,7 @@ export const package_json = {
 		typescript: '^5.8.3',
 		'typescript-eslint': '^8.31.1',
 		uvu: '^0.5.6',
+		'vite-plugin-ripple': '^0.2.152',
 	},
 	prettier: {
 		plugins: ['prettier-plugin-svelte'],

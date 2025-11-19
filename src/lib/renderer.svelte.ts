@@ -3,15 +3,16 @@ import type {Themer} from '@ryanatkn/fuz/themer.svelte.js';
 
 import type {Scene} from '$lib/scene.svelte.js';
 
-export type Renderer_Type = 'pixi' | 'svelte' | 'canvas' | 'html';
+export type Renderer_Type = 'pixi' | 'svelte' | 'canvas' | 'html' | 'ripple';
 
-export const renderer_types: Array<Renderer_Type> = ['pixi', 'svelte', 'canvas', 'html'];
+export const renderer_types: Array<Renderer_Type> = ['pixi', 'svelte', 'canvas', 'html', 'ripple'];
 
 export const renderer_summaries: Record<Renderer_Type, string> = {
 	pixi: "The Pixi renderer uses WebGL via PixiJS. It's the most performant renderer available.",
 	svelte: 'The Svelte renderer uses Svelte components to create SVG elements.',
 	canvas: 'The canvas renderer draws to a canvas element with CanvasRenderingContext2D.',
 	html: 'The HTML renderer generates a raw string of HTML and inserts it into the DOM to create SVG elements.',
+	ripple: 'The Ripple renderer uses the RippleJS framework with signals-based reactivity to create SVG elements.',
 };
 
 export interface Renderer_Colors {

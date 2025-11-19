@@ -26,6 +26,9 @@ export class Simulation {
 		var unit_speed: number;
 
 		// TODO needs a lot of work
+		// TODO PHASE ORDERING: Currently doing movement THEN collision (per-unit).
+		// Better approach (used in Ripple): collision detection/response FIRST, then movement.
+		// This prevents tunneling and is more stable. See physics.ts for detailed explanation.
 		// run the sim for each entitity
 		for (const unit of units) {
 			// if (e.disable_simulation) continue;

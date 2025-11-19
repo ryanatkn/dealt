@@ -13,6 +13,11 @@
 	const {Component: Component_Prop, scene, renderer}: Props = $props();
 
 	// TODO maybe make a `Renderers` component that layers multiple over each other, configurable?
+
+	// TODO refactor
+	$effect(() => {
+		console.log(`[Scene_Renderer] renderer:`, renderer.type);
+	});
 </script>
 
 <div

@@ -39,6 +39,16 @@ export class Clock {
 		}
 	};
 
+	/**
+	 * Reset timing state without stopping the clock.
+	 * Useful when switching renderers to prevent large dt spike
+	 * from accumulated time during renderer initialization.
+	 */
+	reset_timing = (): void => {
+		this.time = null;
+		this.dt = null;
+	};
+
 	ontick = (): void => {
 		// TODO handle with explicit time (composing a clock interface?) fixed time step?
 		// console.log(`ontick r`, r);
