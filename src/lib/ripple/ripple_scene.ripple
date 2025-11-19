@@ -4,8 +4,11 @@
  * This component:
  * - Creates Ripple units from JSON data
  * - Provides update() function driven by Svelte's clock (unified timing)
- * - Handles physics, collisions, and rendering
- * - Exports state back to JSON on unmount
+ * - Handles physics, collisions, and rendering using movement-then-collision
+ * - Exports state back to JSON on unmount (lazy serialization)
+ *
+ * Phase ordering: Movement → Collision Detection → Collision Response
+ * This ensures no visible overlap in rendered frames (optimal visual quality).
  */
 
 import { TrackedArray, effect, untrack } from 'ripple';
@@ -14,8 +17,9 @@ import type { Unit_Json } from '$lib/unit_types.js';
 import type { Renderer_Colors } from '$lib/renderer.svelte.js';
 import { Collisions } from '$lib/collisions.js';
 import { colliding } from '$lib/colliding.js';
-import { cr, type Collision_Result } from '$lib/collision_result.js';
-import { apply_bounce_physics } from '$lib/physics.js';
+import { cr } from '$lib/collision_result.js';
+import { physics_apply_bounce } from '$lib/physics.js';
+import { behavior_handle_collision } from '$lib/collision_behavior.js';
 
 interface Props {
 	width: number;
@@ -89,43 +93,7 @@ export component RippleScene(props: Props) {
 		// Update collision system
 		collisions.update();
 
-		// PHASE 1: Collision detection and response (BEFORE movement, matching Spawn_Demo)
-		for (const unit of units) {
-			if (!unit.body) continue;
-
-			// Check collisions
-			for (const other_body of unit.body.potentials()) {
-				if (!other_body.unit) continue;
-				const other_unit = other_body.unit as Ripple_Unit;
-
-				if (colliding(unit.body, other_body, cr)) {
-					// Handle special behavior collisions
-					const has_harmful = unit.behavior_names.includes('Harmful_Behavior');
-					const has_player = unit.behavior_names.includes('Player_Controller_Behavior');
-					const has_goal = unit.behavior_names.includes('Goal_Behavior');
-					const other_has_harmful = other_unit.behavior_names.includes('Harmful_Behavior');
-					const other_has_player = other_unit.behavior_names.includes('Player_Controller_Behavior');
-					const other_has_goal = other_unit.behavior_names.includes('Goal_Behavior');
-
-					// Player vs Harmful
-					if (other_has_harmful && has_player) {
-						unit.dead = true;
-					} else if (has_harmful && other_has_player) {
-						other_unit.dead = true;
-					}
-					// Player vs Goal
-					else if ((other_has_goal && has_player) || (has_goal && other_has_player)) {
-						// TODO: Add on_goal callback prop and call scene.exit()
-					}
-					// Regular collision response - use shared physics algorithm
-					else {
-						apply_bounce_physics(unit, other_unit, cr);
-					}
-				}
-			}
-		}
-
-		// PHASE 2: Movement (AFTER collision response)
+		// PHASE 1: Movement
 		for (const unit of units) {
 			if (!unit.body) continue;
 
@@ -155,6 +123,25 @@ export component RippleScene(props: Props) {
 				unit.body.y = unit.y;
 			}
 		}
+
+		// PHASE 2: Collision detection and response (AFTER movement for visual quality)
+		for (const unit of units) {
+			if (!unit.body) continue;
+
+			// Check collisions
+			for (const other_body of unit.body.potentials()) {
+				if (!other_body.unit) continue;
+				const other_unit = other_body.unit as Ripple_Unit;
+
+				if (colliding(unit.body, other_body, cr)) {
+					// Check for special behavior collisions using shared logic
+					if (!behavior_handle_collision(unit, other_unit)) {
+						// No special behavior - apply normal physics
+						physics_apply_bounce(unit, other_unit, cr);
+					}
+				}
+			}
+		}
 	}
 
 	// Register callbacks
@@ -167,10 +154,7 @@ export component RippleScene(props: Props) {
 		// Register lazy state getter (Svelte calls this before unmount)
 		// This avoids serializing every frame - only when switching renderers
 		if (props.on_get_state) {
-			const get_state = () => {
-				console.log('serializing Ripple state')
-				return units.map(u => ripple_unit_to_json(u))
-			};
+			const get_state = () => units.map(u => ripple_unit_to_json(u));
 			props.on_get_state(get_state);
 		}
 

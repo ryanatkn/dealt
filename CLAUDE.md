@@ -47,40 +47,22 @@ Located at `/demo/spawn` - physics simulation showcasing:
 - Units bounce off each other and boundaries
 - Renderer switching to compare implementations
 
-## Ripple Integration (Experimental)
+## Ripple Integration
 
-### Architecture
+**Approach:** Ripple has its own complete implementation (units, simulation loop, rendering) separate from Svelte's. The two share only pure functions and types.
 
-**Challenge:** Ripple uses `track()` for reactivity which only works in `.ripple` files. Svelte uses `$state` runes. These don't interoperate directly.
+**Key files:**
+- `ripple/ripple_scene.ripple` - Full Ripple scene with simulation loop
+- `ripple/ripple_unit.ripple` - Ripple unit factory using `TrackedObject`
+- `Scene_Renderer_Ripple.svelte` - Svelte wrapper, lifecycle bridge
 
-**Current Approach:**
-```
-Svelte wrapper (.svelte)
-  ↓ mount() with props
-Ripple components (.ripple)
-  ↓ render once (static)
-SVG output
-```
-
-**Files:**
-- `Scene_Renderer_Ripple.svelte` - Svelte wrapper, handles lifecycle
-- `ripple/Scene_Renderer_Ripple_Internal.ripple` - Main Ripple scene component
-- `ripple/Unit_Renderer_Ripple.ripple` - Renders individual units
-
-**Status:** Static rendering implemented, reactivity TBD.
-
-### Key Constraints
-
-1. **Cannot use `track()` or `@` in `.svelte` files** - Ripple syntax only works in `.ripple` files
-2. **`track()` requires component context** - can't be at module level
-3. **Props passed from Svelte are plain values** - not Ripple tracked objects
-4. **Reactivity boundary** - need strategy to sync Svelte state → Ripple rendering
-
-### Integration with SvelteKit
-
+**Integration:**
 - Uses `vite-plugin-ripple` for `.ripple` file support
-- Ripple components imported into Svelte via `mount()` API
-- Clean separation: Svelte for app structure, Ripple for rendering
+- Ripple components imported via `mount()` API
+- Unified clock: Svelte's RAF loop drives Ripple's update function
+- Lazy serialization: Only converts to JSON when switching renderers
+
+**Status:** Fully functional with reactive rendering. Future optimization: eliminate Svelte Unit/Scene dependency (see ARCHITECTURE.md Phase 3).
 
 ## Development
 
@@ -106,12 +88,29 @@ src/
 
 ```bash
 npm install
-npm run dev  # or: gro dev
+gro typecheck    # type checking
+gro test         # run tests
+gro lint         # lint code
 ```
+
+**Note:** Always use `gro` commands directly (not `npx @ryanatkn/gro`).
+
+## Architecture Principles
+
+**See [ARCHITECTURE.md](./ARCHITECTURE.md) for detailed documentation.**
+
+Dealt prioritizes **idiomatic, performant implementations** over code reuse:
+
+**Code Sharing Strategy:**
+- ✅ **Share:** Pure functions, interfaces/types, framework-agnostic algorithms
+- ❌ **Don't share:** Reactive classes, framework-specific patterns, simulation loops
+
+**Performance over DRY.** Each framework owns its idioms. Duplication is acceptable when it enables better performance or cleaner framework-specific code.
 
 ## Project Goals
 
 - Educational toy for exploring 2D game engine concepts
 - Testbed for comparing rendering approaches (SVG, Canvas, WebGL, Ripple)
 - Clean architecture with pluggable systems
+- Maximize performance through idiomatic framework usage
 - TypeScript-first with strong typing

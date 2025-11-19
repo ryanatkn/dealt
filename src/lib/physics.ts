@@ -1,8 +1,8 @@
 /**
- * Pure physics algorithms for collision response.
+ * Physics algorithms for collision response.
  *
- * These functions are framework-agnostic and work with any object
- * that has the required properties (position, direction, etc.).
+ * Provides both pure physics models (bounce, reflection, separation)
+ * and game-specific models (strength-based separation for editor).
  *
  * Design principles:
  * - Pure functions (no side effects except parameter mutation)
@@ -11,41 +11,32 @@
  *
  * ---
  *
- * ## Phase Ordering (Collision Before Movement vs After)
+ * ## Phase Ordering: Movement-Then-Collision
  *
- * **Recommended: Collision BEFORE Movement (Ripple approach)**
+ * **Current approach (all renderers):**
  * ```
- * 1. Detect collisions (using previous frame positions)
- * 2. Apply collision response (separation + reflection)
- * 3. Move units (apply velocity/direction)
+ * 1. Move units (apply velocity/direction)
+ * 2. Detect collisions (check for overlap)
+ * 3. Apply collision response (separation + reflection)
+ * 4. Render (no overlap visible!)
  * ```
- * ✅ Prevents tunneling (fast objects passing through)
- * ✅ More stable (no overlap accumulation)
- * ✅ Single-pass (better performance)
  *
- * **Current Svelte approach: Movement THEN Collision**
- * ```
- * 1. Move unit
- * 2. Detect collision
- * 3. Apply collision response
- * 4. (Repeat for each unit)
- * ```
- * ⚠️ Can accumulate overlap over multiple frames
- * ⚠️ One unit at a time (less efficient BVH usage)
- * ℹ️ Works for editor with strength-based separation
+ * **Benefits:**
+ * ✅ No visible overlap in rendered frames (better visual quality)
+ * ✅ Collision response happens in same frame as collision
+ * ✅ Intuitive - collision fixes problems immediately
  *
- * **Spawn Demo: Hybrid approach (two-pass)**
- * ```
- * Pass 1: simulation.update() - Movement + strength separation
- * Pass 2: onupdate() callback - Reflection physics
- * ```
- * ⚠️ Duplicated collision detection
- * ℹ️ Works but could be optimized
+ * **Trade-offs:**
+ * ⚠️ Fast-moving objects can tunnel through thin walls without continuous collision detection
+ * ⚠️ Requires small timesteps or swept collision for high-speed physics
+ * ℹ️ Good enough for arcade physics with reasonable speeds
  *
- * **Future refactoring:** Standardize on collision-before-movement for all renderers.
+ * **Note:** Collision-before-movement is an alternative that separates phases more cleanly,
+ * but can show one frame of overlap when objects first collide. We prioritize visual quality.
  */
 
 import type {Collision_Result} from '$lib/collision_result.js';
+import {STRENGTH_MAX, type Unit} from '$lib/unit.svelte.js';
 
 /**
  * Interface for objects with 2D direction vectors.
@@ -79,7 +70,7 @@ export interface Has_Body {
  * This implements a reflection algorithm where objects bounce off each other
  * by reflecting their velocity vectors across the collision normal.
  *
- * **Phase ordering:** Should be called BEFORE movement to prevent tunneling.
+ * **Phase ordering:** Called AFTER movement (during collision response).
  *
  * **Algorithm:**
  * For each object, compute dot product of direction with collision normal,
@@ -94,11 +85,11 @@ export interface Has_Body {
  * @example
  * ```ts
  * if (colliding(unit.body, other.body, cr)) {
- *   apply_reflection_physics(unit, other, cr);
+ *   physics_apply_reflection(unit, other, cr);
  * }
  * ```
  */
-export function apply_reflection_physics(
+export function physics_apply_reflection(
 	a: Has_Direction,
 	b: Has_Direction,
 	cr: Collision_Result,
@@ -120,8 +111,8 @@ export function apply_reflection_physics(
  * This prevents visual overlap and tunneling by moving both objects
  * along the collision normal by half the overlap distance.
  *
- * **Phase ordering:** Should be called BEFORE movement, typically
- * right before or after reflection physics.
+ * **Phase ordering:** Called AFTER movement (during collision response),
+ * typically right before or after reflection physics.
  *
  * **Algorithm:**
  * Each object is pushed by (overlap / 2) along the collision normal.
@@ -137,12 +128,12 @@ export function apply_reflection_physics(
  * @example
  * ```ts
  * if (colliding(unit.body, other.body, cr)) {
- *   apply_separation_physics(unit, other, cr);
- *   apply_reflection_physics(unit, other, cr);
+ *   physics_apply_separation(unit, other, cr);
+ *   physics_apply_reflection(unit, other, cr);
  * }
  * ```
  */
-export function apply_separation_physics<T extends Has_Position & Partial<Has_Body>>(
+export function physics_apply_separation<T extends Has_Position & Partial<Has_Body>>(
 	a: T,
 	b: T,
 	cr: Collision_Result,
@@ -175,8 +166,7 @@ export function apply_separation_physics<T extends Has_Position & Partial<Has_Bo
  * This is a convenience function that applies both separation (to prevent
  * overlap) and reflection (to make objects bounce) in the correct order.
  *
- * **Phase ordering:** Call this during collision detection phase,
- * BEFORE movement updates.
+ * **Phase ordering:** Call this AFTER movement (during collision response).
  *
  * @param a - First object with position and direction
  * @param b - Second object with position and direction
@@ -189,15 +179,65 @@ export function apply_separation_physics<T extends Has_Position & Partial<Has_Bo
  * for (const unit of units) {
  *   for (const other_body of unit.body.potentials()) {
  *     if (colliding(unit.body, other_body, cr)) {
- *       apply_bounce_physics(unit, other_body.unit, cr);
+ *       physics_apply_bounce(unit, other_body.unit, cr);
  *     }
  *   }
  * }
  * ```
  */
-export function apply_bounce_physics<
-	T extends Has_Position & Has_Direction & Partial<Has_Body>,
->(a: T, b: T, cr: Collision_Result, separation_factor: number = 0.5): void {
-	apply_separation_physics(a, b, cr, separation_factor);
-	apply_reflection_physics(a, b, cr);
+export function physics_apply_bounce<T extends Has_Position & Has_Direction & Partial<Has_Body>>(
+	a: T,
+	b: T,
+	cr: Collision_Result,
+	separation_factor: number = 0.5,
+): void {
+	physics_apply_separation(a, b, cr, separation_factor);
+	physics_apply_reflection(a, b, cr);
+}
+
+/**
+ * Apply strength-based separation to colliding units.
+ *
+ * This physics model is used by the editor simulation.
+ * Unlike bounce physics, this:
+ * - Considers unit.strength (mass-like property)
+ * - Respects unit.pressing (player control gives max strength)
+ * - Honors movement_multiplier (walls don't move)
+ * - Does NOT reflect velocity (objects don't bounce)
+ *
+ * Heavier/stronger objects push lighter ones more.
+ *
+ * **Phase ordering:** Called AFTER movement (during collision response).
+ *
+ * @param a - First unit
+ * @param b - Second unit
+ * @param cr - Collision result with overlap data
+ *
+ * @example
+ * ```ts
+ * // Editor simulation uses strength-based separation
+ * if (colliding(unit.body, other.body, cr)) {
+ *   physics_apply_strength_separation(unit, other, cr);
+ * }
+ * ```
+ */
+export function physics_apply_strength_separation(
+	a: Unit,
+	b: Unit,
+	cr: Collision_Result,
+): void {
+	const overlap_x = cr.overlap! * cr.overlap_x;
+	const overlap_y = cr.overlap! * cr.overlap_y;
+
+	// Calculate separation percentages based on strength
+	const strength_a = a.pressing ? STRENGTH_MAX : a.strength;
+	const strength_b = b.pressing ? STRENGTH_MAX : b.strength;
+	const body2_pct = strength_a / (strength_a + strength_b) || 0; // TODO add more factors (what? push? weight? inertia?)
+	const body1_pct = 1 - body2_pct;
+
+	// Apply strength-based separation
+	a.x -= body1_pct * overlap_x * a.movement_multiplier;
+	a.y -= body1_pct * overlap_y * a.movement_multiplier;
+	b.x += body2_pct * overlap_x * b.movement_multiplier;
+	b.y += body2_pct * overlap_y * b.movement_multiplier;
 }

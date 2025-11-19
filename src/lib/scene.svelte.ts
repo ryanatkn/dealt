@@ -7,7 +7,8 @@ import {Unit, type Unit_Json} from '$lib/unit.svelte.js';
 import {Collisions} from '$lib/collisions.js';
 import {Simulation} from '$lib/simulation.svelte.js';
 import {Controller} from '$lib/controller.svelte.js';
-import {handle_collision} from '$lib/collision_helpers.js';
+import {physics_apply_strength_separation} from '$lib/physics.js';
+import type {Collision_Result} from '$lib/collision_result.js';
 import {filter_or_undefined, type Thunked} from '$lib/helpers.js';
 import {load_from_storage, set_in_storage} from '$lib/storage.js';
 import {Clock} from '$lib/clock.svelte.js';
@@ -139,6 +140,14 @@ export class Scene implements Serializable<Scene_Json> {
 	readonly controller: Controller;
 
 	units: Array<Unit> = $state([]);
+
+	/**
+	 * Collision handler for physics simulation.
+	 * Can be swapped to use different physics models (strength-based, bounce, custom).
+	 * Default: strength-based separation (editor physics).
+	 */
+	collision_handler: (a: Unit, b: Unit, cr: Collision_Result) => void =
+		physics_apply_strength_separation;
 
 	constructor(options: Scene_Options) {
 		console.log(`[scene] new with options`, options);
@@ -303,7 +312,7 @@ export class Scene implements Serializable<Scene_Json> {
 			cb(dt);
 		}
 
-		this.simulation.update(this.units, dt, handle_collision);
+		this.simulation.update(this.units, dt, this.collision_handler);
 
 		// TODO how to do this? systems?
 		for (const unit of this.units) {

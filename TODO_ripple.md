@@ -145,7 +145,7 @@ scene.clock.watch((dt) => {
 **Framework-agnostic `physics.ts`:**
 
 ```typescript
-export function apply_bounce_physics(
+export function physics_apply_bounce(
   unit: {x, y, velocity_x, velocity_y},
   other: {x, y, velocity_x, velocity_y},
   collision_result: Collision_Result

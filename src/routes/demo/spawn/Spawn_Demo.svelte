@@ -7,9 +7,7 @@
 
 	import Dealt from '$lib/Dealt.svelte';
 	// import Game from '$lib/game.svelte.js';
-	import {cr} from '$lib/collision_result.js';
-	import {colliding} from '$lib/colliding.js';
-	import {apply_bounce_physics} from '$lib/physics.js';
+	import {physics_apply_bounce} from '$lib/physics.js';
 	import Scrubbable_Input from '$lib/Scrubbable_Input.svelte';
 	import Scene_Controls from '$lib/Scene_Controls.svelte';
 	import Renderer_Controls from '$lib/Renderer_Controls.svelte';
@@ -70,15 +68,19 @@
 		spawn_demo.simulation_speed = simulation.speed;
 	});
 
-	// TODO select movement/collision behavior
-
+	// Spawn demo uses reflection/bounce physics instead of editor's strength-based separation
 	onMount(() => {
-		const was_playing = editor.playing;
-		editor.playing = true; // TODO hacky
-		const unwatch = scene.onupdate(onupdate);
+		const original_playing = editor.playing;
+		const original_collision_handler = scene.collision_handler;
+
+		// Enable simulation and use bounce physics
+		editor.playing = true;
+		scene.collision_handler = physics_apply_bounce;
+
 		return () => {
-			unwatch();
-			editor.playing = was_playing;
+			// Restore original state
+			editor.playing = original_playing;
+			scene.collision_handler = original_collision_handler;
 		};
 	});
 
@@ -171,21 +173,6 @@
 			h = renderer.height;
 		untrack(() => create_units(c, s, w, h));
 	});
-
-	const onupdate = (_dt: number) => {
-		// Apply bounce physics (separation + reflection) to all colliding units
-		for (let i = 0; i < scene.units.length; ++i) {
-			const unit = scene.units[i];
-			const potentials = unit.body.potentials();
-
-			for (const body2 of potentials) {
-				if (colliding(unit.body, body2, cr)) {
-					// Use shared physics algorithm (separation prevents overlap, reflection makes them bounce)
-					apply_bounce_physics(unit, body2.unit, cr);
-				}
-			}
-		}
-	};
 
 	const create_shape = (
 		large: boolean,

@@ -4,10 +4,7 @@
  */
 
 import type {I_Point} from '$lib/point_helpers.js';
-import {
-	polygon_is_simple,
-	polygon_decomp,
-} from '$lib/polygon_helpers.js';
+import {polygon_is_simple, polygon_decomp} from '$lib/polygon_helpers.js';
 import type {Renderer_Colors} from '$lib/renderer.svelte.js';
 
 /**
@@ -19,7 +16,7 @@ export function compute_unit_color(
 	type: 'circle' | 'polygon',
 	is_simple: boolean,
 	is_concave: boolean,
-	behavior_names: string[],
+	behavior_names: Array<string>,
 	colors: Renderer_Colors,
 ): string {
 	if (dead) return colors.dead;
