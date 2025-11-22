@@ -4,7 +4,7 @@
 
 	import Dealt from '$lib/Dealt.svelte';
 	import {serialize_points} from '$lib/point_helpers.js';
-	import {Zoo_State, type Zoo_State_Options} from './zoo_svelte.svelte.js';
+	import {Zoo_State, type Zoo_State_Options} from './zoo_svelte_state.svelte.ts';
 
 	interface Props {
 		options?: Zoo_State_Options;

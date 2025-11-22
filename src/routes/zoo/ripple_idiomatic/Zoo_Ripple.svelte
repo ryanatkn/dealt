@@ -5,8 +5,7 @@
 
 	import Dealt from '$lib/Dealt.svelte';
 	import {colors_default} from '$lib/renderer.svelte.js';
-	// @ts-expect-error - Ripple files use .ripple extension
-	import {ZooRipple} from './zoo_ripple.ripple';
+	import {ZooRipple} from './zoo_ripple.js';
 
 	let el: HTMLDivElement | undefined;
 	let unmount_ripple: (() => void) | undefined;

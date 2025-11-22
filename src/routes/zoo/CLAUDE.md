@@ -11,7 +11,7 @@ The zoo is a testbed for comparing **idiomatic implementations** across differen
 ├── +page.svelte              # Landing page
 ├── svelte_idiomatic/         # Pure Svelte 5 implementation
 │   ├── Zoo_Svelte.svelte     # Component + controls + SVG rendering
-│   └── zoo_svelte.svelte.ts  # Zoo_Agent class, Zoo_State class
+│   └── zoo_svelte_state.svelte.ts  # Zoo_Agent class, Zoo_State class
 └── ripple_idiomatic/         # Pure Ripple implementation
     ├── Zoo_Ripple.svelte     # Minimal Svelte wrapper (just mounts Ripple)
     ├── zoo_ripple.ripple     # Self-contained Ripple component (owns RAF)
