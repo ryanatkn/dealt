@@ -7,7 +7,7 @@
  * Key patterns:
  * - TrackedObject (#{}) for reactive object properties
  * - Direct property access (no @ needed for TrackedObject properties)
- * - Collision body managed via effects (see ripple_simulation.ripple)
+ * - Collision body managed via effects (see ripple_scene.ripple)
  *
  * **Reactivity optimization:**
  * - Position/velocity/state properties are reactive (change every frame)

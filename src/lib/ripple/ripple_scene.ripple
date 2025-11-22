@@ -14,6 +14,7 @@
 import { TrackedArray, effect } from 'ripple';
 import { create_ripple_unit, ripple_unit_to_json, type Ripple_Unit } from '$lib/ripple/ripple_unit.ripple';
 import type { Unit_Json } from '$lib/unit_types.js';
+import { serialize_points } from '$lib/point_helpers.js';
 import type { Renderer_Colors } from '$lib/renderer.svelte.js';
 import { Collisions } from '$lib/collisions.js';
 import { colliding } from '$lib/colliding.js';
@@ -57,22 +58,6 @@ export component RippleScene(props: Props) {
 			unit.body.unit = unit;
 		}
 	}
-
-	// Cleanup on unmount
-	effect(() => {
-		return () => {
-			for (const unit of units) {
-				if (unit.body) {
-					try {
-						unit.body.remove();
-					} catch (e) {
-						console.warn('[Ripple] Failed to remove collision body:', e);
-					}
-					unit.body = undefined;
-				}
-			}
-		};
-	});
 
 	// Update function called by Svelte's clock
 	function update(dt: number): void {
@@ -133,7 +118,7 @@ export component RippleScene(props: Props) {
 		}
 	}
 
-	// Register callbacks
+	// Register callbacks and cleanup on unmount
 	effect(() => {
 		// Register the update function so Svelte's clock can call it
 		if (props.register_update_callback) {
@@ -147,7 +132,6 @@ export component RippleScene(props: Props) {
 			props.on_get_state(get_state);
 		}
 
-		// Cleanup on unmount
 		return () => {
 			// Unregister callbacks
 			if (props.register_update_callback) {
@@ -155,6 +139,18 @@ export component RippleScene(props: Props) {
 			}
 			if (props.on_get_state) {
 				props.on_get_state(null);
+			}
+
+			// Remove collision bodies
+			for (const unit of units) {
+				if (unit.body) {
+					try {
+						unit.body.remove();
+					} catch (e) {
+						console.warn('[Ripple] Failed to remove collision body:', e);
+					}
+					unit.body = undefined;
+				}
 			}
 		};
 	});
@@ -179,22 +175,11 @@ export component RippleScene(props: Props) {
 					/>
 				} else if (unit.type === 'polygon' && unit.transformed_points.length >= 3) {
 					<polygon
-						points={serialize_polygon_points(unit.x, unit.y, unit.transformed_points)}
+						points={serialize_points(unit.x, unit.y, unit.transformed_points)}
 						fill={unit.color}
 					/>
 				}
 			}
 		</svg>
 	</div>
-}
-
-/**
- * Serialize polygon points to SVG format.
- */
-function serialize_polygon_points(x: number, y: number, points: Array<{x: number, y: number}>): string {
-	let s = '';
-	for (const point of points) {
-		s += `${point.x + x},${point.y + y} `;
-	}
-	return s;
 }

@@ -40,6 +40,9 @@ interface Zoo_Ripple_Agent {
 
 const BOUNDS_SIZE = 100000;
 
+// Dummy agent for wall collisions (avoids allocation in hot path)
+const WALL_AGENT = { x: 0, y: 0, direction_x: 0, direction_y: 0 } as Zoo_Ripple_Agent;
+
 interface Props {
 	width: number;
 	height: number;
@@ -261,12 +264,7 @@ export component ZooRipple(props: Props) {
 
 				if (colliding(agent.body, other_body, cr)) {
 					if (is_wall) {
-						physics_apply_bounce(
-							agent,
-							{x: 0, y: 0, direction_x: 0, direction_y: 0} as Zoo_Ripple_Agent,
-							cr,
-							1,
-						);
+						physics_apply_bounce(agent, WALL_AGENT, cr, 1);
 						agent.body.x = agent.x;
 						agent.body.y = agent.y;
 					} else if (other_agent) {
@@ -316,9 +314,14 @@ export component ZooRipple(props: Props) {
 		};
 	});
 
-	// Computed stats (reactive derived values)
-	let circle_count = track(() => agents.filter(a => a.type === 'circle').length);
-	let polygon_count = track(() => agents.filter(a => a.type === 'polygon').length);
+	// Computed stats (reactive derived values) - single pass for efficiency
+	let stats = track(() => {
+		let circles = 0;
+		for (const a of agents) {
+			if (a.type === 'circle') circles++;
+		}
+		return { circles, polygons: agents.length - circles };
+	});
 
 	// === RENDER ===
 	<div class="zoo-ripple">
@@ -394,7 +397,7 @@ export component ZooRipple(props: Props) {
 		</form>
 
 		<p class="stats">
-			{`${agents.length} agents - ${@circle_count} circles, ${@polygon_count} polygons | fps: ${@fps}`}
+			{`${agents.length} agents - ${@stats.circles} circles, ${@stats.polygons} polygons | fps: ${@fps}`}
 		</p>
 
 		<svg
