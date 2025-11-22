@@ -24,16 +24,17 @@ The zoo is a testbed for comparing **idiomatic implementations** across differen
 
 Each framework owns its reactive patterns:
 
-| Concern | Svelte | Ripple |
-|---------|--------|--------|
-| **Agent State** | `Zoo_Agent` class with `$state` | `#{}` TrackedObject |
-| **Agent Collection** | `Array<Zoo_Agent>` with `$state` | `#[]` TrackedArray |
-| **Simulation Loop** | `requestAnimationFrame` in class | Internal RAF in component |
-| **Position Sync** | Setters update collision body | Manual sync after mutation |
+| Concern              | Svelte                           | Ripple                     |
+| -------------------- | -------------------------------- | -------------------------- |
+| **Agent State**      | `Zoo_Agent` class with `$state`  | `#{}` TrackedObject        |
+| **Agent Collection** | `Array<Zoo_Agent>` with `$state` | `#[]` TrackedArray         |
+| **Simulation Loop**  | `requestAnimationFrame` in class | Internal RAF in component  |
+| **Position Sync**    | Setters update collision body    | Manual sync after mutation |
 
 ### 2. Shared Pure Functions Only
 
 From `$lib/` (no perf/design impact):
+
 - `physics.ts` → `physics_apply_bounce`
 - `collisions.ts` → BVH collision system
 - `colliding.ts`, `collision_result.ts` → SAT collision detection
@@ -46,6 +47,7 @@ From `$lib/` (no perf/design impact):
 ### 3. MVP Scope
 
 Current features:
+
 - Circles and polygons with random sizes
 - Bounce physics (separation + reflection)
 - Boundary walls
@@ -96,6 +98,7 @@ ZooRipple component (zoo_ripple.ripple)
 ```
 
 **Key Ripple patterns used:**
+
 - `track()` for reactive primitives with `@` operator
 - `#[]` for TrackedArray, `#{}` for TrackedObject
 - `effect()` for side effects and cleanup (including RAF lifecycle)
