@@ -1,0 +1,460 @@
+/**
+ * Ripple-idiomatic zoo implementation.
+ * Uses Unified Clock Pattern: Svelte owns RAF, Ripple owns state/simulation/rendering.
+ */
+
+import { track, effect, untrack } from 'ripple';
+import { random_float, random_int } from '@ryanatkn/belt/random.js';
+import { create_random_alea } from '@ryanatkn/belt/random_alea.js';
+
+import type { I_Point } from '$lib/point_helpers.js';
+import { transform_points, serialize_points } from '$lib/point_helpers.js';
+import { compute_unit_color } from '$lib/unit_logic.js';
+import { type Renderer_Colors } from '$lib/renderer.svelte.js';
+import { Collisions, type Some_Body } from '$lib/collisions.js';
+import { colliding } from '$lib/colliding.js';
+import { cr } from '$lib/collision_result.js';
+import { physics_apply_bounce } from '$lib/physics.js';
+import { SPEED_DEFAULT } from '$lib/unit_types.js';
+
+/**
+ * Ripple Zoo Agent interface.
+ */
+interface Zoo_Ripple_Agent {
+	id: number;
+	dead: boolean;
+	type: 'circle' | 'polygon';
+	x: number;
+	y: number;
+	rotation: number;
+	scale: number;
+	speed: number;
+	direction_x: number;
+	direction_y: number;
+	radius: number;
+	points: Array<I_Point>;
+	transformed_points: Array<I_Point>;
+	color: string;
+	body?: Some_Body;
+}
+
+const BOUNDS_SIZE = 100000;
+
+interface Props {
+	width: number;
+	height: number;
+	colors: Renderer_Colors;
+	// Callback to register update function (called by Svelte's RAF loop)
+	register_update_callback?: (callback: ((dt: number) => void) | null) => void;
+}
+
+export component ZooRipple(props: Props) {
+	// === RIPPLE-OWNED STATE ===
+	let simulation_speed = track(1);
+	let agent_count = track(72);
+	let agent_scale = track(1);
+	let running = track(true);
+	let fps = track(0);
+
+	// Control limits
+	const speed_min = 0;
+	const speed_max = 3;
+	const speed_step = 0.002;
+	const count_min = 1;
+	const count_max = 1000;
+	const scale_min = 0.1;
+	const scale_max = 5;
+	const scale_step = 0.01;
+
+	// Collision system
+	let collisions = new Collisions();
+
+	// Agents array (reactive)
+	const agents: Array<Zoo_Ripple_Agent> = #[];
+
+	// FPS tracking state
+	let frame_count = 0;
+	let fps_total = 0;
+
+	/**
+	 * Create a single agent.
+	 */
+	function create_agent(
+		id: number,
+		type: 'circle' | 'polygon',
+		x: number,
+		y: number,
+		radius: number,
+		points: Array<I_Point>,
+		rotation: number,
+		scale: number,
+		speed: number,
+		direction_x: number,
+		direction_y: number,
+	): Zoo_Ripple_Agent {
+		const transformed_points = type === 'polygon' ? transform_points(points, rotation, scale) : [];
+		const color = compute_unit_color(false, type, true, false, [], props.colors);
+
+		return #{
+			id,
+			dead: false,
+			type,
+			x,
+			y,
+			rotation,
+			scale,
+			speed,
+			direction_x,
+			direction_y,
+			radius,
+			points,
+			transformed_points,
+			color,
+			body: undefined,
+		};
+	}
+
+	/**
+	 * Create boundary walls.
+	 */
+	function create_bounds(width: number, height: number): void {
+		const top = collisions.create_polygon(0, 0, [
+			{x: 0, y: 0},
+			{x: width, y: 0},
+			{x: width, y: -BOUNDS_SIZE},
+			{x: 0, y: -BOUNDS_SIZE},
+		]);
+		(top as any).is_wall = true;
+
+		const right = collisions.create_polygon(0, 0, [
+			{x: width, y: 0},
+			{x: width, y: height},
+			{x: width + BOUNDS_SIZE, y: height},
+			{x: width + BOUNDS_SIZE, y: 0},
+		]);
+		(right as any).is_wall = true;
+
+		const bottom = collisions.create_polygon(0, 0, [
+			{x: width, y: height},
+			{x: 0, y: height},
+			{x: 0, y: height + BOUNDS_SIZE},
+			{x: width, y: height + BOUNDS_SIZE},
+		]);
+		(bottom as any).is_wall = true;
+
+		const left = collisions.create_polygon(0, 0, [
+			{x: 0, y: height},
+			{x: 0, y: 0},
+			{x: -BOUNDS_SIZE, y: 0},
+			{x: -BOUNDS_SIZE, y: height},
+		]);
+		(left as any).is_wall = true;
+	}
+
+	/**
+	 * Create all agents.
+	 */
+	function create_agents(count: number, scale: number): void {
+		// Clear existing agents
+		agents.length = 0;
+
+		// Create fresh collision system
+		collisions = new Collisions();
+
+		const random_alea = create_random_alea(count, scale);
+		const random = (min: number, max: number): number => random_float(min, max, random_alea);
+
+		// Create bounds
+		create_bounds(props.width, props.height);
+
+		// Create agents
+		const size = 5;
+		for (let i = 0; i < count; i++) {
+			const large = random_alea() > 0.5 ? i % 16 === 0 : false;
+			const min_size = size * 1 * (large ? 4.2 * scale : scale);
+			const max_size = size * 2.5 * (large ? 4.2 * scale : scale);
+			const x = random(0, props.width);
+			const y = random(0, props.height);
+			const direction = (random(0, 360) * Math.PI) / 180;
+			const direction_x = Math.cos(direction);
+			const direction_y = Math.sin(direction);
+
+			let agent: Zoo_Ripple_Agent;
+
+			if (random_alea() > 0.7) {
+				// Circle
+				const radius = random(min_size, max_size);
+				agent = create_agent(
+					i, 'circle', x, y, radius, [], 0, 1,
+					SPEED_DEFAULT * random(0.1, 1),
+					direction_x, direction_y
+				);
+				agent.body = collisions.create_circle(x, y, radius, 1);
+			} else {
+				// Polygon
+				let points: Array<I_Point> = [
+					{x: -random(min_size, max_size), y: -random(min_size, max_size)},
+					{x: random(min_size, max_size), y: -random(min_size, max_size)},
+					{x: random(min_size, max_size), y: random(min_size, max_size)},
+					{x: -random(min_size, max_size), y: random(min_size, max_size)},
+				];
+				if (random_alea() > 0.17) {
+					const index_to_remove = random_int(0, points.length - 1, random_alea);
+					points = points.filter((_, idx) => idx !== index_to_remove);
+				}
+				const rotation = (random(0, 360) * Math.PI) / 180;
+
+				agent = create_agent(
+					i, 'polygon', x, y, 0, points, rotation, 1,
+					SPEED_DEFAULT * random(0.1, 1),
+					direction_x, direction_y
+				);
+				agent.body = collisions.create_polygon(x, y, points, rotation, 1, 1);
+			}
+
+			// Store back-reference
+			if (agent.body) {
+				(agent.body as any).agent = agent;
+			}
+
+			agents.push(agent);
+		}
+	}
+
+	/**
+	 * Simulation update (called by Svelte's RAF loop).
+	 */
+	function update(dt: number): void {
+		// Check running state (paused = skip update)
+		if (!untrack(() => @running)) return;
+
+		const speed = untrack(() => @simulation_speed);
+		const final_dt = dt * speed;
+
+		// Update collision system BVH
+		collisions.update();
+
+		// PHASE 1: Movement
+		for (const agent of agents) {
+			if (!agent.body || agent.dead) continue;
+
+			const unit_speed = agent.speed * final_dt;
+			if (unit_speed !== 0) {
+				if (agent.direction_x !== 0) {
+					agent.x += agent.direction_x * unit_speed;
+					agent.body.x = agent.x;
+				}
+				if (agent.direction_y !== 0) {
+					agent.y += agent.direction_y * unit_speed;
+					agent.body.y = agent.y;
+				}
+			}
+		}
+
+		// PHASE 2: Collision detection and response
+		for (const agent of agents) {
+			if (!agent.body) continue;
+
+			for (const other_body of agent.body.potentials()) {
+				const other_agent = (other_body as any).agent as Zoo_Ripple_Agent | undefined;
+				const is_wall = (other_body as any).is_wall;
+
+				if (colliding(agent.body, other_body, cr)) {
+					if (is_wall) {
+						physics_apply_bounce(
+							agent,
+							{x: 0, y: 0, direction_x: 0, direction_y: 0} as Zoo_Ripple_Agent,
+							cr,
+							1,
+						);
+						agent.body.x = agent.x;
+						agent.body.y = agent.y;
+					} else if (other_agent) {
+						physics_apply_bounce(agent, other_agent, cr);
+						agent.body.x = agent.x;
+						agent.body.y = agent.y;
+						if (other_agent.body) {
+							other_agent.body.x = other_agent.x;
+							other_agent.body.y = other_agent.y;
+						}
+					}
+				}
+			}
+		}
+
+		// FPS tracking
+		frame_count++;
+		fps_total += 1000 / dt;
+		if (frame_count > 100) {
+			@fps = Math.round(fps_total / frame_count);
+			frame_count = 1;
+			fps_total = @fps;
+		}
+	}
+
+	function toggle(): void {
+		@running = !@running;
+	}
+
+	// Watch agent_count and agent_scale - recreate when they change
+	// Use untrack() to prevent mutations inside create_agents from re-triggering this effect
+	effect(() => {
+		const count = @agent_count;
+		const scale = @agent_scale;
+		untrack(() => create_agents(count, scale));
+	});
+
+	// Register update callback on mount, cleanup on unmount
+	effect(() => {
+		if (props.register_update_callback) {
+			props.register_update_callback(update);
+		}
+		return () => {
+			if (props.register_update_callback) {
+				props.register_update_callback(null);
+			}
+		};
+	});
+
+	// Computed stats (reactive derived values)
+	let circle_count = track(() => agents.filter(a => a.type === 'circle').length);
+	let polygon_count = track(() => agents.length - @circle_count);
+
+	// === RENDER ===
+	<div class="zoo-ripple">
+		<form class="controls">
+			<div class="row">
+				<label>
+					<span>{'simulation speed'}</span>
+					<input
+						type="number"
+						value={@simulation_speed}
+						onInput={(e) => @simulation_speed = +e.target.value}
+						step={speed_step}
+						min={speed_min}
+						max={speed_max}
+					/>
+				</label>
+				<input
+					type="range"
+					value={@simulation_speed}
+					onInput={(e) => @simulation_speed = +e.target.value}
+					step={speed_step}
+					min={speed_min}
+					max={speed_max}
+				/>
+			</div>
+			<fieldset>
+				<div class="row">
+					<label>
+						<span>{'agent count'}</span>
+						<input
+							type="number"
+							value={@agent_count}
+							onInput={(e) => @agent_count = +e.target.value}
+							min={count_min}
+							max={count_max}
+						/>
+					</label>
+					<input
+						type="range"
+						value={@agent_count}
+						onInput={(e) => @agent_count = +e.target.value}
+						min={count_min}
+						max={count_max}
+					/>
+				</div>
+				<div class="row">
+					<label>
+						<span>{'agent scale'}</span>
+						<input
+							type="number"
+							value={@agent_scale}
+							onInput={(e) => @agent_scale = +e.target.value}
+							step={scale_step}
+							min={scale_min}
+							max={scale_max}
+						/>
+					</label>
+					<input
+						type="range"
+						value={@agent_scale}
+						onInput={(e) => @agent_scale = +e.target.value}
+						step={scale_step}
+						min={scale_min}
+						max={scale_max}
+					/>
+				</div>
+			</fieldset>
+			<div class="row">
+				<button type="button" onClick={toggle}>
+					{@running ? 'pause' : 'play'}
+				</button>
+			</div>
+		</form>
+
+		<p class="stats">
+			{`${agents.length} agents - ${@circle_count} circles, ${@polygon_count} polygons | fps: ${@fps}`}
+		</p>
+
+		<svg
+			width={props.width}
+			height={props.height}
+			style={{
+				border: '1px solid #444',
+				backgroundColor: props.colors.background ?? 'transparent',
+			}}
+		>
+			for (const agent of agents; key agent.id) {
+				if (agent.type === 'circle') {
+					<circle
+						cx={agent.x}
+						cy={agent.y}
+						r={agent.radius * Math.abs(agent.scale)}
+						fill={agent.color}
+					/>
+				} else if (agent.transformed_points.length >= 3) {
+					<polygon
+						points={serialize_points(agent.x, agent.y, agent.transformed_points)}
+						fill={agent.color}
+					/>
+				}
+			}
+		</svg>
+	</div>
+
+	<style>
+		.zoo-ripple {
+			padding: 0;
+		}
+		.controls {
+			margin-bottom: 1rem;
+			max-width: 600px;
+		}
+		.row {
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+			margin-bottom: 0.5rem;
+		}
+		.stats {
+			margin-bottom: 0.5rem;
+		}
+		label {
+			display: flex;
+			gap: 0.5rem;
+			align-items: center;
+		}
+		input[type="number"] {
+			width: 80px;
+		}
+		input[type="range"] {
+			flex: 1;
+		}
+		fieldset {
+			border: 1px solid #444;
+			padding: 0.5rem;
+			margin-bottom: 0.5rem;
+		}
+	</style>
+}

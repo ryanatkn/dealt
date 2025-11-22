@@ -23,6 +23,7 @@
 	</section>
 	<section>
 		<section class="box gap_lg">
+			<Card href="{base}/zoo" icon="🦒" align="right">zoo</Card>
 			<Card href="{base}/editor" icon="🏞" align="right">project editor</Card>
 			<Card href="{base}/demo" icon="🗻">demos</Card>
 			<Card href="{base}/about" icon="🔮" align="right">about</Card>

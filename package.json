@@ -40,6 +40,7 @@
     "esm-env": "^1.2.2",
     "pixi.js": "^8.9.2",
     "prettier": "^3.5.3",
+    "prettier-plugin-ripple": "^0.2.152",
     "prettier-plugin-svelte": "^3.3.3",
     "ripple": "^0.2.175",
     "svelte": "^5.28.2",

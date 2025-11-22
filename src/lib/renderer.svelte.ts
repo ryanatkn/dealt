@@ -12,7 +12,8 @@ export const renderer_summaries: Record<Renderer_Type, string> = {
 	svelte: 'The Svelte renderer uses Svelte components to create SVG elements.',
 	canvas: 'The canvas renderer draws to a canvas element with CanvasRenderingContext2D.',
 	html: 'The HTML renderer generates a raw string of HTML and inserts it into the DOM to create SVG elements.',
-	ripple: 'The Ripple renderer uses the RippleJS framework with signals-based reactivity to create SVG elements.',
+	ripple:
+		'The Ripple renderer uses the RippleJS framework with signals-based reactivity to create SVG elements.',
 };
 
 export interface Renderer_Colors {

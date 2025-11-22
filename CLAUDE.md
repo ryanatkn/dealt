@@ -62,7 +62,16 @@ Located at `/demo/spawn` - physics simulation showcasing:
 - Unified clock: Svelte's RAF loop drives Ripple's update function
 - Lazy serialization: Only converts to JSON when switching renderers
 
-**Status:** Fully functional with reactive rendering. Future optimization: eliminate Svelte Unit/Scene dependency (see ARCHITECTURE.md Phase 3).
+**Critical Pattern - `untrack()` for mutating effects:**
+```ripple
+// When effect() calls code that mutates reactive collections, wrap in untrack()
+effect(() => {
+  const count = @agent_count;           // dependency
+  untrack(() => create_agents(count));  // mutations don't re-trigger effect
+});
+```
+
+**Status:** Fully functional with reactive rendering. See `/zoo/ripple_idiomatic` for standalone Ripple implementation.
 
 ## Development
 
@@ -80,7 +89,10 @@ src/
 │       ├── Scene_Renderer_Ripple_Internal.ripple
 │       └── Unit_Renderer_Ripple.ripple
 ├── routes/
-│   └── demo/spawn/                 - Spawn demo
+│   ├── demo/spawn/                 - Spawn demo (switchable renderers)
+│   └── zoo/                        - Framework comparison testbed
+│       ├── svelte_idiomatic/       - Pure Svelte 5 implementation
+│       └── ripple_idiomatic/       - Pure Ripple implementation
 └── ...
 ```
 

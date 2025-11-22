@@ -221,11 +221,7 @@ export function physics_apply_bounce<T extends Has_Position & Has_Direction & Pa
  * }
  * ```
  */
-export function physics_apply_strength_separation(
-	a: Unit,
-	b: Unit,
-	cr: Collision_Result,
-): void {
+export function physics_apply_strength_separation(a: Unit, b: Unit, cr: Collision_Result): void {
 	const overlap_x = cr.overlap! * cr.overlap_x;
 	const overlap_y = cr.overlap! * cr.overlap_y;
 
