@@ -242,39 +242,40 @@ export class Zoo_State {
 	}
 
 	#create_bounds(): void {
+		// Walls use clockwise winding (in screen coords) so normals point into playfield
 		// Top wall
 		const top = this.collisions.create_polygon(0, 0, [
 			{x: 0, y: 0},
-			{x: this.width, y: 0},
-			{x: this.width, y: -BOUNDS_SIZE},
 			{x: 0, y: -BOUNDS_SIZE},
+			{x: this.width, y: -BOUNDS_SIZE},
+			{x: this.width, y: 0},
 		]);
 		(top as any).is_wall = true;
 
 		// Right wall
 		const right = this.collisions.create_polygon(0, 0, [
 			{x: this.width, y: 0},
-			{x: this.width, y: this.height},
-			{x: this.width + BOUNDS_SIZE, y: this.height},
 			{x: this.width + BOUNDS_SIZE, y: 0},
+			{x: this.width + BOUNDS_SIZE, y: this.height},
+			{x: this.width, y: this.height},
 		]);
 		(right as any).is_wall = true;
 
 		// Bottom wall
 		const bottom = this.collisions.create_polygon(0, 0, [
 			{x: this.width, y: this.height},
-			{x: 0, y: this.height},
-			{x: 0, y: this.height + BOUNDS_SIZE},
 			{x: this.width, y: this.height + BOUNDS_SIZE},
+			{x: 0, y: this.height + BOUNDS_SIZE},
+			{x: 0, y: this.height},
 		]);
 		(bottom as any).is_wall = true;
 
 		// Left wall
 		const left = this.collisions.create_polygon(0, 0, [
 			{x: 0, y: this.height},
-			{x: 0, y: 0},
-			{x: -BOUNDS_SIZE, y: 0},
 			{x: -BOUNDS_SIZE, y: this.height},
+			{x: -BOUNDS_SIZE, y: 0},
+			{x: 0, y: 0},
 		]);
 		(left as any).is_wall = true;
 	}

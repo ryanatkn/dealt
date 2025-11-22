@@ -59,7 +59,8 @@ Located at `/demo/spawn` - physics simulation showcasing:
 **Integration:**
 - Uses `vite-plugin-ripple` for `.ripple` file support
 - Ripple components imported via `mount()` API
-- Unified clock: Svelte's RAF loop drives Ripple's update function
+- Spawn demo: Unified clock (Svelte's RAF drives Ripple's update function)
+- Zoo: Ripple owns everything including RAF loop
 - Lazy serialization: Only converts to JSON when switching renderers
 
 **Critical Pattern - `untrack()` for mutating effects:**
@@ -86,13 +87,16 @@ src/
 │   ├── unit.svelte.ts              - Unit class
 │   ├── Scene_Renderer_*.svelte     - Renderer implementations
 │   └── ripple/                     - Ripple components
-│       ├── Scene_Renderer_Ripple_Internal.ripple
-│       └── Unit_Renderer_Ripple.ripple
+│       ├── ripple_scene.ripple     - Scene with simulation loop
+│       └── ripple_unit.ripple      - Unit factory
 ├── routes/
 │   ├── demo/spawn/                 - Spawn demo (switchable renderers)
 │   └── zoo/                        - Framework comparison testbed
 │       ├── svelte_idiomatic/       - Pure Svelte 5 implementation
-│       └── ripple_idiomatic/       - Pure Ripple implementation
+│       └── ripple_idiomatic/       - Pure Ripple implementation (owns RAF)
+│           ├── Zoo_Ripple.svelte   - Minimal mount wrapper
+│           ├── zoo_ripple.ripple   - Component (state, RAF, simulation, UI)
+│           └── zoo_ripple_agent.ts - Agent types and constants
 └── ...
 ```
 

@@ -13,8 +13,9 @@ The zoo is a testbed for comparing **idiomatic implementations** across differen
 │   ├── Zoo_Svelte.svelte     # Component + controls + SVG rendering
 │   └── zoo_svelte.svelte.ts  # Zoo_Agent class, Zoo_State class
 └── ripple_idiomatic/         # Pure Ripple implementation
-    ├── Zoo_Ripple.svelte     # Svelte wrapper (mounts Ripple, owns RAF)
-    └── zoo_ripple.ripple     # Self-contained Ripple component
+    ├── Zoo_Ripple.svelte     # Minimal Svelte wrapper (just mounts Ripple)
+    ├── zoo_ripple.ripple     # Self-contained Ripple component (owns RAF)
+    └── zoo_ripple_agent.ts   # Agent types and constants
 ```
 
 ## Design Principles
@@ -27,7 +28,7 @@ Each framework owns its reactive patterns:
 |---------|--------|--------|
 | **Agent State** | `Zoo_Agent` class with `$state` | `#{}` TrackedObject |
 | **Agent Collection** | `Array<Zoo_Agent>` with `$state` | `#[]` TrackedArray |
-| **Simulation Loop** | `requestAnimationFrame` in class | Callback from Svelte wrapper |
+| **Simulation Loop** | `requestAnimationFrame` in class | Internal RAF in component |
 | **Position Sync** | Setters update collision body | Manual sync after mutation |
 
 ### 2. Shared Pure Functions Only
@@ -70,36 +71,35 @@ Zoo_Agent (reactive entity)
 
 ## Ripple Implementation
 
-**Unified Clock Pattern** - Svelte owns timing, Ripple owns everything else:
+**Ripple owns everything** - Svelte is just a minimal mount wrapper:
 
 ```
-Zoo_Ripple.svelte (owns RAF loop)
-├── Mounts Ripple ONCE via mount()
-├── Owns RAF loop (tick/start/stop)
-├── Passes register_update_callback prop
-└── Calls Ripple's update(dt) each frame
+Zoo_Ripple.svelte (minimal wrapper)
+├── Mounts ZooRipple via mount()
+├── Passes static props (width, height, colors)
+└── Handles unmount cleanup
+
+zoo_ripple_agent.ts (pure TypeScript)
+├── Zoo_Ripple_Agent interface
+├── BOUNDS_SIZE constant
+└── WALL_AGENT constant (hot path optimization)
 
 ZooRipple component (zoo_ripple.ripple)
 ├── State (track())
 │   ├── simulation_speed, agent_count, agent_scale
 │   ├── running, fps
 │   └── agents: #[] (TrackedArray of #{} TrackedObjects)
-├── Simulation (update function, exposed via callback)
+├── RAF loop (tick/start/stop, owned by Ripple)
+├── Simulation (update function)
 ├── Controls (rendered with onInput handlers)
-└── effect() for lifecycle and callback registration
+└── effect() for lifecycle (init agents, start/stop RAF)
 ```
-
-**Why this pattern:**
-- Ripple's reactivity doesn't trigger re-renders from internal RAF callbacks
-- External calls (from Svelte) properly integrate with Ripple's reactive system
-- Same pattern used successfully in spawn demo's Scene_Renderer_Ripple
 
 **Key Ripple patterns used:**
 - `track()` for reactive primitives with `@` operator
 - `#[]` for TrackedArray, `#{}` for TrackedObject
-- `effect()` for side effects and cleanup
+- `effect()` for side effects and cleanup (including RAF lifecycle)
 - `untrack()` to read without subscribing
-- Scoped `<style>` for CSS
 
 **Critical: `untrack()` for mutating effects**
 

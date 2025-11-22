@@ -1,6 +1,6 @@
 /**
  * Ripple-idiomatic zoo implementation.
- * Uses Unified Clock Pattern: Svelte owns RAF, Ripple owns state/simulation/rendering.
+ * Ripple owns all state, simulation, timing (RAF), and rendering.
  */
 
 import { track, effect, untrack } from 'ripple';
@@ -11,48 +11,21 @@ import type { I_Point } from '$lib/point_helpers.js';
 import { transform_points, serialize_points } from '$lib/point_helpers.js';
 import { compute_unit_color } from '$lib/unit_logic.js';
 import { type Renderer_Colors } from '$lib/renderer.svelte.js';
-import { Collisions, type Some_Body } from '$lib/collisions.js';
+import { Collisions } from '$lib/collisions.js';
 import { colliding } from '$lib/colliding.js';
 import { cr } from '$lib/collision_result.js';
 import { physics_apply_bounce } from '$lib/physics.js';
 import { SPEED_DEFAULT } from '$lib/unit_types.js';
-
-/**
- * Ripple Zoo Agent interface.
- */
-interface Zoo_Ripple_Agent {
-	id: number;
-	dead: boolean;
-	type: 'circle' | 'polygon';
-	x: number;
-	y: number;
-	rotation: number;
-	scale: number;
-	speed: number;
-	direction_x: number;
-	direction_y: number;
-	radius: number;
-	points: Array<I_Point>;
-	transformed_points: Array<I_Point>;
-	color: string;
-	body?: Some_Body;
-}
-
-const BOUNDS_SIZE = 100000;
-
-// Dummy agent for wall collisions (avoids allocation in hot path)
-const WALL_AGENT = { x: 0, y: 0, direction_x: 0, direction_y: 0 } as Zoo_Ripple_Agent;
+import { type Zoo_Ripple_Agent, BOUNDS_SIZE, WALL_AGENT } from './zoo_ripple_agent.js';
 
 interface Props {
 	width: number;
 	height: number;
 	colors: Renderer_Colors;
-	// Callback to register update function (called by Svelte's RAF loop)
-	register_update_callback?: (callback: ((dt: number) => void) | null) => void;
 }
 
 export component ZooRipple(props: Props) {
-	// === RIPPLE-OWNED STATE ===
+	// === STATE ===
 	let simulation_speed = track(1);
 	let agent_count = track(72);
 	let agent_scale = track(1);
@@ -75,7 +48,11 @@ export component ZooRipple(props: Props) {
 	// Agents array (reactive)
 	const agents: Array<Zoo_Ripple_Agent> = #[];
 
-	// FPS tracking state
+	// RAF loop state (non-reactive)
+	let frame_id: number | null = null;
+	let last_time: number | null = null;
+
+	// FPS tracking
 	let frame_count = 0;
 	let fps_total = 0;
 
@@ -119,37 +96,38 @@ export component ZooRipple(props: Props) {
 
 	/**
 	 * Create boundary walls.
+	 * Walls use clockwise winding (in screen coords) so normals point into playfield.
 	 */
 	function create_bounds(width: number, height: number): void {
 		const top = collisions.create_polygon(0, 0, [
 			{x: 0, y: 0},
-			{x: width, y: 0},
-			{x: width, y: -BOUNDS_SIZE},
 			{x: 0, y: -BOUNDS_SIZE},
+			{x: width, y: -BOUNDS_SIZE},
+			{x: width, y: 0},
 		]);
 		(top as any).is_wall = true;
 
 		const right = collisions.create_polygon(0, 0, [
 			{x: width, y: 0},
-			{x: width, y: height},
-			{x: width + BOUNDS_SIZE, y: height},
 			{x: width + BOUNDS_SIZE, y: 0},
+			{x: width + BOUNDS_SIZE, y: height},
+			{x: width, y: height},
 		]);
 		(right as any).is_wall = true;
 
 		const bottom = collisions.create_polygon(0, 0, [
 			{x: width, y: height},
-			{x: 0, y: height},
-			{x: 0, y: height + BOUNDS_SIZE},
 			{x: width, y: height + BOUNDS_SIZE},
+			{x: 0, y: height + BOUNDS_SIZE},
+			{x: 0, y: height},
 		]);
 		(bottom as any).is_wall = true;
 
 		const left = collisions.create_polygon(0, 0, [
 			{x: 0, y: height},
-			{x: 0, y: 0},
-			{x: -BOUNDS_SIZE, y: 0},
 			{x: -BOUNDS_SIZE, y: height},
+			{x: -BOUNDS_SIZE, y: 0},
+			{x: 0, y: 0},
 		]);
 		(left as any).is_wall = true;
 	}
@@ -158,19 +136,14 @@ export component ZooRipple(props: Props) {
 	 * Create all agents.
 	 */
 	function create_agents(count: number, scale: number): void {
-		// Clear existing agents
 		agents.length = 0;
-
-		// Create fresh collision system
 		collisions = new Collisions();
 
 		const random_alea = create_random_alea(count, scale);
 		const random = (min: number, max: number): number => random_float(min, max, random_alea);
 
-		// Create bounds
 		create_bounds(props.width, props.height);
 
-		// Create agents
 		const size = 5;
 		for (let i = 0; i < count; i++) {
 			const large = random_alea() > 0.5 ? i % 16 === 0 : false;
@@ -185,7 +158,6 @@ export component ZooRipple(props: Props) {
 			let agent: Zoo_Ripple_Agent;
 
 			if (random_alea() > 0.7) {
-				// Circle
 				const radius = random(min_size, max_size);
 				agent = create_agent(
 					i, 'circle', x, y, radius, [], 0, 1,
@@ -194,7 +166,6 @@ export component ZooRipple(props: Props) {
 				);
 				agent.body = collisions.create_circle(x, y, radius, 1);
 			} else {
-				// Polygon
 				let points: Array<I_Point> = [
 					{x: -random(min_size, max_size), y: -random(min_size, max_size)},
 					{x: random(min_size, max_size), y: -random(min_size, max_size)},
@@ -215,7 +186,6 @@ export component ZooRipple(props: Props) {
 				agent.body = collisions.create_polygon(x, y, points, rotation, 1, 1);
 			}
 
-			// Store back-reference
 			if (agent.body) {
 				(agent.body as any).agent = agent;
 			}
@@ -225,19 +195,17 @@ export component ZooRipple(props: Props) {
 	}
 
 	/**
-	 * Simulation update (called by Svelte's RAF loop).
+	 * Simulation update.
 	 */
 	function update(dt: number): void {
-		// Check running state (paused = skip update)
 		if (!untrack(() => @running)) return;
 
 		const speed = untrack(() => @simulation_speed);
 		const final_dt = dt * speed;
 
-		// Update collision system BVH
 		collisions.update();
 
-		// PHASE 1: Movement
+		// Movement
 		for (const agent of agents) {
 			if (!agent.body || agent.dead) continue;
 
@@ -254,7 +222,7 @@ export component ZooRipple(props: Props) {
 			}
 		}
 
-		// PHASE 2: Collision detection and response
+		// Collision detection and response
 		for (const agent of agents) {
 			if (!agent.body) continue;
 
@@ -290,31 +258,52 @@ export component ZooRipple(props: Props) {
 		}
 	}
 
+	/**
+	 * RAF tick.
+	 */
+	function tick(): void {
+		const now = performance.now();
+		if (last_time !== null) {
+			const dt = now - last_time;
+			if (dt < 1000) {
+				update(dt);
+			}
+		}
+		last_time = now;
+		frame_id = requestAnimationFrame(tick);
+	}
+
+	function start(): void {
+		if (frame_id !== null) return;
+		last_time = null;
+		tick();
+	}
+
+	function stop(): void {
+		if (frame_id !== null) {
+			cancelAnimationFrame(frame_id);
+			frame_id = null;
+		}
+	}
+
 	function toggle(): void {
 		@running = !@running;
 	}
 
-	// Watch agent_count and agent_scale - recreate when they change
-	// Use untrack() to prevent mutations inside create_agents from re-triggering this effect
+	// Initialize agents when count/scale changes
 	effect(() => {
 		const count = @agent_count;
 		const scale = @agent_scale;
 		untrack(() => create_agents(count, scale));
 	});
 
-	// Register update callback on mount, cleanup on unmount
+	// Start RAF on mount, stop on unmount
 	effect(() => {
-		if (props.register_update_callback) {
-			props.register_update_callback(update);
-		}
-		return () => {
-			if (props.register_update_callback) {
-				props.register_update_callback(null);
-			}
-		};
+		start();
+		return () => stop();
 	});
 
-	// Computed stats (reactive derived values) - single pass for efficiency
+	// Computed stats
 	let stats = track(() => {
 		let circles = 0;
 		for (const a of agents) {

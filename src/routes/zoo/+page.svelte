@@ -11,9 +11,12 @@
 	{#snippet global_controls()}{/snippet}
 	{#snippet app_contextmenu()}{/snippet}
 	<div class="p_md">
-		<header class="pb_md"><Breadcrumb>zoo</Breadcrumb></header>
+		<header class="pb_md"><Breadcrumb>🦒</Breadcrumb></header>
 		<h1>Zoo</h1>
-		<p class="mb_lg">A virtual space full of agents with different behaviors.</p>
+		<p class="mb_lg">
+			A virtual space full of agents with different behaviors, simulated and rendered with multiple
+			reactive frameworks.
+		</p>
 
 		<h2>Implementations</h2>
 		<ul>
