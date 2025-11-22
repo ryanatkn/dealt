@@ -1,3 +1,5 @@
+import type {Behavior_Name} from '$lib/behaviors.js';
+
 /**
  * Game behavior collision logic.
  *
@@ -21,7 +23,7 @@
  */
 export interface Unit_With_Behaviors {
 	// Svelte units have behaviors Map
-	behaviors?: {has: (name: string) => boolean};
+	behaviors?: {has: (name: Behavior_Name) => boolean};
 	// Ripple units have behavior_names array
 	behavior_names?: Array<string>;
 	// State mutation - different implementations
@@ -34,7 +36,7 @@ export interface Unit_With_Behaviors {
  * Check if a unit has a specific behavior.
  * Works with both Svelte (behaviors Map) and Ripple (behavior_names array).
  */
-function has_behavior(unit: Unit_With_Behaviors, name: string): boolean {
+function has_behavior(unit: Unit_With_Behaviors, name: Behavior_Name): boolean {
 	if (unit.behaviors) {
 		return unit.behaviors.has(name);
 	}
