@@ -21,13 +21,13 @@
  */
 export interface Unit_With_Behaviors {
 	// Svelte units have behaviors Map
-	behaviors?: {has(name: string): boolean};
+	behaviors?: {has: (name: string) => boolean};
 	// Ripple units have behavior_names array
-	behavior_names?: string[];
+	behavior_names?: Array<string>;
 	// State mutation - different implementations
-	kill?(): void;
+	kill?: () => void;
 	dead?: boolean;
-	scene?: {exit(): void};
+	scene?: {exit: () => void};
 }
 
 /**
