@@ -11,7 +11,7 @@
  * This ensures no visible overlap in rendered frames (optimal visual quality).
  */
 
-import { TrackedArray, effect, untrack } from 'ripple';
+import { TrackedArray, effect } from 'ripple';
 import { create_ripple_unit, ripple_unit_to_json, type Ripple_Unit } from '$lib/ripple/ripple_unit.ripple';
 import type { Unit_Json } from '$lib/unit_types.js';
 import type { Renderer_Colors } from '$lib/renderer.svelte.js';
@@ -44,33 +44,22 @@ export component RippleScene(props: Props) {
 		(json) => create_ripple_unit(json, props.colors)
 	);
 
-	// Create collision bodies ONCE at initialization using untrack()
-	// untrack() lets us read tracked properties without making them dependencies
-	effect(() => {
-		for (const unit of units) {
-			// Use untrack to read properties without subscribing
-			const type = untrack(() => unit.type);
-			const x = untrack(() => unit.x);
-			const y = untrack(() => unit.y);
-
-			if (type === 'circle') {
-				const radius = untrack(() => unit.radius);
-				const scale = untrack(() => unit.scale);
-				unit.body = collisions.create_circle(x, y, radius, scale);
-			} else if (type === 'polygon') {
-				const points = untrack(() => unit.points);
-				const rotation = untrack(() => unit.rotation);
-				const scale = untrack(() => unit.scale);
-				unit.body = collisions.create_polygon(x, y, points, rotation, scale, scale);
-			}
-
-			// Store reference back to unit
-			if (unit.body) {
-				unit.body.unit = unit;
-			}
+	// Create collision bodies (sync initialization at component creation)
+	for (const unit of units) {
+		if (unit.type === 'circle') {
+			unit.body = collisions.create_circle(unit.x, unit.y, unit.radius, unit.scale);
+		} else if (unit.type === 'polygon') {
+			unit.body = collisions.create_polygon(unit.x, unit.y, unit.points, unit.rotation, unit.scale, unit.scale);
 		}
 
-		// Cleanup on unmount
+		// Store reference back to unit
+		if (unit.body) {
+			unit.body.unit = unit;
+		}
+	}
+
+	// Cleanup on unmount
+	effect(() => {
 		return () => {
 			for (const unit of units) {
 				if (unit.body) {
@@ -180,7 +169,7 @@ export component RippleScene(props: Props) {
 				backgroundColor: props.colors.background ?? 'transparent',
 			}}
 		>
-			for (const unit of units; key unit.id) {
+			for (const unit of units) {
 				if (unit.type === 'circle') {
 					<circle
 						cx={unit.x}

@@ -318,7 +318,7 @@ export component ZooRipple(props: Props) {
 
 	// Computed stats (reactive derived values)
 	let circle_count = track(() => agents.filter(a => a.type === 'circle').length);
-	let polygon_count = track(() => agents.length - @circle_count);
+	let polygon_count = track(() => agents.filter(a => a.type === 'polygon').length);
 
 	// === RENDER ===
 	<div class="zoo-ripple">
@@ -405,7 +405,7 @@ export component ZooRipple(props: Props) {
 				backgroundColor: props.colors.background ?? 'transparent',
 			}}
 		>
-			for (const agent of agents; key agent.id) {
+			for (const agent of agents) {
 				if (agent.type === 'circle') {
 					<circle
 						cx={agent.x}
