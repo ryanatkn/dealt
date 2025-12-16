@@ -1,6 +1,10 @@
-The MIT License (MIT)
+MIT License
 
 Copyright (c) Ryan Atkinson <mail@ryanatkn.com> <https://ryanatkn.com/>
+
+collisions system adapted from
+https://github.com/Sinova/Collisions
+Copyright (c) 2017 Sinova
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
