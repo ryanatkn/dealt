@@ -18,7 +18,7 @@
 <ul class="unstyled">
 	{#each unit.points as point, i (point)}
 		<li class="row" transition:slide>
-			<div class="flex_1 row justify_content_end" style:--title_width="3.4rem">
+			<div class="flex:1 row justify-content:end" style:--title_width="3.4rem">
 				<Scrubbable_Input
 					title="polygon.points[{i}].x"
 					classes="mb_0"

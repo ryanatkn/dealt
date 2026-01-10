@@ -32,10 +32,10 @@
 	{#snippet summary()}
 		View raw project data
 	{/snippet}
-	<div class="panel position_relative">
+	<div class="panel position:relative">
 		<pre class="p_xs mb_0">{serializer.serialized}</pre>
 		<div
-			class="position_absolute"
+			class="position:absolute"
 			style:right="var(--font_size_lg)"
 			style:top="var(--font_size_lg)"
 		>

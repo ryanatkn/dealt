@@ -18,7 +18,7 @@
 </script>
 
 {#if unit}
-	<div class="display_contents" data-unit={unit.id} use:contextmenu_action={contextmenu_entries}>
+	<div class="display:contents" data-unit={unit.id} use:contextmenu_action={contextmenu_entries}>
 		{@render children()}
 	</div>
 {:else}

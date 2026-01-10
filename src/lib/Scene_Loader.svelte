@@ -44,7 +44,7 @@
 				<button
 					type="button"
 					class:selected
-					class="white_space_nowrap"
+					class="white-space:nowrap"
 					onclick={selected
 						? undefined
 						: () => {

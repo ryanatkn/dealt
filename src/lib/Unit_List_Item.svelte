@@ -31,7 +31,7 @@
 	onpointerdown={() => unit_selection.set(unit)}
 	transition:slide
 >
-	<label class="flex_1 row mb_0 pr_lg">
+	<label class="flex:1 row mb_0 pr_lg">
 		<div class="unit_type">
 			<Unit_Icon {unit} />
 		</div>

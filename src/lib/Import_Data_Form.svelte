@@ -55,7 +55,7 @@
 </script>
 
 <form>
-	<div class="display_flex mb_md gap_md">
+	<div class="display:flex mb_md gap_md">
 		<button type="button" onclick={import_data} disabled={local_serialized === serialized}>
 			↦ import {title}
 		</button>

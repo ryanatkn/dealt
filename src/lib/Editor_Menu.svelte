@@ -46,7 +46,7 @@
 						<h2 class="mt_0 mb_lg row pr_md">
 							<span class="icon_size_md mr_lg">🏞</span> projects
 						</h2>
-						<div class="display_flex flex_column flex_wrap w_100">
+						<div class="display:flex flex_column flex_wrap w_100">
 							{#each editor.projects as project (project)}
 								{@const selected = editor.selected_project_id === project.id}
 								<div class="w_100 py_xs" transition:slide>
@@ -55,7 +55,7 @@
 										title={selected
 											? `${project.glyph} ${project.name} is selected`
 											: `select project ${project.glyph} ${project.name}`}
-										class="w_100 color_d text_align_left justify_content_start"
+										class="w_100 color_d text-align:left justify-content:start"
 										style:flex-wrap="nowrap"
 										class:selected
 										onclick={selected
@@ -72,7 +72,7 @@
 							<button
 								type="button"
 								title="create a new project"
-								class="w_100 mt_xs justify_content_start"
+								class="w_100 mt_xs justify-content:start"
 								onclick={() => {
 									editor.create_project(
 										parse_project_json({
@@ -83,7 +83,7 @@
 									// TODO create scene metadata, save?
 								}}
 							>
-								<div class="row white_space_nowrap">
+								<div class="row white-space:nowrap">
 									<span class="font_size_xl3 mr_lg line_height_1">+</span>
 									create new project
 								</div>
@@ -97,7 +97,7 @@
 						<div class="box p_xl3 gap_xl3 border_radius_sm shadow_md">
 							<Breadcrumb><span class="font_size_xl">🔮</span></Breadcrumb>
 							<nav>
-								<ul class="display_flex flex_column gap_sm unstyled">
+								<ul class="display:flex flex_column gap_sm unstyled">
 									<li>
 										<a class="chip w_100 box px_md py_xs" href="{base}/demo">demos</a>
 									</li>
@@ -106,7 +106,7 @@
 									</li>
 									<li>
 										<a
-											class="chip w_100 box p_md pb_xs white_space_nowrap"
+											class="chip w_100 box p_md pb_xs white-space:nowrap"
 											href="https://github.com/ryanatkn/dealt"
 											><Svg data={github_logo} size="var(--icon_size_md)" /> source</a
 										>
@@ -145,7 +145,7 @@
 						<Scene_Datafiles scene={editor.project.scene} />
 					</div>
 					<div class="pane p_xl mb_xl3 shadow_c_xl">
-						<h2 class="mt_xl color_c_5 font_weight_600">Danger zone</h2>
+						<h2 class="mt_xl color_c_5 font-weight:600">Danger zone</h2>
 						<section class="width_sm">
 							<Project_Delete_Button {project} />
 						</section>
@@ -178,7 +178,7 @@
 												}}
 											>
 												<div class="font_size_xl3">✕</div>
-												<div class="ml_lg text_align_left">
+												<div class="ml_lg text-align:left">
 													permanently delete<br />all locally saved data
 												</div>
 											</button>

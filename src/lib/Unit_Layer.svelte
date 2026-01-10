@@ -70,7 +70,7 @@
 	{#if !collapsed}
 		<div transition:slide>
 			<div class="row pb_sm pt_md">
-				<div class="pr_md text_align_right font_weight_600 input_width_sm">id</div>
+				<div class="pr_md text-align:right font-weight:600 input_width_sm">id</div>
 				<small style:padding="var(--input_padding_y) var(--input_padding_x)">{unit.id}</small>
 			</div>
 			{#if unit.type === 'circle'}
@@ -151,7 +151,7 @@
 				<button
 					type="button"
 					title="add a point to this polygon"
-					class="plain justify_self_end"
+					class="plain justify-self:end"
 					onclick={() => {
 						unit.add_point(new Unit_Point(120, 200));
 					}}>add point ◎</button
@@ -165,7 +165,7 @@
 							<div transition:slide class="py_sm">
 								<button
 									type="button"
-									class="inline color_g selected white_space_nowrap"
+									class="inline color_g selected white-space:nowrap"
 									title="this polygon intersects itself - collision detection is disabled"
 									>self-intersecting</button
 								>
@@ -177,7 +177,7 @@
 							<div transition:slide class="py_sm">
 								<button
 									type="button"
-									class="inline color_d selected deselectable white_space_nowrap"
+									class="inline color_d selected deselectable white-space:nowrap"
 									title="this polygon is concave, and can be decomposed into {unit.decomped
 										.length} convex polygons"
 									onclick={() => {

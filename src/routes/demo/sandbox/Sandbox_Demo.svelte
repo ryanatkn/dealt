@@ -49,7 +49,7 @@
 <Dealt>
 	<div class="sandbox_demo">
 		<div
-			class="renderer position_relative"
+			class="renderer position:relative"
 			bind:clientWidth={renderer.width}
 			bind:clientHeight={renderer.height}
 		>
@@ -67,7 +67,7 @@
 		{#if editor.editing}
 			<div class="sidebar">
 				<div class="topbar">
-					<div class="row justify_content_space_between">
+					<div class="row justify-content:space-between">
 						<Breadcrumb>🔮</Breadcrumb>
 						<button
 							type="button"
@@ -78,7 +78,7 @@
 							}}>✕</button
 						>
 					</div>
-					<div class="py_xs display_flex">
+					<div class="py_xs display:flex">
 						<Scene_Controls {project} />
 						<Fps_Indicator />
 					</div>

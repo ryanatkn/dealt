@@ -61,7 +61,7 @@
 				<Fps_Indicator />
 			</div>
 			<Scene_Controls {project} />
-			<div class="row align_items_stretch shadow_inset_xs pl_md">
+			<div class="row align-items:stretch shadow_inset_xs pl_md">
 				{#each renderer_types as renderer_type (renderer_type)}
 					<button
 						type="button"
@@ -81,7 +81,7 @@
 			</div>
 		</div>
 		<Scene_Summary {project} />
-		<header class="display_flex">
+		<header class="display:flex">
 			<div class="row ml_auto">
 				<a class="nav_link" href="{base}/demo">demos</a>
 				<a class="nav_link" href="{base}/about">about</a>
