@@ -84,7 +84,7 @@
 								}}
 							>
 								<div class="row white-space:nowrap">
-									<span class="font_size_xl3 mr_lg line_height_1">+</span>
+									<span class="font_size_xl3 mr_lg line-height:1">+</span>
 									create new project
 								</div>
 							</button>
