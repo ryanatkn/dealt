@@ -2,6 +2,7 @@ import {vitePreprocess} from '@sveltejs/vite-plugin-svelte';
 import adapter from '@sveltejs/adapter-static';
 import {create_csp_directives} from '@ryanatkn/fuz/csp.js';
 import {csp_trusted_sources_of_ryanatkn} from '@ryanatkn/fuz/csp_of_ryanatkn.js';
+import {execSync} from 'node:child_process';
 
 /** @type {import('@sveltejs/kit').Config} */
 export default {
@@ -16,6 +17,8 @@ export default {
 			directives: create_csp_directives({
 				trusted_sources: csp_trusted_sources_of_ryanatkn,
 			}),
+		},
+		version: {			name: execSync('git rev-parse HEAD').toString().trim(),
 		},
 	},
 };
