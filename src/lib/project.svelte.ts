@@ -57,6 +57,7 @@ const parse_project_renderers = (v: any): Record<Renderer_Type, boolean> => ({
 	svelte: v?.svelte === undefined ? false : v.svelte,
 	canvas: v?.canvas === undefined ? false : v.canvas,
 	html: v?.html === undefined ? false : v.html,
+	ripple: v?.ripple === undefined ? false : v.ripple,
 });
 
 export const parse_project_json = (v: any): Project_Json => {

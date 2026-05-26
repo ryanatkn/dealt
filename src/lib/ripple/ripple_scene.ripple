@@ -1,0 +1,185 @@
+/**
+ * Full Ripple Scene Implementation
+ *
+ * This component:
+ * - Creates Ripple units from JSON data
+ * - Provides update() function driven by Svelte's clock (unified timing)
+ * - Handles physics, collisions, and rendering using movement-then-collision
+ * - Exports state back to JSON on unmount (lazy serialization)
+ *
+ * Phase ordering: Movement → Collision Detection → Collision Response
+ * This ensures no visible overlap in rendered frames (optimal visual quality).
+ */
+
+import { TrackedArray, effect } from 'ripple';
+import { create_ripple_unit, ripple_unit_to_json, type Ripple_Unit } from '$lib/ripple/ripple_unit.ripple';
+import type { Unit_Json } from '$lib/unit_types.js';
+import { serialize_points } from '$lib/point_helpers.js';
+import type { Renderer_Colors } from '$lib/renderer.svelte.js';
+import { Collisions } from '$lib/collisions.js';
+import { colliding } from '$lib/colliding.js';
+import { cr } from '$lib/collision_result.js';
+import { physics_apply_bounce } from '$lib/physics.js';
+import { behavior_handle_collision } from '$lib/collision_behavior.js';
+
+interface Props {
+	width: number;
+	height: number;
+	units_json: Array<Unit_Json>;
+	colors: Renderer_Colors;
+	// Getter for reactive Svelte state
+	get_simulation_speed: () => number;
+	// Callback to register update function (called by Svelte's clock)
+	register_update_callback?: (callback: ((dt: number) => void) | null) => void;
+	// Callback to register lazy state getter (called by Svelte before unmount)
+	on_get_state?: (getter: (() => Array<Unit_Json>) | null) => void;
+}
+
+export component RippleScene(props: Props) {
+	// Create collision system (framework-agnostic!)
+	const collisions = new Collisions();
+
+	// Create Ripple units from JSON
+	const units = TrackedArray.from(
+		props.units_json,
+		(json) => create_ripple_unit(json, props.colors)
+	);
+
+	// Create collision bodies (sync initialization at component creation)
+	for (const unit of units) {
+		if (unit.type === 'circle') {
+			unit.body = collisions.create_circle(unit.x, unit.y, unit.radius, unit.scale);
+		} else if (unit.type === 'polygon') {
+			unit.body = collisions.create_polygon(unit.x, unit.y, unit.points, unit.rotation, unit.scale, unit.scale);
+		}
+
+		// Store reference back to unit
+		if (unit.body) {
+			unit.body.unit = unit;
+		}
+	}
+
+	// Update function called by Svelte's clock
+	function update(dt: number): void {
+		const sim_speed = props.get_simulation_speed();
+		const final_dt = dt * sim_speed;
+
+		// Update collision system
+		collisions.update();
+
+		// PHASE 1: Movement
+		for (const unit of units) {
+			if (!unit.body) continue;
+
+			// Movement
+			if (!unit.dead) {
+				const unit_speed = unit.speed * final_dt;
+
+				if (unit_speed !== 0) {
+					if (unit.direction_x !== 0) {
+						unit.x += unit.direction_x * unit_speed;
+						unit.body.x = unit.x;
+					}
+					if (unit.direction_y !== 0) {
+						unit.y += unit.direction_y * unit_speed;
+						unit.body.y = unit.y;
+					}
+				}
+			}
+
+			// Teleporting (even when dead)
+			if (unit.teleporting_x !== 0) {
+				unit.x += unit.teleporting_x;
+				unit.body.x = unit.x;
+			}
+			if (unit.teleporting_y !== 0) {
+				unit.y += unit.teleporting_y;
+				unit.body.y = unit.y;
+			}
+		}
+
+		// PHASE 2: Collision detection and response (AFTER movement for visual quality)
+		for (const unit of units) {
+			if (!unit.body) continue;
+
+			// Check collisions
+			for (const other_body of unit.body.potentials()) {
+				if (!other_body.unit) continue;
+				const other_unit = other_body.unit as Ripple_Unit;
+
+				if (colliding(unit.body, other_body, cr)) {
+					// Check for special behavior collisions using shared logic
+					if (!behavior_handle_collision(unit, other_unit)) {
+						// No special behavior - apply normal physics
+						physics_apply_bounce(unit, other_unit, cr);
+					}
+				}
+			}
+		}
+	}
+
+	// Register callbacks and cleanup on unmount
+	effect(() => {
+		// Register the update function so Svelte's clock can call it
+		if (props.register_update_callback) {
+			props.register_update_callback(update);
+		}
+
+		// Register lazy state getter (Svelte calls this before unmount)
+		// This avoids serializing every frame - only when switching renderers
+		if (props.on_get_state) {
+			const get_state = () => units.map(u => ripple_unit_to_json(u));
+			props.on_get_state(get_state);
+		}
+
+		return () => {
+			// Unregister callbacks
+			if (props.register_update_callback) {
+				props.register_update_callback(null);
+			}
+			if (props.on_get_state) {
+				props.on_get_state(null);
+			}
+
+			// Remove collision bodies
+			for (const unit of units) {
+				if (unit.body) {
+					try {
+						unit.body.remove();
+					} catch (e) {
+						console.warn('[Ripple] Failed to remove collision body:', e);
+					}
+					unit.body = undefined;
+				}
+			}
+		};
+	});
+
+	// Render units
+	<div>
+		<svg
+			width={props.width}
+			height={props.height}
+			style={{
+				border: '1px solid #444',
+				backgroundColor: props.colors.background ?? 'transparent',
+			}}
+		>
+			for (const unit of units) {
+				if (unit.type === 'circle') {
+					<circle
+						cx={unit.x}
+						cy={unit.y}
+						r={unit.radius * Math.abs(unit.scale)}
+						fill={unit.color}
+					/>
+				} else if (unit.type === 'polygon' && unit.transformed_points.length >= 3) {
+					<polygon
+						points={serialize_points(unit.x, unit.y, unit.transformed_points)}
+						fill={unit.color}
+					/>
+				}
+			}
+		</svg>
+	</div>
+}

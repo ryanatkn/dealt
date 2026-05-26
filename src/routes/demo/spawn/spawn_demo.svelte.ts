@@ -18,7 +18,16 @@ export class Spawn_Demo_State {
 	unit_count: number = $state()!;
 	unit_scale: number = $state()!;
 	renderer_type: Renderer_Type = $state()!;
-	simulation_speed: number = $state()!;
+
+	// Use getter/setter to validate simulation_speed range
+	#simulation_speed: number = $state()!;
+	get simulation_speed(): number {
+		return this.#simulation_speed;
+	}
+	set simulation_speed(value: number) {
+		// Clamp to valid range (0-3 based on UI in Spawn_Demo.svelte)
+		this.#simulation_speed = Math.max(0, Math.min(3, value));
+	}
 
 	constructor(json: Partial<Spawn_Demo_State_Json> = EMPTY_OBJECT) {
 		const {
@@ -34,7 +43,7 @@ export class Spawn_Demo_State {
 		this.unit_count = unit_count;
 		this.unit_scale = unit_scale;
 		this.renderer_type = renderer_type;
-		this.simulation_speed = simulation_speed;
+		this.simulation_speed = simulation_speed; // Uses setter, will clamp
 	}
 
 	// TODO what if this had `derived.by` read from objects?

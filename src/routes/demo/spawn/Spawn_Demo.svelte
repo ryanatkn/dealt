@@ -7,8 +7,7 @@
 
 	import Dealt from '$lib/Dealt.svelte';
 	// import Game from '$lib/game.svelte.js';
-	import {cr} from '$lib/collision_result.js';
-	import {colliding} from '$lib/colliding.js';
+	import {physics_apply_bounce} from '$lib/physics.js';
 	import Scrubbable_Input from '$lib/Scrubbable_Input.svelte';
 	import Scene_Controls from '$lib/Scene_Controls.svelte';
 	import Renderer_Controls from '$lib/Renderer_Controls.svelte';
@@ -69,15 +68,19 @@
 		spawn_demo.simulation_speed = simulation.speed;
 	});
 
-	// TODO select movement/collision behavior
-
+	// Spawn demo uses reflection/bounce physics instead of editor's strength-based separation
 	onMount(() => {
-		const was_playing = editor.playing;
-		editor.playing = true; // TODO hacky
-		const unwatch = scene.onupdate(onupdate);
+		const original_playing = editor.playing;
+		const original_collision_handler = scene.collision_handler;
+
+		// Enable simulation and use bounce physics
+		editor.playing = true;
+		scene.collision_handler = physics_apply_bounce;
+
 		return () => {
-			unwatch();
-			editor.playing = was_playing;
+			// Restore original state
+			editor.playing = original_playing;
+			scene.collision_handler = original_collision_handler;
 		};
 	});
 
@@ -170,40 +173,6 @@
 			h = renderer.height;
 		untrack(() => create_units(c, s, w, h));
 	});
-
-	const onupdate = (_dt: number) => {
-		// console.log('[Spawn_Demo] onupdate');
-
-		for (let i = 0; i < scene.units.length; ++i) {
-			const unit = scene.units[i];
-
-			// if (speed > 0) {
-			// 	unit.x += unit.direction_x * speed;
-			// 	unit.y += unit.direction_y * speed;
-			// }
-
-			const potentials = unit.body.potentials();
-
-			for (const body2 of potentials) {
-				if (colliding(unit.body, body2, cr)) {
-					// This makes them predictably bounce off each other. Without it, it's much more chaotic
-					// unit.x -= cr.overlap! * cr.overlap_x;
-					// unit.y -= cr.overlap! * cr.overlap_y;
-
-					const dot1 = unit.direction_x * cr.overlap_y + unit.direction_y * -cr.overlap_x;
-
-					unit.direction_x = 2 * dot1 * cr.overlap_y - unit.direction_x;
-					unit.direction_y = 2 * dot1 * -cr.overlap_x - unit.direction_y;
-
-					const dot2 =
-						body2.unit.direction_x * cr.overlap_y + body2.unit.direction_y * -cr.overlap_x;
-
-					body2.unit.direction_x = 2 * dot2 * cr.overlap_y - body2.unit.direction_x;
-					body2.unit.direction_y = 2 * dot2 * -cr.overlap_x - body2.unit.direction_y;
-				}
-			}
-		}
-	};
 
 	const create_shape = (
 		large: boolean,
@@ -326,7 +295,9 @@
 		</p>
 
 		<div class="position_relative">
-			<Scene_Renderer Component={renderer.Component} {scene} {renderer} />
+			{#if scene.units.length > 0}
+				<Scene_Renderer Component={renderer.Component} {scene} {renderer} />
+			{/if}
 			{#if editor.editing}
 				<Scene_Interaction_Surface
 					{scene}

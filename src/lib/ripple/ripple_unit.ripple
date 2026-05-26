@@ -1,0 +1,181 @@
+/**
+ * Ripple-native Unit implementation using TrackedObject pattern.
+ *
+ * This is a factory function that creates reactive units for the Ripple renderer.
+ * Uses TrackedObject (#{}) syntax so properties are reactive without @ operator.
+ *
+ * Key patterns:
+ * - TrackedObject (#{}) for reactive object properties
+ * - Direct property access (no @ needed for TrackedObject properties)
+ * - Collision body managed via effects (see ripple_scene.ripple)
+ *
+ * **Reactivity optimization:**
+ * - Position/velocity/state properties are reactive (change every frame)
+ * - Derived properties (transformed_points, color) computed once for performance
+ * - Spawn demo doesn't change rotation/scale during simulation, so static is optimal
+ * - TODO: Make derived properties reactive if gameplay requires dynamic rotation/scale
+ *   using `track(() => transform_points(unit.points, unit.rotation, unit.scale))`
+ */
+
+import type {Unit_Json} from '$lib/unit_types.js';
+import type {Some_Body} from '$lib/collisions.js';
+import {transform_points, type I_Point} from '$lib/point_helpers.js';
+import {compute_unit_color} from '$lib/unit_logic.js';
+import type {Renderer_Colors} from '$lib/renderer.svelte.js';
+import {polygon_is_simple, polygon_decomp} from '$lib/polygon_helpers.js';
+
+/**
+ * Ripple Unit type.
+ * Properties are plain values but reactive thanks to TrackedObject.
+ */
+export interface Ripple_Unit {
+	// Identity
+	id: number;
+	name: string;
+
+	// State
+	dead: boolean;
+	type: 'circle' | 'polygon';
+
+	// Transform
+	x: number;
+	y: number;
+	rotation: number;
+	scale: number;
+
+	// Movement
+	velocity: number;
+	speed: number;
+	direction_x: number;
+	direction_y: number;
+	teleporting_x: number;
+	teleporting_y: number;
+
+	// Physics
+	strength: number;
+	movement_multiplier: number;
+
+	// Circle properties
+	radius: number;
+
+	// Polygon properties
+	points: Array<I_Point>;
+
+	// Derived properties (computed)
+	transformed_points: Array<I_Point>;
+	is_simple: boolean;
+	is_concave: boolean;
+	color: string;
+
+	// Behaviors (simplified - just track names for now)
+	behavior_names: string[];
+
+	// Collision body reference (set externally by simulation)
+	body?: Some_Body;
+}
+
+/**
+ * Creates a Ripple unit from Unit_Json data.
+ * Returns a TrackedObject so all properties are reactive.
+ */
+export function create_ripple_unit(
+	json: Unit_Json,
+	colors: Renderer_Colors,
+): Ripple_Unit {
+	// Extract behavior names
+	const behavior_names = json.behaviors.map(b => b.name);
+
+	// Calculate initial derived values
+	const points = json.type === 'polygon' ? json.points : [];
+	const transformed_points = points.length > 0
+		? transform_points(points, json.rotation, json.scale)
+		: [];
+	const is_simple = points.length > 0 ? polygon_is_simple(points) : true;
+	const decomped = points.length > 0 ? polygon_decomp(points) : [];
+	const is_concave = decomped.length > 1;
+	const color = compute_unit_color(
+		json.dead,
+		json.type,
+		is_simple,
+		is_concave,
+		behavior_names,
+		colors,
+	);
+
+	// Create TrackedObject
+	// Note: Use #{} syntax - properties are reactive WITHOUT @ operator!
+	return #{
+		// Identity
+		id: json.id,
+		name: json.name,
+
+		// State
+		dead: json.dead,
+		type: json.type,
+
+		// Transform
+		x: json.x,
+		y: json.y,
+		rotation: json.rotation,
+		scale: json.scale,
+
+		// Movement
+		velocity: json.velocity,
+		speed: json.speed,
+		direction_x: json.direction_x,
+		direction_y: json.direction_y,
+		teleporting_x: json.teleporting_x,
+		teleporting_y: json.teleporting_y,
+
+		// Physics
+		strength: json.strength,
+		movement_multiplier: json.movement_multiplier,
+
+		// Circle properties
+		radius: json.radius,
+
+		// Polygon properties
+		points,
+
+		// Derived properties (will be updated reactively)
+		transformed_points,
+		is_simple,
+		is_concave,
+		color,
+
+		// Behaviors
+		behavior_names,
+
+		// Body will be set by simulation
+		body: undefined,
+	};
+}
+
+/**
+ * Serialize Ripple unit back to Unit_Json.
+ * Used when switching away from Ripple renderer.
+ */
+export function ripple_unit_to_json(unit: Ripple_Unit): Unit_Json {
+	return {
+		id: unit.id,
+		name: unit.name,
+		behaviors: unit.behavior_names.map(name => ({name})),
+		dead: unit.dead,
+		type: unit.type,
+		x: unit.x,
+		y: unit.y,
+		rotation: unit.rotation,
+		velocity: unit.velocity,
+		speed: unit.speed,
+		strength: unit.strength,
+		movement_multiplier: unit.movement_multiplier,
+		direction_x: unit.direction_x,
+		direction_y: unit.direction_y,
+		teleporting_x: unit.teleporting_x,
+		teleporting_y: unit.teleporting_y,
+		scale: unit.scale,
+		points: unit.points,
+		radius: unit.radius,
+	};
+}
+

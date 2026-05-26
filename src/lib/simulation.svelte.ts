@@ -2,6 +2,7 @@ import type {Collisions} from '$lib/collisions.js';
 import {cr, type Collision_Result} from '$lib/collision_result.js';
 import type {Unit} from '$lib/unit.svelte.js';
 import {colliding} from '$lib/colliding.js';
+import {behavior_handle_collision} from '$lib/collision_behavior.js';
 
 // TODO maybe this shouldn't exist, and instead have plain functions as the various implementations? instead compose directly in a `Scene` or somewhere else?
 export class Simulation {
@@ -13,6 +14,17 @@ export class Simulation {
 		this.collisions = collisions;
 	}
 
+	/**
+	 * Update simulation with movement-then-collision phase ordering.
+	 *
+	 * PHASE ORDERING: Movement → Collision Detection → Collision Response
+	 *
+	 * This ensures rendered frames never show overlapping objects (better visual quality).
+	 * Movement happens first, then we detect and fix any collisions that occurred.
+	 *
+	 * The oncollide callback handles physics (e.g., strength-based separation for editor,
+	 * or reflection/bounce for arcade physics).
+	 */
 	update(
 		units: Array<Unit>,
 		dt: number,
@@ -21,59 +33,32 @@ export class Simulation {
 		this.collisions.update();
 
 		const final_dt = dt * this.speed;
-		// TODO maybe track total time?
 
 		var unit_speed: number;
 
-		// TODO needs a lot of work
-		// run the sim for each entitity
+		// MOVEMENT-THEN-COLLISION (per-unit iteration for efficiency)
 		for (const unit of units) {
-			// if (e.disable_simulation) continue;
-
-			// TODO hacky just to get some basic behavior
+			// PHASE 1: Movement
 			if (!unit.dead) {
 				unit_speed = unit.speed * final_dt;
 				if (unit_speed !== 0) {
-					// TODO this moves one unit and then tests for collisions,
-					// but we're calling `collisions.update()` above --
-					// will we get better behavior if we move everyunit first,
-					// then update the collisions, then test for collisions?
 					if (unit.direction_x !== 0) unit.x += unit.direction_x * unit_speed;
 					if (unit.direction_y !== 0) unit.y += unit.direction_y * unit_speed;
 				}
 			}
 
-			// still teleport when dead
-			if (unit.teleporting_x !== 0) unit.x += unit.teleporting_x; // TODO batch this mutation?
-			if (unit.teleporting_y !== 0) unit.y += unit.teleporting_y; // TODO batch this mutation?
+			// Teleport even when dead
+			if (unit.teleporting_x !== 0) unit.x += unit.teleporting_x;
+			if (unit.teleporting_y !== 0) unit.y += unit.teleporting_y;
 
+			// PHASE 2: Collision detection and response
 			for (const body of unit.body.potentials()) {
 				if (colliding(unit.body, body, cr)) {
-					// TODO abysmal hack, refactor both the collision logic and removal, should have a "dead" state or behavior
-					if (
-						body.unit.behaviors.has('Harmful_Behavior') &&
-						unit.behaviors.has('Player_Controller_Behavior')
-					) {
-						unit.kill();
-					} else if (
-						body.unit.behaviors.has('Player_Controller_Behavior') &&
-						unit.behaviors.has('Harmful_Behavior')
-					) {
-						body.unit.kill();
-					} else if (
-						body.unit.behaviors.has('Goal_Behavior') &&
-						unit.behaviors.has('Player_Controller_Behavior')
-					) {
-						unit.scene.exit();
-					} else if (
-						body.unit.behaviors.has('Player_Controller_Behavior') &&
-						unit.behaviors.has('Goal_Behavior')
-					) {
-						body.unit.scene.exit();
-					} else {
-						oncollide(unit, body.unit, cr); // TODO type
+					// Check for special behavior collisions first
+					if (!behavior_handle_collision(unit, body.unit)) {
+						// No special behavior - apply normal physics
+						oncollide(unit, body.unit, cr);
 					}
-					// if (e.dead) break outer;
 				}
 			}
 		}

@@ -410,6 +410,9 @@ a.chip {
 .mb_0 {
 	margin-bottom: 0;
 }
+.mb_sm {
+	margin-bottom: var(--space_sm);
+}
 .mb_md {
 	margin-bottom: var(--space_md);
 }
