@@ -12,7 +12,7 @@
 
 <main class="width_md mx_auto box px_lg pb_xl9">
 	<Header />
-	<section class="display_flex gap_lg flex_column">
+	<section class="display:flex gap_lg flex_column">
 		<Card href="{base}/demo/spawn" icon="🌋">spawn demo</Card>
 		<Card href="{base}/demo/vehicle" icon="🐢">vehicle demo</Card>
 		<Card href="{base}/demo/sandbox" icon="🌄">sandbox demo</Card>

@@ -10,7 +10,7 @@
 	const clock = $derived(props_clock ?? clock_context.get());
 </script>
 
-<div class="display_flex align_items_end font_weight_700 px_md font_family_mono">
-	<div class="text_align_right pr_xs" style:width="4rem">{clock.average_fps}</div>
+<div class="display:flex align-items:end font-weight:700 px_md font_family_mono">
+	<div class="text-align:right pr_xs" style:width="4rem">{clock.average_fps}</div>
 	<div class="text_color_4">fps</div>
 </div>

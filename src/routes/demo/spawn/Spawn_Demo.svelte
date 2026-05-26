@@ -255,9 +255,9 @@
 	<div class="p_md">
 		<header class="pb_md"><Breadcrumb>🔮</Breadcrumb></header>
 		<form class="width_md">
-			<div class="my_md display_flex">
+			<div class="my_md display:flex">
 				<Scene_Controls {project} />
-				<div class="align_self_end">
+				<div class="align-self:end">
 					<Fps_Indicator />
 				</div>
 			</div>
@@ -325,7 +325,7 @@
 			{scene.units.filter((u) => u.type === 'polygon').length} polygons
 		</p>
 
-		<div class="position_relative">
+		<div class="position:relative">
 			<Scene_Renderer Component={renderer.Component} {scene} {renderer} />
 			{#if editor.editing}
 				<Scene_Interaction_Surface

@@ -15,9 +15,9 @@
 	<Header>
 		{#snippet icon()}
 			<!-- svelte-ignore a11y_distracting_elements -->
-			<div class="display_flex font_size_xl7">
+			<div class="display:flex font_size_xl7">
 				<marquee> 🔮 </marquee>
-				<marquee class="flip_x w_100"> 🔮 </marquee>
+				<marquee class="transform:scaleX(-1) w_100"> 🔮 </marquee>
 			</div>
 		{/snippet}
 		<h1 class="mt_xl2">about Dealt</h1>

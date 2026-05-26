@@ -108,16 +108,16 @@
 	<div class="wrapper">
 		<div class="content p_md">
 			<header class="pb_md"><Breadcrumb>🔮</Breadcrumb></header>
-			<div class="my_md display_flex">
+			<div class="my_md display:flex">
 				<Scene_Controls {project} />
-				<div class="align_self_end">
+				<div class="align-self:end">
 					<Fps_Indicator />
 				</div>
 			</div>
 			<div class="mb_md">
 				<Renderer_Controls {renderer} />
 			</div>
-			<div class="position_relative mt_md">
+			<div class="position:relative mt_md">
 				<Scene_Renderer Component={renderer.Component} {scene} {renderer} />
 				{#if editor.editing}
 					<Scene_Interaction_Surface

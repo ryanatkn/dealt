@@ -34,7 +34,7 @@
 			}}
 		>
 			<div class="font_size_xl3">✕</div>
-			<div class="ml_lg text_align_left">
+			<div class="ml_lg text-align:left">
 				permanently delete scene<br />{scene.glyph}
 				{scene.name}
 			</div>
